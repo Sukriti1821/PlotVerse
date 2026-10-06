@@ -3,19 +3,38 @@ const router = express.Router();
 
 const {
   createBooking,
-  getUserBookings,
+  getCustomerBookings,
+  getOwnerBookings,
+  updateBookingStatus,
   cancelBooking,
+  respondToCustomRequest,
+  acceptCustomRequestPrice,
 } = require("../controllers/bookingController");
 
-const { protect } = require("../middleware/authMiddleware");
+const { protect, ownerOnly } = require("../middleware/authMiddleware");
+const { validateCreateBooking } = require("../middleware/validationMiddleware");
 
-// Create booking
-router.post("/", protect, createBooking);
+// 1. Create booking (Customer)
+router.post("/", protect, validateCreateBooking, createBooking);
 
-// Get user bookings
-router.get("/mybookings", protect, getUserBookings);
+// 2. Get customer bookings
+router.get("/mine", protect, getCustomerBookings);
+router.get("/mybookings", protect, getCustomerBookings);
+router.get("/user", protect, getCustomerBookings);
 
-// Cancel booking
+// 3. Get owner's spot bookings
+router.get("/owner", protect, ownerOnly, getOwnerBookings);
+
+// 4. Update booking status (confirm/reject/cancel)
+router.patch("/:id/status", protect, updateBookingStatus);
+router.put("/:id/status", protect, updateBookingStatus);
+
+// 5. Cancel booking
+router.put("/:id/cancel", protect, cancelBooking);
 router.delete("/:id", protect, cancelBooking);
+
+// 6. Custom Request endpoints
+router.patch("/:id/custom-request/:index", protect, ownerOnly, respondToCustomRequest);
+router.patch("/:id/custom-request/:index/accept", protect, acceptCustomRequestPrice);
 
 module.exports = router;
