@@ -25,6 +25,7 @@ import Footer from "../components/common/Footer";
 import { useAuth } from "../context/AuthContext";
 import { getImageUrl } from "../utils/imageHelper";
 import BuyAsGiftModal from "../components/gifts/BuyAsGiftModal";
+import { FALLBACK_EXPERIENCES } from "../data/fallbackData";
 
 // Helper to convert "HH:MM" to minutes from midnight
 const timeToMinutes = (timeStr) => {
@@ -78,8 +79,13 @@ const ExperienceDetails = () => {
           setExperience(res.data?.data || res.data);
         }
       } catch (err) {
-        console.error("Error loading experience details:", err);
-        toast.error("Failed to load experience details");
+        console.warn("Backend error loading experience details, checking fallbacks:", err.message);
+        const fb = FALLBACK_EXPERIENCES.find((e) => e._id === id || e.id === id) || FALLBACK_EXPERIENCES[0];
+        if (!ignore && fb) {
+          setExperience(fb);
+        } else {
+          toast.error("Failed to load experience details");
+        }
       } finally {
         if (!ignore) {
           setLoading(false);

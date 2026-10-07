@@ -24,7 +24,7 @@ const AuthModal = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("customer");
   const [referralCode, setReferralCode] = useState(() => {
-    return localStorage.getItem("thikana_ref_code") || localStorage.getItem("plotverse_ref_code") || "";
+    return localStorage.getItem("thikana_ref_code") || localStorage.getItem("thikana_ref_code") || "";
   });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const AuthModal = () => {
   // Sync referral code if set in localStorage or URL
   useEffect(() => {
     if (showAuthModal) {
-      const stored = localStorage.getItem("thikana_ref_code") || localStorage.getItem("plotverse_ref_code");
+      const stored = localStorage.getItem("thikana_ref_code") || localStorage.getItem("thikana_ref_code");
       if (stored && !referralCode) {
         setReferralCode(stored);
       }
@@ -70,9 +70,9 @@ const AuthModal = () => {
       } else {
         const user = await register(name, email, password, role, referralCode);
         localStorage.removeItem("thikana_ref_code");
-        localStorage.removeItem("plotverse_ref_code");
+        localStorage.removeItem("thikana_ref_code");
         toast.success(
-          `Account registered as ${user.role === "owner" ? "Plot Owner / Host" : "Customer"}! Welcome to Thikana — Mera Thikana!`
+          `Account registered as ${user.role === "owner" ? "Plot Owner / Host" : "Customer"}! Welcome to Thikana!`
         );
       }
       // Reset fields
@@ -84,7 +84,11 @@ const AuthModal = () => {
     } catch (err) {
       const msg =
         err.response?.data?.message ||
-        "Authentication failed. Please check your credentials.";
+        (err.code === "ERR_NETWORK" || !err.response
+          ? "Unable to connect to server. Please ensure the backend is running."
+          : authMode === "login"
+          ? "Invalid email or password. Please try again."
+          : "Registration failed. Please check your details and try again.");
       setError(msg);
       toast.error(msg);
     } finally {
@@ -195,10 +199,10 @@ const AuthModal = () => {
                 <input
                   type="email"
                   required
-                  placeholder="name@example.com"
+                  placeholder="e.g. you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-transparent text-sm text-slate-800 outline-none"
+                  className="w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
                 />
               </div>
             </div>

@@ -1,7 +1,7 @@
 {
   "name": "thikana-backend",
   "version": "1.0.0",
-  "description": "Thikana API backend - Mera Thikana",
+  "description": "Thikana API backend",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",

@@ -108,9 +108,21 @@ const getCorporateSpaces = async ({
     };
   }
 
-  const spots = await Spot.find(query)
+  let spots = await Spot.find(query)
     .populate("owner", "name email avatar")
     .sort({ rating: -1, createdAt: -1 });
+
+  // Graceful fallback for existing databases without explicit corporateFriendly flags
+  if (spots.length === 0 && !amenity) {
+    const fallbackQuery = { isActive: true };
+    if (location && location.trim()) {
+      fallbackQuery.location = { $regex: location.trim(), $options: "i" };
+    }
+    spots = await Spot.find(fallbackQuery)
+      .populate("owner", "name email avatar")
+      .sort({ rating: -1, createdAt: -1 })
+      .limit(6);
+  }
 
   // Also query corporate curated experience packages
   const expQuery = {
@@ -122,13 +134,25 @@ const getCorporateSpaces = async ({
     expQuery.corporateType = eventType;
   }
 
-  const experiences = await Experience.find(expQuery)
+  let experiences = await Experience.find(expQuery)
     .populate({
       path: "spot",
       select: "title location images address corporateFriendly",
     })
     .populate("owner", "name email")
     .sort({ rating: -1 });
+
+  // Graceful fallback if no experience has explicit corporate flag
+  if (experiences.length === 0 && (!eventType || eventType === "all")) {
+    experiences = await Experience.find({ isActive: true })
+      .populate({
+        path: "spot",
+        select: "title location images address corporateFriendly",
+      })
+      .populate("owner", "name email")
+      .sort({ rating: -1 })
+      .limit(6);
+  }
 
   return {
     spots,

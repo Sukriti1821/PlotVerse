@@ -398,7 +398,7 @@ const RedeemGift = () => {
                     </div>
 
                     <div className="text-sm font-medium italic text-slate-800 dark:text-slate-100 relative pl-4 border-l-2 border-amber-400 my-2">
-                      “{voucherData.personalMessage || "Enjoy this peaceful outdoor escape on Thikana — Mera Thikana!"}”
+                      “{voucherData.personalMessage || "Enjoy this peaceful outdoor escape on Thikana!"}”
                     </div>
 
                     <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-2 flex items-center gap-1">

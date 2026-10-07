@@ -28,6 +28,13 @@ module.exports = (owner1, owner2, owner3) => {
       { name: "Alpine Waterproof Tent", hourlyPrice: 500, price: 500 },
       { name: "Solar Lanterns & Power", hourlyPrice: 150, price: 150 },
     ],
+    corporateFriendly: {
+      isCorporateFriendly: true,
+      maxCorporateCapacity: 60,
+      corporateAmenities: ["High-speed Wi-Fi", "AV Projector Setup", "Buffet Dining Area", "Power Generator Backup"],
+      corporateHourlyRate: 2500,
+      corporateDayPackagePrice: 15000,
+    },
   },
   {
     title: "Khajjiar Cedar Meadow Glade",
@@ -64,6 +71,13 @@ module.exports = (owner1, owner2, owner3) => {
       { name: "Stargazing Telescope", hourlyPrice: 250, price: 250 },
       { name: "Thermal Windbreaker Blankets", hourlyPrice: 150, price: 150 },
     ],
+    corporateFriendly: {
+      isCorporateFriendly: true,
+      maxCorporateCapacity: 45,
+      corporateAmenities: ["Starlink Satellite Wi-Fi", "Outdoor Seating Setup", "Bonfire Evening Deck", "Catering Service"],
+      corporateHourlyRate: 2800,
+      corporateDayPackagePrice: 18000,
+    },
   },
   {
     title: "Gulmarg Alpine Plateau Grassland",
@@ -395,6 +409,13 @@ module.exports = (owner1, owner2, owner3) => {
       { name: "Clay Tandoor & Charcoal Kit", hourlyPrice: 450, price: 450 },
       { name: "Lawn Badminton Kit", hourlyPrice: 150, price: 150 },
     ],
+    corporateFriendly: {
+      isCorporateFriendly: true,
+      maxCorporateCapacity: 75,
+      corporateAmenities: ["High-speed Wi-Fi", "Lakeside Deck AV Setup", "Buffet Dining Area", "Private Valet Parking"],
+      corporateHourlyRate: 3500,
+      corporateDayPackagePrice: 22000,
+    },
   },
   {
     title: "Dharamkot Oak Canopy Circle & Jammery",
@@ -411,6 +432,13 @@ module.exports = (owner1, owner2, owner3) => {
       { name: "Acoustic Guitars & Djembe Kit", hourlyPrice: 300, price: 300 },
       { name: "Chai & Snack Urn", hourlyPrice: 250, price: 250 },
     ],
+    corporateFriendly: {
+      isCorporateFriendly: true,
+      maxCorporateCapacity: 40,
+      corporateAmenities: ["Fiber Wi-Fi", "Amphitheater Acoustics", "Catering & Tea Station", "Generator Backup"],
+      corporateHourlyRate: 2600,
+      corporateDayPackagePrice: 16000,
+    },
   },
   {
     title: "Patnitop Pine Grove Gathering Meadow",
@@ -427,6 +455,13 @@ module.exports = (owner1, owner2, owner3) => {
       { name: "Barbecue Grill Station", hourlyPrice: 450, price: 450 },
       { name: "Pine Log Seating Circle", hourlyPrice: 200, price: 200 },
     ],
+    corporateFriendly: {
+      isCorporateFriendly: true,
+      maxCorporateCapacity: 50,
+      corporateAmenities: ["High-speed Wi-Fi", "Outdoor Projection Screen", "Bonfire Forum", "Catering & Barbecue"],
+      corporateHourlyRate: 2900,
+      corporateDayPackagePrice: 19000,
+    },
   },
 
   // ==========================================

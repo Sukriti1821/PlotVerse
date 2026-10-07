@@ -1,5 +1,5 @@
-# PlotVerse 🌿 — Mountain Plot & Scenic Outdoor Stay Marketplace
-> *Your own patch of the mountains, by the hour*
+# Thikana 🌿 — Mountain Plot & Scenic Outdoor Stay Marketplace
+> *Mera Thikana - your own patch of the mountains, by the hour*
 
 [![React 19](https://img.shields.io/badge/Frontend-React_19_+_Vite-61dafb?logo=react&logoColor=black)](https://react.dev/)
 [![Tailwind v4](https://img.shields.io/badge/Styling-Tailwind_v4-38bdf8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
@@ -8,7 +8,7 @@
 [![Cloudinary](https://img.shields.io/badge/Storage-Cloudinary-3448C5?logo=cloudinary&logoColor=white)](https://cloudinary.com/)
 [![Razorpay](https://img.shields.io/badge/Payments-Razorpay_UPI_&_Cards-0C2340?logo=razorpay&logoColor=white)](https://razorpay.com/)
 
-**PlotVerse** is a full-stack MERN marketplace connecting outdoor lovers, remote workers, and event organizers with private, undeveloped mountain plots and scenic stays (alpine meadows, riverside orchards, stargazing clearings, date night hideaways) booked by the hour. Hosts list terrain and manage per-hour amenities, while guests reserve verified terrain under an equitable **Pay-After-Approval** lifecycle with Razorpay checkout.
+**Thikana** is a full-stack MERN marketplace connecting outdoor lovers, remote workers, and event organizers with private, undeveloped mountain plots and scenic stays (alpine meadows, riverside orchards, stargazing clearings, date night hideaways) booked by the hour. Hosts list terrain and manage per-hour amenities, while guests reserve verified terrain under an equitable **Pay-After-Approval** lifecycle with Razorpay checkout.
 
 ---
 
@@ -60,7 +60,7 @@
 | `SMTP_PORT` | SMTP server port | Optional | `587` |
 | `SMTP_USER` | SMTP username/email | Optional | `your_email@gmail.com` |
 | `SMTP_PASS` | SMTP application password | Optional | `your_app_password` |
-| `EMAIL_FROM` | From sender address | Optional | `"PlotVerse" <noreply@plotverse.com>` |
+| `EMAIL_FROM` | From sender address | Optional | `"Thikana" <noreply@thikana.com>` |
 | `ALLOW_PRODUCTION_SEED` | Guard for running `seed.js` against production DB | Optional | `false` |
 
 ### Frontend (`frontend/.env`)
@@ -82,7 +82,7 @@
 ```bash
 # Clone the repository
 git clone https://github.com/Sukriti1821/PlotVerse.git
-cd PlotVerse
+###CD_THIKANA###
 
 # Install dependencies across root, backend, and frontend
 npm run install-all
@@ -101,10 +101,10 @@ Populate realistic sample plots, users, and experiences across Himachal and Utta
 npm run seed
 ```
 
-**Seeded Demo Accounts (Password for all: `Test@123`):**
-- **Admin Console**: `admin@thikana.com` / `Test@123` (Access `/admin`)
-- **Host / Owner Login**: `aarav.host@thikana.com` / `Test@123`
-- **Customer / Guest Login**: `rohan.travel@thikana.com` / `Test@123`
+**Seeded Demo Accounts (Default dev password: `Test@123` or your configured `SEED_TEST_PASSWORD`):**
+- **Admin Console**: `admin@thikana.com` (Access `/admin`)
+- **Host / Owner Login**: `aarav.host@thikana.com`
+- **Customer / Guest Login**: `rohan.travel@thikana.com`
 
 ### 5. Running the Application
 ```bash
@@ -125,7 +125,7 @@ npm run dev
 4. **Environment Variables**:
    - Set all variables from `backend/.env.example` in the hosting dashboard.
    - Set `NODE_ENV=production`.
-   - Set `CLIENT_URL` to your production frontend URL (e.g. `https://plotverse.vercel.app`).
+   - Set `CLIENT_URL` to your production frontend URL (e.g. `https://thikana.vercel.app`).
    - Set `MONGO_URI` to your MongoDB Atlas connection string.
    - Set `CLOUDINARY_*` and `RAZORPAY_*` credentials.
 
@@ -134,7 +134,7 @@ npm run dev
 2. **Build Command**: `npm run build`
 3. **Output Directory**: `dist`
 4. **Environment Variables**:
-   - `VITE_API_BASE_URL`: Your deployed backend API URL (e.g. `https://plotverse-api.onrender.com/api`).
+   - `VITE_API_BASE_URL`: Your deployed backend API URL (e.g. `https://thikana-api.onrender.com/api`).
    - `VITE_RAZORPAY_KEY_ID`: Your Razorpay Key ID (`rzp_test_*` or `rzp_live_*`).
 5. **SPA Rewrites**:
    - Vercel: Configured via [`frontend/vercel.json`](frontend/vercel.json) rewrite rule.

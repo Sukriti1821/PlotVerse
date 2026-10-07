@@ -7,10 +7,7 @@ let deferredInstallPrompt = null;
 export function triggerPWAInstall() {
   if (deferredInstallPrompt) {
     deferredInstallPrompt.prompt();
-    deferredInstallPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("[Thikana PWA] User accepted the install prompt");
-      }
+    deferredInstallPrompt.userChoice.then(() => {
       deferredInstallPrompt = null;
       window.dispatchEvent(new Event("pwa-prompt-changed"));
     });
@@ -45,7 +42,7 @@ const PWAInstallPrompt = () => {
     }
 
     // Check recent dismissal
-    const dismissedUntil = localStorage.getItem("thikana_pwa_dismissed") || localStorage.getItem("plotverse_pwa_dismissed");
+    const dismissedUntil = localStorage.getItem("thikana_pwa_dismissed") || localStorage.getItem("thikana_pwa_dismissed");
     if (dismissedUntil && Date.now() < Number(dismissedUntil)) {
       setIsDismissed(true);
     }
@@ -58,7 +55,6 @@ const PWAInstallPrompt = () => {
     };
 
     const handleAppInstalled = () => {
-      console.log("[Thikana PWA] App was successfully installed");
       deferredInstallPrompt = null;
       setCanInstall(false);
       setIsInstalled(true);
@@ -82,10 +78,7 @@ const PWAInstallPrompt = () => {
   const handleInstallClick = async () => {
     if (!deferredInstallPrompt) return;
     deferredInstallPrompt.prompt();
-    const { outcome } = await deferredInstallPrompt.userChoice;
-    if (outcome === "accepted") {
-      console.log("[Thikana PWA] User accepted installation");
-    }
+    await deferredInstallPrompt.userChoice;
     deferredInstallPrompt = null;
     setCanInstall(false);
   };
@@ -139,7 +132,7 @@ const PWAInstallPrompt = () => {
               </h4>
             </div>
             <p className="mt-1 text-xs text-slate-300 leading-snug">
-              Mera Thikana — Fast, app-like outdoor booking experience with offline viewing.
+              Thikana — Fast, app-like outdoor plot booking experience with offline viewing.
             </p>
 
             <div className="mt-2.5 flex items-center gap-3 text-[11px] text-emerald-400 font-medium">

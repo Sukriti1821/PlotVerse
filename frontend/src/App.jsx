@@ -114,6 +114,7 @@ function ReferralParamHandler() {
       if (refCode && refCode.trim()) {
         const cleanCode = refCode.trim().toUpperCase();
         localStorage.setItem("thikana_ref_code", cleanCode);
+        localStorage.setItem("thikana_ref_code", cleanCode);
         if (!user) {
           toast.info(`🎁 Referral code "${cleanCode}" saved! Sign up to earn ₹200 on your first booking.`, {
             toastId: "referral-banner",

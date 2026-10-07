@@ -18,6 +18,7 @@ import BookingComposer from "../components/BookingComposer";
 import SmartRecommendations from "../components/recommendations/SmartRecommendations";
 import { getAllImageUrls, PLACEHOLDER_IMAGE } from "../utils/imageHelper";
 import { PlotDetailsSkeleton } from "../components/common/SkeletonLoader";
+import { FALLBACK_SPOTS } from "../data/fallbackData";
 
 const PlotDetails = () => {
   const { id } = useParams();
@@ -56,11 +57,18 @@ const PlotDetails = () => {
       setSpot(response.data);
       setActiveImageIndex(0);
     } catch (err) {
-      console.error("Error fetching spot details:", err);
-      setError(
-        err.response?.data?.message ||
-          "Failed to load property details. Please verify the ID or check backend status."
-      );
+      console.warn("Backend error fetching spot details, checking fallbacks:", err.message);
+      const fb = FALLBACK_SPOTS.find((s) => s._id === id || s.id === id);
+      if (fb) {
+        setSpot(fb);
+        setActiveImageIndex(0);
+        setError(null);
+      } else {
+        setError(
+          err.response?.data?.message ||
+            "Failed to load property details. Please verify the ID or check backend status."
+        );
+      }
     } finally {
       setLoading(false);
     }

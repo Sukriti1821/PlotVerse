@@ -1,6 +1,14 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import API from "../services/api";
+import {
+  getAuthToken,
+  setAuthToken,
+  removeAuthToken,
+  getUserInfo,
+  setUserInfo,
+  removeUserInfo,
+} from "../utils/storage";
 
 const AuthContext = createContext(null);
 
@@ -12,13 +20,13 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     try {
-      const storedUser = localStorage.getItem("userInfo");
-      const storedToken = localStorage.getItem("token");
+      const storedUser = getUserInfo();
+      const storedToken = getAuthToken();
       if (storedUser && storedToken) {
-        setUser(JSON.parse(storedUser));
+        setUser(storedUser);
       }
     } catch (e) {
-      console.error("Failed to restore auth from localStorage", e);
+      console.error("Failed to restore auth from storage", e);
     } finally {
       setLoading(false);
     }
@@ -37,8 +45,8 @@ export const AuthProvider = ({ children }) => {
     const rawData = response.data;
     const userData = rawData.data || rawData;
 
-    localStorage.setItem("token", userData.token);
-    localStorage.setItem("userInfo", JSON.stringify(userData));
+    setAuthToken(userData.token);
+    setUserInfo(userData);
     setUser(userData);
     setShowAuthModal(false);
     return userData;
@@ -54,8 +62,8 @@ export const AuthProvider = ({ children }) => {
     const rawData = response.data;
     const userData = rawData.data || rawData;
 
-    localStorage.setItem("token", userData.token);
-    localStorage.setItem("userInfo", JSON.stringify(userData));
+    setAuthToken(userData.token);
+    setUserInfo(userData);
     setUser(userData);
     setShowAuthModal(false);
     return userData;
@@ -72,7 +80,7 @@ export const AuthProvider = ({ children }) => {
             walletBalance: response.data.data.walletBalance,
             referralCode: response.data.data.referralCode,
           };
-          localStorage.setItem("userInfo", JSON.stringify(updated));
+          setUserInfo(updated);
           return updated;
         });
       }
@@ -82,8 +90,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userInfo");
+    removeAuthToken();
+    removeUserInfo();
     setUser(null);
     toast.info("You have signed out.");
   };

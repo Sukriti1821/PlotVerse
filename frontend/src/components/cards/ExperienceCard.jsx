@@ -16,8 +16,10 @@ import { getImageUrl, getOptimizedImageUrl } from "../../utils/imageHelper";
 const CATEGORY_ICONS = {
   "Romantic Date": FaHeart,
   "Group Gathering": FaUsers,
+  "Friends' Escape": FaUsers,
   "Stargazing Retreat": FaCompass,
   "Sunset Campfire": FaFire,
+  "Mountain Wellness": FaCompass,
 };
 
 const ExperienceCard = ({ experience }) => {

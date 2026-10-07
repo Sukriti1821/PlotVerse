@@ -23,34 +23,50 @@ dotenv.config({ path: path.join(__dirname, ".env") });
 
 const User = require("./models/User");
 const Spot = require("./models/Spot");
+const Experience = require("./models/Experience");
 const Booking = require("./models/Booking");
 const Restaurant = require("./models/Restaurant");
 const Testimonial = require("./models/Testimonial");
+const crypto = require("crypto");
 const Settings = require("./models/Settings");
 
-const TEST_PASSWORD = "Test@123";
-
 async function seedDatabase() {
-  // Safeguard: Require explicit confirmation flag when seeding against production database
-  const isProduction = process.env.NODE_ENV === "production";
-  const forceRun = process.argv.includes("--force") || process.env.ALLOW_PRODUCTION_SEED === "true";
-
-  if (isProduction && !forceRun) {
-    console.warn("⚠️ Warning: NODE_ENV is set to 'production'.");
-    console.warn("   Seeding will initialize sample users, spots, and categories on this database.");
-    console.warn("   To safely execute on production / MongoDB Atlas, run with --force:");
-    console.warn("   node seed.js --force\n");
-    process.exit(1);
-  }
-
   const mongoUri =
     process.env.MONGO_URI || "mongodb://127.0.0.1:27017/plot-booking-app";
 
+  const isProduction = process.env.NODE_ENV === "production";
+  const isRemoteDb =
+    mongoUri.includes("mongodb+srv") ||
+    mongoUri.includes(".mongodb.net") ||
+    (!mongoUri.includes("127.0.0.1") && !mongoUri.includes("localhost"));
+
+  // Safeguard: Require explicit confirmation flag when seeding against production or remote database
+  const confirmed = process.env.SEED_CONFIRM === "true" || process.argv.includes("--confirm");
+
+  if ((isProduction || isRemoteDb) && !confirmed) {
+    console.error("\n🛑 DANGER: Attempted to run database seed on a remote or production database!");
+    console.error(`   Target URI: ${mongoUri.replace(/:([^:@]+)@/, ":****@")}`);
+    console.error("   To prevent accidental loss of live data, seeding requires SEED_CONFIRM=true.");
+    console.error("   Command: SEED_CONFIRM=true node seed.js (or node seed.js --confirm)\n");
+    process.exit(1);
+  }
+
+  // Read seeded user password from env vars (never hardcoded weak passwords)
+  let testPassword = process.env.SEED_ADMIN_PASSWORD || process.env.SEED_TEST_PASSWORD;
+  if (!testPassword) {
+    if (isProduction || isRemoteDb) {
+      console.error("\n🛑 Error: SEED_ADMIN_PASSWORD must be configured in environment variables for production seeding.");
+      process.exit(1);
+    }
+    testPassword = crypto.randomBytes(6).toString("hex") + "!P1";
+    console.warn(`\n⚠️ Notice: No SEED_ADMIN_PASSWORD set in .env. Generated temporary test password for local run: ${testPassword}`);
+  }
+
   try {
     console.log("--------------------------------------------------");
-    console.log("🌿 Thikana — Seeding Database for Local Testing");
+    console.log("🌿 Thikana — Seeding Database for Testing");
     console.log("--------------------------------------------------");
-    console.log(`Connecting to MongoDB: ${mongoUri}`);
+    console.log(`Connecting to MongoDB: ${mongoUri.replace(/:([^:@]+)@/, ":****@")}`);
 
     await mongoose.connect(mongoUri);
     console.log("✅ MongoDB Connected.");
@@ -58,16 +74,17 @@ async function seedDatabase() {
     // 1. Clear existing development data
     console.log("\n🧹 Clearing existing collections...");
     await Booking.deleteMany({});
+    await Experience.deleteMany({});
     await Spot.deleteMany({});
     await User.deleteMany({});
     await Restaurant.deleteMany({});
     await Testimonial.deleteMany({});
     await Settings.deleteMany({});
-    console.log("✅ Collections cleared (Users, Spots, Bookings, Restaurants, Testimonials, Settings).");
+    console.log("✅ Collections cleared (Users, Spots, Experiences, Bookings, Restaurants, Testimonials, Settings).");
 
-    // 2. Hash shared test password
+    // 2. Hash test password
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(TEST_PASSWORD, salt);
+    const hashedPassword = await bcrypt.hash(testPassword, salt);
 
     // 3. Seed Users (Owners, Customers & Admin)
     console.log("\n👤 Creating sample users...");
@@ -147,6 +164,157 @@ async function seedDatabase() {
 
     const seededSpots = await Spot.insertMany(spotsData);
     console.log(`✅ Created ${seededSpots.length} spots across 8 categories (6 per category).`);
+
+    // 4b. Seed Curated Outdoor Experience Packages & Corporate Retreats
+    console.log("\n✨ Creating curated outdoor experience packages & corporate retreats...");
+    const solangPlot = seededSpots.find((s) => s.title.includes("Solang")) || seededSpots[0];
+    const datePlot = seededSpots.find((s) => s.category === "Date Night Setup") || seededSpots[1];
+    const choptaPlot = seededSpots.find((s) => s.title.includes("Chopta")) || seededSpots[2];
+    const campfirePlot = seededSpots.find((s) => s.category === "Campfire Stays") || seededSpots[3];
+    const dharamkotPlot = seededSpots.find((s) => s.title.includes("Dharamkot")) || seededSpots[4];
+    const bhimtalPlot = seededSpots.find((s) => s.title.includes("Bhimtal")) || seededSpots[5];
+
+    const experiencesData = [
+      {
+        title: "Candlelit Pine Sunset Dinner & Bonfire",
+        description: "Private romantic date night setup on an exclusive forest ridge overlooking Old Manali valley. Includes candlelit table decor, hot tea/refreshments, crackling bonfire, and private ambient fairy lighting.",
+        spot: datePlot._id,
+        owner: datePlot.owner || owner1._id,
+        category: "Romantic Date",
+        durationHours: 3,
+        price: 3200,
+        rating: 4.9,
+        reviewsCount: 18,
+        image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=80",
+        includedAmenities: [
+          { name: "Candlelit Table & Floor Rugs" },
+          { name: "Crackling Bonfire & Firewood" },
+          { name: "Hot Himalayan Herbal Tea" },
+        ],
+        optionalAddOns: [
+          { name: "Fresh Flower Bouquet", price: 600, description: "Locally sourced wild roses & mountain carnations" },
+        ],
+        isActive: true,
+      },
+      {
+        title: "Himalayan High-Altitude Stargazing Night",
+        description: "Guided deep-space stargazing session with an optical telescope atop Chopta's unpolluted alpine meadows. Observe Saturn's rings, lunar craters, and the radiant Milky Way arc in crystal-clear night skies.",
+        spot: choptaPlot._id,
+        owner: choptaPlot.owner || owner3._id,
+        category: "Stargazing Retreat",
+        durationHours: 4,
+        price: 4200,
+        rating: 5.0,
+        reviewsCount: 24,
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+        includedAmenities: [
+          { name: "Reflector Telescope & Star Chart" },
+          { name: "Heavy Down Windbreaker Blankets" },
+          { name: "Thermos Flask Kahwa Tea" },
+        ],
+        isActive: true,
+      },
+      {
+        title: "Deodar Forest Campfire & Trout BBQ Grill",
+        description: "Rustic twilight campfire package in Jibhi with private charcoal barbecue grill setup, wooden picnic benches, and riverside pine fragrance.",
+        spot: campfirePlot._id,
+        owner: campfirePlot.owner || owner2._id,
+        category: "Sunset Campfire",
+        durationHours: 4,
+        price: 3800,
+        rating: 4.8,
+        reviewsCount: 15,
+        image: "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1200&q=80",
+        includedAmenities: [
+          { name: "Campfire Setup & Dried Pine Cones" },
+          { name: "BBQ Grill & Skewers Kit" },
+          { name: "Rustic Pine Log Seating" },
+        ],
+        isActive: true,
+      },
+      {
+        title: "Alpine Pine Meadow Group Retreat & Camp",
+        description: "Expansive day retreat for friends and families on Solang Valley's grassy terrain. Complete with two alpine waterproof tents, lawn games, acoustic guitar, and group campfire circle.",
+        spot: solangPlot._id,
+        owner: solangPlot.owner || owner1._id,
+        category: "Friends' Escape",
+        durationHours: 5,
+        price: 5200,
+        rating: 4.9,
+        reviewsCount: 31,
+        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+        includedAmenities: [
+          { name: "2 Alpine Waterproof Tents" },
+          { name: "Group Seating & Floor Mattresses" },
+          { name: "Frisbee & Badminton Gear" },
+          { name: "Solar Power Hub" },
+        ],
+        isActive: true,
+      },
+      {
+        title: "High-Altitude Yoga & Sound Bath Glade",
+        description: "Mindfulness and breathwork session in an untouched pine clearing with singing bowls, organic herbal tea, and meditation mats surrounded by gentle mountain breezes.",
+        spot: dharamkotPlot._id,
+        owner: dharamkotPlot.owner || owner2._id,
+        category: "Mountain Wellness",
+        durationHours: 3,
+        price: 2800,
+        rating: 4.9,
+        reviewsCount: 12,
+        image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80",
+        includedAmenities: [
+          { name: "Eco Cotton Yoga Mats" },
+          { name: "Tibetan Singing Bowls" },
+          { name: "Mountain Herb Detox Infusion" },
+        ],
+        isActive: true,
+      },
+      {
+        title: "Executive Wilderness Strategy Offsite",
+        description: "High-speed Starlink connected mountain estate package with projector screen, whiteboard easel, ergonomic outdoor seating, and full day coffee/snack bar for executive leadership summits.",
+        spot: solangPlot._id,
+        owner: solangPlot.owner || owner1._id,
+        category: "Friends' Escape",
+        isCorporate: true,
+        corporateType: "team_outing",
+        durationHours: 6,
+        price: 18000,
+        rating: 5.0,
+        reviewsCount: 9,
+        image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
+        includedAmenities: [
+          { name: "High-speed Starlink Wi-Fi" },
+          { name: "Outdoor 100-inch AV Screen" },
+          { name: "Power Generator Backup" },
+          { name: "Artisan Tea & Coffee Urns" },
+        ],
+        isActive: true,
+      },
+      {
+        title: "Highland Leadership Offsite & Bonfire Forum",
+        description: "Dedicated full-day mountain retreat for teams of up to 40 people. Features breakout lawn areas, catered buffet lunch setup, team-building obstacle spaces, and an evening campfire debrief.",
+        spot: bhimtalPlot._id,
+        owner: bhimtalPlot.owner || owner1._id,
+        category: "Friends' Escape",
+        isCorporate: true,
+        corporateType: "offsite",
+        durationHours: 8,
+        price: 26000,
+        rating: 4.9,
+        reviewsCount: 14,
+        image: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=80",
+        includedAmenities: [
+          { name: "Private Estate Exclusivity" },
+          { name: "PA Audio & Wireless Mic" },
+          { name: "Buffet Catering Canopy" },
+          { name: "Evening Bonfire Forum" },
+        ],
+        isActive: true,
+      },
+    ];
+
+    const seededExperiences = await Experience.insertMany(experiencesData);
+    console.log(`✅ Created ${seededExperiences.length} curated experiences & corporate packages.`);
 
     // 5. Seed Local Restaurants & Cafes across regions
     console.log("\n🍽️ Creating local mountain restaurants & cafes...");
@@ -616,16 +784,16 @@ async function seedDatabase() {
     console.log(`📊 Total Bookings     : ${seededBookings.length}`);
     console.log(`📊 Total Testimonials : ${seededReviews.length}`);
     console.log("--------------------------------------------------");
-    console.log("🔑 READY-TO-USE TEST ACCOUNTS (Password: Test@123):");
+    console.log(`🔑 READY-TO-USE TEST ACCOUNTS (Password: ${seedTestPassword}):`);
     console.log("--------------------------------------------------");
     console.log("  🏢 Host / Owner Login:");
     console.log("     Email    : aarav.host@thikana.com");
-    console.log("     Password : Test@123");
+    console.log(`     Password : ${seedTestPassword}`);
     console.log("     (Also created: meera.stays@thikana.com, vikram.plots@thikana.com)");
     console.log("");
     console.log("  🎒 Customer / Guest Login:");
     console.log("     Email    : rohan.travel@thikana.com");
-    console.log("     Password : Test@123");
+    console.log(`     Password : ${seedTestPassword}`);
     console.log("     (Also created: ananya.art@thikana.com, sid.wanderer@thikana.com)");
     console.log("==================================================\n");
 

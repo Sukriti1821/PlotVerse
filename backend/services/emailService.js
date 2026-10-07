@@ -34,10 +34,10 @@ const getTransporter = () => {
  */
 const sendPasswordResetEmail = async ({ to, name = "Traveler", resetUrl }) => {
   const transporter = getTransporter();
-  const fromAddress = process.env.EMAIL_FROM || '"Thikana Security" <noreply@thikana.in>';
+  const fromAddress = process.env.EMAIL_FROM || '"Thikana Security" <noreply@thikana.com>';
 
   const subject = "Reset Your Thikana Password";
-  const textContent = `Hello ${name},\n\nYou recently requested to reset your password for your Thikana account.\nClick the link below to set a new password:\n\n${resetUrl}\n\nThis link is valid for 1 hour. If you did not request this, please ignore this email and your password will remain unchanged.\n\nBest regards,\nThe Thikana Team\nMera Thikana - Your own patch of the mountains, by the hour`;
+  const textContent = `Hello ${name},\n\nYou recently requested to reset your password for your Thikana account.\nClick the link below to set a new password:\n\n${resetUrl}\n\nThis link is valid for 1 hour. If you did not request this, please ignore this email and your password will remain unchanged.\n\nBest regards,\nThe Thikana Team\nMera Thikana - Mera Thikana - your own patch of the mountains, by the hour`;
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -64,7 +64,7 @@ const sendPasswordResetEmail = async ({ to, name = "Traveler", resetUrl }) => {
         <div class="container">
           <div class="header">
             <h1>Thikana</h1>
-            <p>Mera Thikana • Mountain Plots by the Hour</p>
+            <p>Mountain Plots by the Hour</p>
           </div>
           <div class="body">
             <div class="greeting">Hi ${name},</div>
@@ -84,7 +84,7 @@ const sendPasswordResetEmail = async ({ to, name = "Traveler", resetUrl }) => {
           </div>
           <div class="footer">
             &copy; 2026 Thikana. All rights reserved.<br>
-            Mera Thikana - Your own patch of the mountains, by the hour.
+            Mera Thikana - Mera Thikana - your own patch of the mountains, by the hour.
           </div>
         </div>
       </body>
@@ -111,7 +111,7 @@ const sendPasswordResetEmail = async ({ to, name = "Traveler", resetUrl }) => {
   // Development Fallback: output clearly to console
   console.log(`
 ╔═════════════════════════════════════════════════════════════════════════════╗
-║                   📧 THIKANA PASSWORD RESET EMAIL (DEV)                     ║
+║                   📧 THIKANA PASSWORD RESET EMAIL (DEV)                   ║
 ╠═════════════════════════════════════════════════════════════════════════════╣
 ║ To: ${to.padEnd(72)}║
 ║ Subject: ${subject.padEnd(67)}║
@@ -139,10 +139,10 @@ const sendBookingApprovedEmail = async ({
   paymentUrl,
 }) => {
   const transporter = getTransporter();
-  const fromAddress = process.env.EMAIL_FROM || '"Thikana Concierge" <noreply@thikana.in>';
+  const fromAddress = process.env.EMAIL_FROM || '"Thikana Concierge" <noreply@thikana.com>';
   const subject = `Reservation Approved: ${spotTitle} — Complete Your Payment`;
 
-  const textContent = `Hello ${name},\n\nGreat news! Your booking request for "${spotTitle}" on ${bookingDate} (${startTime} - ${endTime}) has been approved by the host.\n\nTotal Payable: ₹${Number(totalPrice).toLocaleString("en-IN")}\n\nTo lock in and confirm your reservation, please complete your payment via the link below:\n${paymentUrl}\n\nBest regards,\nThe Thikana Team\nMera Thikana - Your own patch of the mountains, by the hour`;
+  const textContent = `Hello ${name},\n\nGreat news! Your booking request for "${spotTitle}" on ${bookingDate} (${startTime} - ${endTime}) has been approved by the host.\n\nTotal Payable: ₹${Number(totalPrice).toLocaleString("en-IN")}\n\nTo lock in and confirm your reservation, please complete your payment via the link below:\n${paymentUrl}\n\nBest regards,\nThe Thikana Team\nMera Thikana - Mera Thikana - your own patch of the mountains, by the hour`;
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -186,7 +186,7 @@ const sendBookingApprovedEmail = async ({
               <a href="${paymentUrl}" class="button" target="_blank">Pay Now & Confirm Reservation</a>
             </div>
           </div>
-          <div class="footer">&copy; 2026 Thikana. All rights reserved. • Mera Thikana</div>
+          <div class="footer">&copy; 2026 Thikana. All rights reserved.</div>
         </div>
       </body>
     </html>
@@ -217,10 +217,11 @@ const sendBookingRejectedEmail = async ({
   reason = "The host was unable to accommodate this reservation request.",
 }) => {
   const transporter = getTransporter();
-  const fromAddress = process.env.EMAIL_FROM || '"Thikana Concierge" <noreply@thikana.in>';
+  const fromAddress = process.env.EMAIL_FROM || '"Thikana Concierge" <noreply@thikana.com>';
   const subject = `Update on your reservation request for ${spotTitle}`;
+  const clientBase = (process.env.CLIENT_URL || "http://localhost:5173").split(",")[0].trim().replace(/\/+$/, "");
 
-  const textContent = `Hello ${name},\n\nWe regret to inform you that your booking request for "${spotTitle}" on ${bookingDate} could not be accepted by the host.\n\nReason: ${reason}\n\nYour card was not charged. You can discover other scenic plots across the Himalayas at http://localhost:5173/listings.\n\nBest regards,\nThe Thikana Team\nMera Thikana - Your own patch of the mountains, by the hour`;
+  const textContent = `Hello ${name},\n\nWe regret to inform you that your booking request for "${spotTitle}" on ${bookingDate} could not be accepted by the host.\n\nReason: ${reason}\n\nYour card was not charged. You can discover other scenic plots across the Himalayas at ${clientBase}/listings.\n\nBest regards,\nThe Thikana Team\nMera Thikana - Mera Thikana - your own patch of the mountains, by the hour`;
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -256,10 +257,10 @@ const sendBookingRejectedEmail = async ({
               You have not been charged. Don't worry, there are dozens of other breathtaking verified plots waiting for you!
             </p>
             <div style="text-align: center; margin: 24px 0;">
-              <a href="http://localhost:5173/listings" class="button" target="_blank">Explore Alternative Plots</a>
+              <a href="${clientBase}/listings" class="button" target="_blank">Explore Alternative Plots</a>
             </div>
           </div>
-          <div class="footer">&copy; 2026 Thikana. All rights reserved. • Mera Thikana</div>
+          <div class="footer">&copy; 2026 Thikana. All rights reserved.</div>
         </div>
       </body>
     </html>
@@ -293,10 +294,11 @@ const sendBookingConfirmedEmail = async ({
   paymentId,
 }) => {
   const transporter = getTransporter();
-  const fromAddress = process.env.EMAIL_FROM || '"Thikana Concierge" <noreply@thikana.in>';
+  const fromAddress = process.env.EMAIL_FROM || '"Thikana Concierge" <noreply@thikana.com>';
   const subject = `Booking Confirmed! ${spotTitle} — See You There!`;
+  const clientBase = (process.env.CLIENT_URL || "http://localhost:5173").split(",")[0].trim().replace(/\/+$/, "");
 
-  const textContent = `Hello ${name},\n\nYour payment of ₹${Number(amountPaid).toLocaleString("en-IN")} was verified successfully! Your reservation for "${spotTitle}" on ${bookingDate} (${startTime} - ${endTime}) is now officially confirmed.\n\nPayment ID: ${paymentId}\nView your reservation details in your Thikana dashboard: http://localhost:5173/my-bookings\n\nHappy travels,\nThe Thikana Team\nMera Thikana - Your own patch of the mountains, by the hour`;
+  const textContent = `Hello ${name},\n\nYour payment of ₹${Number(amountPaid).toLocaleString("en-IN")} was verified successfully! Your reservation for "${spotTitle}" on ${bookingDate} (${startTime} - ${endTime}) is now officially confirmed.\n\nPayment ID: ${paymentId}\nView your reservation details in your Thikana dashboard: ${clientBase}/my-bookings\n\nHappy travels,\nThe Thikana Team\nMera Thikana - Mera Thikana - your own patch of the mountains, by the hour`;
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -338,10 +340,10 @@ const sendBookingConfirmedEmail = async ({
               </div>
             </div>
             <div style="text-align: center; margin: 28px 0;">
-              <a href="http://localhost:5173/my-bookings" class="button" target="_blank">View My Bookings</a>
+              <a href="${clientBase}/my-bookings" class="button" target="_blank">View My Bookings</a>
             </div>
           </div>
-          <div class="footer">&copy; 2026 Thikana. All rights reserved. • Mera Thikana</div>
+          <div class="footer">&copy; 2026 Thikana. All rights reserved.</div>
         </div>
       </body>
     </html>

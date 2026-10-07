@@ -1,6 +1,8 @@
 // Helper to format spot image URLs whether they are external or uploaded to backend static path
 const API_ORIGIN = (
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api"
+  import.meta.env.VITE_API_URL ||
+  import.meta.env.VITE_API_BASE_URL ||
+  ""
 ).replace(/\/api\/?$/, "");
 
 export const PLACEHOLDER_IMAGES = [

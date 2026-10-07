@@ -13,7 +13,7 @@ if (isCloudinaryConfigured()) {
     storage = new CloudinaryStorage({
       cloudinary: cloudinary,
       params: {
-        folder: "plotverse/spots",
+        folder: "thikana/spots",
         allowed_formats: ["jpg", "jpeg", "png", "webp"],
         transformation: [{ width: 1600, height: 1200, crop: "limit", quality: "auto" }],
       },

@@ -66,17 +66,26 @@ const apiLimiter = rateLimit({
 });
 
 // Production-ready, secure CORS configuration
-const rawClientUrls = process.env.CLIENT_URL
-  ? process.env.CLIENT_URL.split(",").map((url) => url.trim().replace(/\/$/, ""))
-  : [];
+// Restrict CORS to process.env.CLIENT_URL (strip any trailing slash before comparing)
+const parseClientUrls = () => {
+  const configured = (process.env.CLIENT_URL || "")
+    .split(",")
+    .map((url) => url.trim().replace(/\/+$/, ""))
+    .filter(Boolean);
 
-const defaultOrigins = [
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "http://localhost:3000",
-];
+  if (process.env.NODE_ENV !== "production" && configured.length === 0) {
+    return [
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "http://localhost:3000",
+    ];
+  }
+  return configured;
+};
 
-const allowedOrigins = Array.from(new Set([...rawClientUrls, ...defaultOrigins]));
+const allowedOrigins = parseClientUrls();
+// Allow credentials only if the app uses cookies (Thikana uses localStorage/Bearer tokens)
+const usesCookies = Boolean(process.env.USE_COOKIES === "true");
 
 app.use(
   cors({
@@ -84,27 +93,22 @@ app.use(
       // Allow requests with no origin (like mobile apps, curl, server-to-server)
       if (!origin) return callback(null, true);
 
-      // Check direct match against verified allowed origins
-      if (allowedOrigins.includes(origin)) {
+      const normalizedOrigin = origin.trim().replace(/\/+$/, "");
+
+      if (allowedOrigins.includes(normalizedOrigin)) {
         return callback(null, true);
       }
 
       // Allow any localhost or 127.0.0.1 port during local development
       if (
         process.env.NODE_ENV !== "production" &&
-        /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)
+        /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(normalizedOrigin)
       ) {
         return callback(null, true);
       }
 
-      // Allow verified Thikana & preview deployments explicitly matching thikana or plotverse domain prefix
-      if (
-        /^https:\/\/((thikana|plotverse)[a-z0-9-]*\.(vercel\.app|netlify\.app))$/i.test(origin)
-      ) {
-        return callback(null, true);
-      }
-
-      callback(new Error(`CORS blocked for origin: ${origin}`));
+      console.warn(`[CORS] Warning: Blocked origin '${origin}'`);
+      callback(null, false);
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -125,7 +129,12 @@ app.use(cookieParser());
 // Static uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-// Health check root
+// Health check endpoint for uptime monitors
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ success: true });
+});
+
+// Root status endpoint
 app.get("/", (req, res) => {
   res.json({
     success: true,

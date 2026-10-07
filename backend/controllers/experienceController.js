@@ -75,7 +75,11 @@ const getAllExperiences = asyncHandler(async (req, res) => {
   }
 
   if (category && category !== "all") {
-    query.category = { $regex: new RegExp(`^${escapeRegex(category)}$`, "i") };
+    if (/friends'?\s*escape|group\s*gathering/i.test(category)) {
+      query.category = { $regex: /friends'?\s*escape|group\s*gathering/i };
+    } else {
+      query.category = { $regex: new RegExp(`^${escapeRegex(category)}$`, "i") };
+    }
   }
 
   if (featured === "true") {

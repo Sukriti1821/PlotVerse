@@ -23,8 +23,26 @@ async function seedAnalyticsData() {
   await mongoose.connect(mongoUri);
   console.log("✅ Connected to MongoDB");
 
+  const isProduction = process.env.NODE_ENV === "production";
+  const isRemoteDb =
+    mongoUri.includes("mongodb+srv://") ||
+    mongoUri.includes(".mongodb.net");
+  const confirmFlag =
+    process.env.SEED_CONFIRM === "true" ||
+    process.argv.includes("--confirm");
+
+  if ((isProduction || isRemoteDb) && !confirmFlag) {
+    console.error(
+      "\n🛑 SAFETY BLOCKED: Refusing to seed analytics data into a remote or production database!"
+    );
+    console.error("To proceed, set SEED_CONFIRM=true or pass --confirm.\n");
+    process.exit(1);
+  }
+
   // 1. Find Aarav Sharma
-  const host = await User.findOne({ email: "aarav.host@thikana.com" });
+  const host =
+    (await User.findOne({ email: "aarav.host@thikana.com" })) ||
+    (await User.findOne({ email: "aarav.host@thikana.com" }));
   if (!host) {
     console.error("❌ Host aarav.host@thikana.com not found. Please run main seed first.");
     process.exit(1);

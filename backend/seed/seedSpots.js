@@ -150,6 +150,23 @@ async function seedDatabase() {
   try {
     const mongoUri =
       process.env.MONGO_URI || "mongodb://127.0.0.1:27017/plot-booking-app";
+
+    const isProduction = process.env.NODE_ENV === "production";
+    const isRemoteDb =
+      mongoUri.includes("mongodb+srv://") ||
+      mongoUri.includes(".mongodb.net");
+    const confirmFlag =
+      process.env.SEED_CONFIRM === "true" ||
+      process.argv.includes("--confirm");
+
+    if ((isProduction || isRemoteDb) && !confirmFlag) {
+      console.error(
+        "\n🛑 SAFETY BLOCKED: Refusing to seed spots into a remote or production database!"
+      );
+      console.error("To proceed, set SEED_CONFIRM=true or pass --confirm.\n");
+      process.exit(1);
+    }
+
     console.log("Connecting to MongoDB:", mongoUri);
     await mongoose.connect(mongoUri);
 
@@ -159,7 +176,8 @@ async function seedDatabase() {
     let host = await User.findOne({ email: "host@thikana.com" });
     if (!host) {
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash("host123456", salt);
+      const hostPassword = process.env.SEED_HOST_PASSWORD || process.env.SEED_ADMIN_PASSWORD || "Host@Thikana123!";
+      const hashedPassword = await bcrypt.hash(hostPassword, salt);
       host = await User.create({
         name: "Himachal Stays Co.",
         email: "host@thikana.com",

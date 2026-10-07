@@ -1,8 +1,11 @@
 import axios from "axios";
+import { getAuthToken, removeAuthToken, removeUserInfo } from "../utils/storage";
 
-// Base API URL from environment variable or localhost fallback
+// Base API URL from environment variable VITE_API_URL
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+  import.meta.env.VITE_API_URL ||
+  import.meta.env.VITE_API_BASE_URL ||
+  "";
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -16,11 +19,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     try {
-      const token =
-        localStorage.getItem("token") ||
-        (localStorage.getItem("userInfo")
-          ? JSON.parse(localStorage.getItem("userInfo")).token
-          : null);
+      const token = getAuthToken();
 
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -52,8 +51,8 @@ axiosInstance.interceptors.response.use(
 
       if (status === 401) {
         // Clear expired/invalid auth state
-        localStorage.removeItem("token");
-        localStorage.removeItem("userInfo");
+        removeAuthToken();
+        removeUserInfo();
         window.dispatchEvent(new Event("auth:unauthorized"));
       }
 

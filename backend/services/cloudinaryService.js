@@ -35,7 +35,7 @@ if (isCloudinaryConfigured()) {
  * @param {string} folder - Target folder in Cloudinary
  * @returns {Promise<string>} - Returns secure_url
  */
-const uploadLocalFileToCloudinary = async (localFilePath, folder = "plotverse/spots") => {
+const uploadLocalFileToCloudinary = async (localFilePath, folder = "thikana/spots") => {
   if (!isCloudinaryConfigured()) {
     throw new Error("Cloudinary credentials are not configured in environment variables.");
   }

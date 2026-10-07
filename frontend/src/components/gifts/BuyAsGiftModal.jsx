@@ -35,7 +35,7 @@ const BuyAsGiftModal = ({
   const [recipientEmail, setRecipientEmail] = useState("");
   const [recipientPhone, setRecipientPhone] = useState("");
   const [personalMessage, setPersonalMessage] = useState(
-    "For you & someone special ❤️ Enjoy this private outdoor escape on Thikana — Mera Thikana!"
+    "For you & someone special ❤️ Enjoy this private outdoor escape on Thikana!"
   );
   const [useWalletCredits, setUseWalletCredits] = useState(false);
   const [submitting, setSubmitting] = useState(false);

@@ -24,6 +24,7 @@ import ListingCard from "../components/cards/ListingCard";
 import SmartRecommendations from "../components/recommendations/SmartRecommendations";
 import { SpotGridSkeleton } from "../components/common/SkeletonLoader";
 import API from "../services/api";
+import { FALLBACK_SPOTS, filterFallbackSpots } from "../data/fallbackData";
 
 const CATEGORIES = [
   { id: "all", label: "All Categories" },
@@ -178,7 +179,9 @@ const Listings = () => {
 
   // Fetch spots from backend whenever URL search params change
   useEffect(() => {
-    const fetchSpots = async () => {
+    let cancelled = false;
+
+    const fetchSpots = async (retryCount = 0) => {
       try {
         setLoading(true);
         setError(null);
@@ -188,29 +191,101 @@ const Listings = () => {
         if (!params.get("limit")) params.set("limit", "9");
 
         const response = await API.get(`/spots?${params.toString()}`);
+        if (cancelled) return;
         const responseData = response.data;
 
         const spotList = Array.isArray(responseData)
           ? responseData
           : responseData.data || responseData.spots || [];
 
-        setSpots(spotList);
-        setTotalCount(responseData.totalCount !== undefined ? responseData.totalCount : spotList.length);
-        setTotalPages(responseData.totalPages || Math.ceil(spotList.length / 9) || 1);
-        setCurrentPage(responseData.currentPage || parseInt(params.get("page"), 10) || 1);
-      } catch (err) {
-        console.error("Error fetching listings:", err);
-        setError(
-          err.response?.data?.message ||
-            "Failed to load property listings. Please check your connection."
+        // If backend returned spots, use live DB spots
+        if (spotList.length > 0) {
+          setSpots(spotList);
+          setTotalCount(responseData.totalCount !== undefined ? responseData.totalCount : spotList.length);
+          setTotalPages(responseData.totalPages || Math.ceil(spotList.length / 9) || 1);
+          setCurrentPage(responseData.currentPage || parseInt(params.get("page"), 10) || 1);
+          return;
+        }
+
+        // Check if user specifically applied filters that yielded 0 live results
+        const hasFilters = Boolean(
+          urlLocation ||
+            urlMinPrice ||
+            urlMaxPrice ||
+            (urlCategory && urlCategory !== "all") ||
+            urlAmenities.length > 0 ||
+            urlGuests
         );
+
+        if (!hasFilters) {
+          // Empty DB on default view: populate fallback inventory seamlessly
+          setSpots(FALLBACK_SPOTS.slice(0, 9));
+          setTotalCount(FALLBACK_SPOTS.length);
+          setTotalPages(Math.ceil(FALLBACK_SPOTS.length / 9));
+          setCurrentPage(1);
+        } else {
+          // Check fallback inventory against user's filters
+          const filteredFallbacks = filterFallbackSpots(FALLBACK_SPOTS, {
+            category: urlCategory,
+            location: urlLocation,
+            minPrice: urlMinPrice,
+            maxPrice: urlMaxPrice,
+            amenities: urlAmenities,
+            guests: urlGuests,
+            sort: urlSort,
+          });
+
+          if (filteredFallbacks.length > 0) {
+            setSpots(filteredFallbacks.slice(0, 9));
+            setTotalCount(filteredFallbacks.length);
+            setTotalPages(Math.ceil(filteredFallbacks.length / 9));
+          } else {
+            setSpots([]);
+            setTotalCount(0);
+            setTotalPages(1);
+          }
+        }
+      } catch (err) {
+        if (cancelled) return;
+        console.warn("Backend error on /spots, using resilient fallback:", err.message);
+
+        // Auto-retry once after 1s if Render backend is waking up from sleep
+        if (retryCount < 1) {
+          setTimeout(() => {
+            if (!cancelled) fetchSpots(retryCount + 1);
+          }, 1000);
+          return;
+        }
+
+        // Resilient fallback: calculate matches so the user never sees a broken red error box
+        const filteredFallbacks = filterFallbackSpots(FALLBACK_SPOTS, {
+          category: urlCategory,
+          location: urlLocation,
+          minPrice: urlMinPrice,
+          maxPrice: urlMaxPrice,
+          amenities: urlAmenities,
+          guests: urlGuests,
+          sort: urlSort,
+        });
+
+        setSpots(filteredFallbacks.slice(0, 9));
+        setTotalCount(filteredFallbacks.length);
+        setTotalPages(Math.max(1, Math.ceil(filteredFallbacks.length / 9)));
+        setCurrentPage(1);
+        setError(null);
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchSpots();
-  }, [searchParams]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [searchParams, urlCategory, urlLocation, urlMinPrice, urlMaxPrice, urlAmenities, urlGuests, urlSort]);
 
   // Handlers for specific filter changes
   const handleCategoryChange = (catId) => {

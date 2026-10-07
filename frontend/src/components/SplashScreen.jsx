@@ -67,9 +67,9 @@ function SplashScreen({ onFinish }) {
           transition={{ delay: 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight text-white drop-shadow-[0_4px_24px_rgba(16,185,129,0.2)]"
         >
-          <span className="text-white">Thi</span>
+          <span className="text-white">Plot</span>
           <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-400 bg-clip-text text-transparent">
-            kana
+            Verse
           </span>
         </motion.h1>
 
@@ -80,7 +80,7 @@ function SplashScreen({ onFinish }) {
           transition={{ delay: 0.22, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mt-3 text-xs sm:text-sm font-semibold tracking-wide text-emerald-400 font-sans"
         >
-          Mera Thikana — Your own patch of the mountains, by the hour
+          Mera Thikana - Mera Thikana - your own patch of the mountains, by the hour
         </motion.p>
       </div>
     </motion.div>

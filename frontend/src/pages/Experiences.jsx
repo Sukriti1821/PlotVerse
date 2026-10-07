@@ -16,11 +16,12 @@ import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import ExperienceCard from "../components/cards/ExperienceCard";
 import { useAuth } from "../context/AuthContext";
+import { FALLBACK_EXPERIENCES, filterFallbackExperiences } from "../data/fallbackData";
 
 const CATEGORIES = [
   { id: "all", label: "All Experiences", icon: FaCompass },
   { id: "Romantic Date", label: "Romantic Date", icon: FaHeart },
-  { id: "Group Gathering", label: "Friends' Escape", icon: FaUsers },
+  { id: "Friends' Escape", label: "Friends' Escape", icon: FaUsers },
   { id: "Stargazing Retreat", label: "Stargazing Retreat", icon: FaCompass },
   { id: "Sunset Campfire", label: "Sunset Campfire", icon: FaFire },
 ];
@@ -38,7 +39,7 @@ const Experiences = () => {
 
   useEffect(() => {
     let ignore = false;
-    const fetchExperiences = async () => {
+    const fetchExperiences = async (retryCount = 0) => {
       try {
         setLoading(true);
         const params = {};
@@ -48,11 +49,43 @@ const Experiences = () => {
         if (sortBy) params.sort = sortBy;
 
         const res = await API.get("/experiences", { params });
+        const list = res.data?.data || [];
+
         if (!ignore) {
-          setExperiences(res.data?.data || []);
+          if (list.length > 0) {
+            setExperiences(list);
+            return;
+          }
+
+          // If backend returned empty list (e.g. unseeded database), provide filtered fallback packages
+          const fallbackList = filterFallbackExperiences(FALLBACK_EXPERIENCES, {
+            category: selectedCategory,
+            search: searchQuery,
+            duration: maxDuration,
+            sort: sortBy,
+          });
+          setExperiences(fallbackList);
         }
       } catch (err) {
-        console.error("Error loading experiences:", err);
+        console.warn("Backend error loading experiences, using fallback inventory:", err.message);
+
+        // Auto-retry once silently in case backend is cold-starting
+        if (retryCount < 1) {
+          setTimeout(() => {
+            if (!ignore) fetchExperiences(retryCount + 1);
+          }, 1000);
+          return;
+        }
+
+        if (!ignore) {
+          const fallbackList = filterFallbackExperiences(FALLBACK_EXPERIENCES, {
+            category: selectedCategory,
+            search: searchQuery,
+            duration: maxDuration,
+            sort: sortBy,
+          });
+          setExperiences(fallbackList);
+        }
       } finally {
         if (!ignore) {
           setLoading(false);

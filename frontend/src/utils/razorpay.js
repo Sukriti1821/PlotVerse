@@ -155,7 +155,7 @@ export const openRazorpayModal = ({
       amount: orderData.amount,
       currency: orderData.currency || "INR",
       name: "Thikana",
-      description: `Booking at Thikana: ${orderData.spotTitle || "Mountain Spot"}`,
+      description: "Private mountain plot booking",
       image: "/logo-icon.svg",
       order_id: orderData.orderId,
       prefill: {

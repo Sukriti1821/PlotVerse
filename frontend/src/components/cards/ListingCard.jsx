@@ -4,8 +4,9 @@ import { FaArrowRight, FaHeart, FaRegHeart, FaMapMarkerAlt, FaStar } from "react
 import { toast } from "react-toastify";
 import API from "../../services/api";
 import { getImageUrl, getOptimizedImageUrl } from "../../utils/imageHelper";
+import { getAuthToken } from "../../utils/storage";
 
-const SAVED_STORAGE_KEY = "plotverse_saved_destinations";
+const SAVED_STORAGE_KEY = "thikana_saved_destinations";
 
 const getSavedList = () => {
   try {
@@ -19,21 +20,7 @@ const getSavedList = () => {
 };
 
 const ListingCard = ({ plot, actionLabel = "View Details" }) => {
-  if (!plot) {
-    return null;
-  }
-
-  const {
-    _id,
-    id,
-    title = "Scenic Spot",
-    location = "Location Unknown",
-    area,
-    category = "Scenic Escape",
-    rating = "4.8",
-  } = plot;
-
-  const spotId = _id || id;
+  const spotId = plot?._id || plot?.id;
   const spotIdStr = spotId ? String(spotId) : "";
 
   // Check if item is saved/liked in storage (defaults to false so destinations are NOT pre-liked)
@@ -51,14 +38,24 @@ const ListingCard = ({ plot, actionLabel = "View Details" }) => {
       setIsLiked(Array.isArray(list) && list.includes(spotIdStr));
     };
 
-    window.addEventListener("plotverse:saved-changed", syncSavedState);
+    window.addEventListener("thikana:saved-changed", syncSavedState);
     window.addEventListener("storage", syncSavedState);
 
     return () => {
-      window.removeEventListener("plotverse:saved-changed", syncSavedState);
+      window.removeEventListener("thikana:saved-changed", syncSavedState);
       window.removeEventListener("storage", syncSavedState);
     };
   }, [spotIdStr]);
+
+  if (!plot) return null;
+
+  const {
+    title = "Scenic Spot",
+    location = "Location Unknown",
+    area,
+    category = "Scenic Escape",
+    rating = "4.8",
+  } = plot;
 
   const handleToggleLike = (e) => {
     e.preventDefault();
@@ -76,7 +73,6 @@ const ListingCard = ({ plot, actionLabel = "View Details" }) => {
 
     try {
       localStorage.setItem(SAVED_STORAGE_KEY, JSON.stringify(updatedList));
-      localStorage.setItem("thikana_saved_destinations", JSON.stringify(updatedList));
     } catch (storageErr) {
       console.warn("Could not persist saved destination to localStorage:", storageErr);
     }
@@ -97,13 +93,13 @@ const ListingCard = ({ plot, actionLabel = "View Details" }) => {
 
     // Broadcast change so duplicate cards on page sync in real-time
     window.dispatchEvent(
-      new CustomEvent("plotverse:saved-changed", {
+      new CustomEvent("thikana:saved-changed", {
         detail: { spotId: spotIdStr, isLiked: nextSaved },
       })
     );
 
     // Sync with backend if user is authenticated
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     if (token) {
       API.post(`/spots/${spotIdStr}/wishlist`).catch(() => {
         // Silent fail for non-blocking background sync

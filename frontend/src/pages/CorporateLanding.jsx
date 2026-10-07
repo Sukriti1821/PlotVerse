@@ -28,6 +28,12 @@ import Footer from "../components/common/Footer";
 import { useAuth } from "../context/AuthContext";
 import API from "../services/api";
 import { getImageUrl } from "../utils/imageHelper";
+import {
+  FALLBACK_CORPORATE_SPACES,
+  FALLBACK_CORPORATE_EXPERIENCES,
+  filterFallbackCorporateSpaces,
+  filterFallbackCorporateExperiences,
+} from "../data/fallbackData";
 
 const EVENT_TYPES = [
   {
@@ -110,7 +116,7 @@ const CorporateLanding = () => {
   const [requiresCustomQuote, setRequiresCustomQuote] = useState(true);
 
   // Fetch corporate spaces
-  const fetchCorporateSpaces = async () => {
+  const fetchCorporateSpaces = async (retryCount = 0) => {
     try {
       setLoading(true);
       const params = {};
@@ -120,13 +126,49 @@ const CorporateLanding = () => {
       if (selectedAmenity) params.amenity = selectedAmenity;
 
       const res = await API.get("/corporate/spaces", { params });
-      if (res.data?.data) {
-        setSpaces(res.data.data.spots || []);
-        setExperiences(res.data.data.experiences || []);
+      const apiSpots = res.data?.data?.spots || [];
+      const apiExps = res.data?.data?.experiences || [];
+
+      if (apiSpots.length > 0 || apiExps.length > 0) {
+        setSpaces(apiSpots);
+        setExperiences(apiExps);
+        return;
       }
+
+      // If backend returns empty array (e.g. unseeded DB), load fallback corporate inventory
+      const fallbackSpaces = filterFallbackCorporateSpaces(FALLBACK_CORPORATE_SPACES, {
+        minCapacity,
+        location: searchLocation,
+        amenity: selectedAmenity,
+      });
+      const fallbackExps = filterFallbackCorporateExperiences(FALLBACK_CORPORATE_EXPERIENCES, {
+        eventType: selectedEventType,
+        location: searchLocation,
+      });
+
+      setSpaces(fallbackSpaces);
+      setExperiences(fallbackExps);
     } catch (err) {
-      console.error("Failed to load corporate spaces:", err);
-      toast.error("Could not load corporate spaces.");
+      console.warn("Failed to load live corporate spaces, using fallback inventory:", err.message);
+
+      // Auto-retry once silently in case backend is waking up
+      if (retryCount < 1) {
+        setTimeout(() => fetchCorporateSpaces(retryCount + 1), 1200);
+        return;
+      }
+
+      const fallbackSpaces = filterFallbackCorporateSpaces(FALLBACK_CORPORATE_SPACES, {
+        minCapacity,
+        location: searchLocation,
+        amenity: selectedAmenity,
+      });
+      const fallbackExps = filterFallbackCorporateExperiences(FALLBACK_CORPORATE_EXPERIENCES, {
+        eventType: selectedEventType,
+        location: searchLocation,
+      });
+
+      setSpaces(fallbackSpaces);
+      setExperiences(fallbackExps);
     } finally {
       setLoading(false);
     }

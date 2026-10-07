@@ -1,23 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none">
-  <defs>
-    <linearGradient id="thikana-pin-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#059669"/>
-      <stop offset="100%" stop-color="#047857"/>
-    </linearGradient>
-    <filter id="thikana-pin-shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#064e3b" flood-opacity="0.25"/>
-    </filter>
-  </defs>
-
-  <!-- Rounded Map Pin Container -->
-  <path d="M 50 92 C 46 85 20 57 20 40 A 30 30 0 1 1 80 40 C 80 57 54 85 50 92 Z" 
-        fill="url(#thikana-pin-gradient)" 
-        filter="url(#thikana-pin-shadow)"/>
-
-  <!-- Golden Sun between mountain peaks -->
-  <circle cx="49" cy="33" r="5.5" fill="#F4A93B"/>
-
-  <!-- Two-Peak Mountain Silhouette -->
-  <!-- Left majestic peak + right companion peak with snowcap aesthetic -->
-  <path d="M 27 58 L 42 34 L 50 45 L 61 37 L 73 58 C 66 61 34 61 27 58 Z" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <image href="/thikana-icon.png" width="100" height="100" preserveAspectRatio="xMidYMid meet" />
 </svg>

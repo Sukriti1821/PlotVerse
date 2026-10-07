@@ -322,13 +322,53 @@ class SceneErrorBoundary extends React.Component {
 // Main Export Component
 export default function HeroScene() {
   const [hasWebGL, setHasWebGL] = useState(true);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isLowEnd, setIsLowEnd] = useState(false);
 
   useEffect(() => {
     setHasWebGL(checkWebGLSupport());
+    const checkDevice = () => {
+      const small = typeof window !== "undefined" && window.innerWidth < 768;
+      const lowCores =
+        typeof navigator !== "undefined" &&
+        navigator.hardwareConcurrency &&
+        navigator.hardwareConcurrency <= 2;
+      const saveData =
+        typeof navigator !== "undefined" &&
+        navigator.connection &&
+        Boolean(navigator.connection.saveData);
+
+      setIsSmallScreen(Boolean(small));
+      setIsLowEnd(Boolean(lowCores || saveData));
+    };
+
+    checkDevice();
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
-  if (!hasWebGL) {
-    return null;
+  // Mobile / Low-End Fallback: Lightweight static image instead of heavy WebGL canvas
+  if (!hasWebGL || isSmallScreen) {
+    return (
+      <div className="relative w-full h-[340px] sm:h-[400px] rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex items-center justify-center bg-slate-950">
+        <img
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=70"
+          alt="Panoramic Himalayan Plot Preview"
+          className="absolute inset-0 w-full h-full object-cover opacity-75"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+        <div className="relative z-10 p-6 text-center text-white max-w-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 px-3 py-1 text-[11px] font-bold text-emerald-300 uppercase tracking-wider backdrop-blur-md mb-2">
+            🏔️ Mobile Optimized
+          </span>
+          <h4 className="text-base font-bold text-white">Scenic Himalayan Plot</h4>
+          <p className="text-xs text-slate-300 mt-1">
+            High-performance preview loaded for smaller screens to conserve data and battery.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -339,8 +379,12 @@ export default function HeroScene() {
       >
         <Canvas
           camera={{ position: [3.8, 3.2, 5.0], fov: 42 }}
-          gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-          dpr={[1, 1.5]}
+          gl={{
+            antialias: !isLowEnd,
+            alpha: true,
+            powerPreference: isLowEnd ? "low-power" : "high-performance",
+          }}
+          dpr={isLowEnd ? 1 : [1, 1.5]}
           className="cursor-grab active:cursor-grabbing"
         >
           {/* Soft Sky & Daylight Ambient Lighting */}

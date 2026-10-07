@@ -1,17 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 72" width="280" height="72" fill="none">
-  <!-- Left Pin Icon Container (White Monochrome for Dark Backgrounds) -->
-  <g transform="translate(6, 6) scale(0.6)">
-    <!-- White Map Pin -->
-    <path d="M 50 92 C 46 85 20 57 20 40 A 30 30 0 1 1 80 40 C 80 57 54 85 50 92 Z" fill="#FFFFFF"/>
-    <!-- Amber Accent Sun -->
-    <circle cx="49" cy="33" r="5.5" fill="#F4A93B"/>
-    <!-- Dark Emerald Mountain Silhouette Cutout -->
-    <path d="M 27 58 L 42 34 L 50 45 L 61 37 L 73 58 C 66 61 34 61 27 58 Z" fill="#064e3b"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" width="320" height="72" fill="none">
+  <!-- Left Arched Emblem -->
+  <g transform="translate(6, 4)">
+    <image href="/thikana-icon.png" width="64" height="64" preserveAspectRatio="xMidYMid meet" />
   </g>
 
-  <!-- Wordmark "Thikana" (White) -->
-  <text x="74" y="42" font-family="'Poppins', 'Outfit', 'Plus Jakarta Sans', sans-serif" font-size="34" font-weight="700" fill="#FFFFFF" letter-spacing="-0.5px">Thikana</text>
+  <!-- Wordmark "THIKANA" (White) -->
+  <text x="80" y="44" font-family="'Outfit', 'Poppins', 'Plus Jakarta Sans', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5px">Thikana</text>
 
-  <!-- Tagline "MERA THIKANA" (Brand Cream / Light Gold) -->
-  <text x="75" y="58" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#FAF7F0" opacity="0.85" letter-spacing="1.5px">MERA THIKANA</text>
+  <!-- Tagline "MERA THIKANA" -->
+  <text x="82" y="60" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#6EE7B7" letter-spacing="2px">MERA THIKANA</text>
 </svg>
