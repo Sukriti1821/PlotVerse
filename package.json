@@ -1,7 +1,7 @@
 {
   "name": "thikana",
   "version": "1.0.0",
-  "description": "Mera Thikana - Mera Thikana - your own patch of the mountains, by the hour",
+  "description": "Mera Thikana - your own patch of the mountains, by the hour",
   "scripts": {
     "dev": "concurrently -n BACKEND,FRONTEND -c blue,green \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
     "start": "concurrently -n BACKEND,FRONTEND -c blue,green \"npm run start --prefix backend\" \"npm run dev --prefix frontend\"",

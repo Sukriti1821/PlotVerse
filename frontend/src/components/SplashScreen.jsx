@@ -80,7 +80,7 @@ function SplashScreen({ onFinish }) {
           transition={{ delay: 0.22, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mt-3 text-xs sm:text-sm font-semibold tracking-wide text-emerald-400 font-sans"
         >
-          Mera Thikana - Mera Thikana - your own patch of the mountains, by the hour
+          Mera Thikana - your own patch of the mountains, by the hour
         </motion.p>
       </div>
     </motion.div>

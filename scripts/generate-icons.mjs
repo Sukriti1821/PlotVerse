@@ -19,8 +19,7 @@ function prepareSvgWithEmbeddedImages(svgContent) {
     const iconBase64 = fs.readFileSync(thikanaIconPngPath).toString("base64");
     const dataUri = `data:image/png;base64,${iconBase64}`;
     return svgContent
-      .replaceAll('href="/thikana-icon.png"', `href="${dataUri}"`)
-      .replaceAll('href="/plotverse-icon.png"', `href="${dataUri}"`);
+      .replaceAll('href="/thikana-icon.png"', `href="${dataUri}"`);
   }
   return svgContent;
 }
