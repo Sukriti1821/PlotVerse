@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
@@ -6,28 +6,19 @@ import {
   FaShieldAlt,
   FaUsers,
   FaUserCheck,
-  FaUserTimes,
   FaMapMarkerAlt,
   FaTree,
   FaCalendarCheck,
   FaMoneyBillWave,
   FaCheckCircle,
-  FaTimesCircle,
   FaExclamationTriangle,
   FaSpinner,
   FaSearch,
-  FaFilter,
   FaSlidersH,
   FaSyncAlt,
   FaEye,
   FaBan,
-  FaCheck,
-  FaFileInvoiceDollar,
   FaPercent,
-  FaArrowUp,
-  FaArrowDown,
-  FaStore,
-  FaClock,
 } from "react-icons/fa";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
@@ -58,7 +49,7 @@ const AdminPanel = () => {
   const [bookingSearch, setBookingSearch] = useState("");
   const [bookingStatusFilter, setBookingStatusFilter] = useState("all");
   const [bookingPaymentFilter, setBookingPaymentFilter] = useState("all");
-  const [bookingPayoutFilter, setBookingPayoutFilter] = useState("all");
+  const [bookingPayoutFilter] = useState("all");
   const [bookingStartDate, setBookingStartDate] = useState("");
   const [bookingEndDate, setBookingEndDate] = useState("");
   const [bookingPage, setBookingPage] = useState(1);
@@ -202,6 +193,7 @@ const AdminPanel = () => {
       setLoading(false);
     };
     loadAll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Tab change handlers & refresher
@@ -219,14 +211,17 @@ const AdminPanel = () => {
 
   useEffect(() => {
     if (activeTab === "owners") fetchOwners();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ownerSearch, activeTab]);
 
   useEffect(() => {
     if (activeTab === "spots") fetchSpots();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [spotPage, spotStatusFilter, spotSearch, activeTab]);
 
   useEffect(() => {
     if (activeTab === "bookings") fetchBookings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookingPage, bookingStatusFilter, bookingPaymentFilter, bookingPayoutFilter, bookingStartDate, bookingEndDate, bookingSearch, activeTab]);
 
   useEffect(() => {
@@ -242,7 +237,7 @@ const AdminPanel = () => {
       if (res.data?.success) {
         setOwnerSpotsList(res.data.data);
       }
-    } catch (err) {
+    } catch {
       toast.error("Failed to load listings for this host");
     } finally {
       setLoadingOwnerSpots(false);

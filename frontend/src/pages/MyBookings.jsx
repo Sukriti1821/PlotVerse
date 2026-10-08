@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
@@ -18,7 +18,6 @@ import {
   FaTimes,
   FaCreditCard,
   FaGift,
-  FaWallet,
   FaArrowRight,
 } from "react-icons/fa";
 import Navbar from "../components/common/Navbar";
@@ -38,7 +37,7 @@ const MyBookings = () => {
   const [acceptingQuoteKey, setAcceptingQuoteKey] = useState(null);
   const [payingBookingId, setPayingBookingId] = useState(null);
 
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     if (!user) {
       setLoading(false);
       return;
@@ -59,11 +58,11 @@ const MyBookings = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchBookings();
-  }, [user]);
+  }, [fetchBookings]);
 
   const handleCancelBooking = async (bookingId) => {
     if (!window.confirm("Are you sure you want to cancel this booking?")) {
@@ -72,7 +71,7 @@ const MyBookings = () => {
 
     try {
       setCancellingId(bookingId);
-      const response = await API.patch(`/bookings/${bookingId}/status`, {
+      await API.patch(`/bookings/${bookingId}/status`, {
         status: "cancelled",
       });
 

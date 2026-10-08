@@ -16,7 +16,6 @@ import {
   FaHourglassHalf,
   FaHistory,
   FaQuestionCircle,
-  FaArrowRight,
   FaShieldAlt,
   FaChevronDown,
   FaChevronUp,
@@ -107,7 +106,7 @@ const CustomerReferrals = () => {
           text: shareText,
           url: referralLink,
         });
-      } catch (e) {
+      } catch {
         // User cancelled share
       }
     } else {

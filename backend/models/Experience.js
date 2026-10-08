@@ -144,6 +144,7 @@ const experienceSchema = new mongoose.Schema(
         "small_retreat",
         "team_building",
         "offsite_event",
+        "offsite",
         "none",
       ],
       default: "none",

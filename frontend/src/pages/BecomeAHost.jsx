@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   FaShieldAlt,
   FaMoneyBillWave,
@@ -8,23 +10,40 @@ import {
   FaCheckCircle,
   FaTree,
   FaStar,
+  FaSpinner,
 } from "react-icons/fa";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import { useAuth } from "../context/AuthContext";
 
 const BecomeAHost = () => {
-  const { user, openAuthModal } = useAuth();
+  const { user, openAuthModal, upgradeToHost } = useAuth();
+  const [upgrading, setUpgrading] = useState(false);
   const navigate = useNavigate();
 
   const isOwner = user && (user.role === "owner" || user.role === "admin");
 
-  const handleHostAction = () => {
+  const handleHostAction = async () => {
     if (isOwner) {
       navigate("/owner/spots");
-    } else {
-      openAuthModal("register");
+      return;
     }
+
+    if (user && user.role === "customer") {
+      try {
+        setUpgrading(true);
+        await upgradeToHost();
+        toast.success("Welcome, Host! Your account is now upgraded with host listing privileges.");
+        navigate("/owner/spots");
+      } catch (err) {
+        toast.error(err.response?.data?.message || "Failed to upgrade account. Please try again.");
+      } finally {
+        setUpgrading(false);
+      }
+      return;
+    }
+
+    openAuthModal("register");
   };
 
   const benefits = [
@@ -110,9 +129,17 @@ const BecomeAHost = () => {
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 <button
                   onClick={handleHostAction}
-                  className="flex items-center gap-3 rounded-full bg-emerald-500 px-8 py-4 text-base font-bold text-white shadow-xl shadow-emerald-500/30 transition hover:-translate-y-0.5 hover:bg-emerald-400"
+                  disabled={upgrading}
+                  className="flex items-center gap-3 rounded-full bg-emerald-500 px-8 py-4 text-base font-bold text-white shadow-xl shadow-emerald-500/30 transition hover:-translate-y-0.5 hover:bg-emerald-400 disabled:opacity-60"
                 >
-                  {isOwner ? "Open Host Dashboard" : "Get Started as Host"}{" "}
+                  {upgrading && <FaSpinner className="animate-spin" size={16} />}
+                  {isOwner
+                    ? "Open Host Dashboard"
+                    : user
+                    ? upgrading
+                      ? "Activating Host Account..."
+                      : "Upgrade Account to Host"
+                    : "Get Started as Host"}{" "}
                   <FaArrowRight size={14} />
                 </button>
 
@@ -219,9 +246,17 @@ const BecomeAHost = () => {
 
               <button
                 onClick={handleHostAction}
-                className="flex items-center gap-2 rounded-full bg-slate-950 px-8 py-4 text-sm font-bold text-white shadow-xl hover:bg-slate-900 transition whitespace-nowrap"
+                disabled={upgrading}
+                className="flex items-center gap-2 rounded-full bg-slate-950 px-8 py-4 text-sm font-bold text-white shadow-xl hover:bg-slate-900 transition whitespace-nowrap disabled:opacity-60"
               >
-                {isOwner ? "Access Host Dashboard" : "Register as Host Now"}
+                {upgrading && <FaSpinner className="animate-spin" size={14} />}
+                {isOwner
+                  ? "Access Host Dashboard"
+                  : user
+                  ? upgrading
+                    ? "Activating..."
+                    : "Upgrade Account to Host"
+                  : "Register as Host Now"}
                 <FaArrowRight size={12} />
               </button>
             </div>

@@ -8,7 +8,6 @@ import {
   FaFire,
   FaLightbulb,
   FaEye,
-  FaMousePointer,
   FaStar,
   FaPercent,
   FaArrowUp,
@@ -18,7 +17,6 @@ import {
   FaExclamationTriangle,
   FaCalendarAlt,
   FaLayerGroup,
-  FaInfoCircle,
 } from "react-icons/fa";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
@@ -91,7 +89,7 @@ const OwnerAnalytics = () => {
   };
 
   // Helper for timeline chart dimensions & calculations
-  const timelinePoints = data?.timeline || [];
+  const timelinePoints = useMemo(() => data?.timeline || [], [data?.timeline]);
   const maxMetricValue = useMemo(() => {
     if (!timelinePoints.length) return 100;
     const values = timelinePoints.map((p) =>

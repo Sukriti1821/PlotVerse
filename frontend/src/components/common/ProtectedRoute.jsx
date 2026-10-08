@@ -1,12 +1,11 @@
 import { useEffect } from "react";
-import { Navigate, useLocation, Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaSpinner, FaShieldAlt, FaLock } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 
 const ProtectedRoute = ({ children, requiredRole }) => {
   const { user, loading, openAuthModal } = useAuth();
-  const location = useLocation();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -24,7 +23,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
         { toastId: "role-guard-toast" }
       );
     }
-  }, [user, loading, requiredRole]);
+  }, [user, loading, requiredRole, openAuthModal]);
 
   if (loading) {
     return (

@@ -1,5 +1,3 @@
-import React from "react";
-
 /**
  * Reusable Thikana Brand Logo Component
  * Incorporates the arched mountain campsite emblem and custom dual-tone typography

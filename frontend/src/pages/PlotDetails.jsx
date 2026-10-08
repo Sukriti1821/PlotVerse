@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -14,6 +14,8 @@ import {
   FaImages,
 } from "react-icons/fa";
 import API from "../services/api";
+import Navbar from "../components/common/Navbar";
+import Footer from "../components/common/Footer";
 import BookingComposer from "../components/BookingComposer";
 import SmartRecommendations from "../components/recommendations/SmartRecommendations";
 import { getAllImageUrls, PLACEHOLDER_IMAGE } from "../utils/imageHelper";
@@ -49,7 +51,7 @@ const PlotDetails = () => {
     });
   };
 
-  const fetchSpotDetails = async () => {
+  const fetchSpotDetails = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -72,13 +74,13 @@ const PlotDetails = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     if (id) {
       fetchSpotDetails();
     }
-  }, [id]);
+  }, [id, fetchSpotDetails]);
 
   const images = getAllImageUrls(spot);
 
@@ -117,31 +119,29 @@ const PlotDetails = () => {
       : rawPrice || "Price on Request";
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Header with Back Button */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="bg-white shadow-md py-4 px-6 sticky top-0 z-10"
-      >
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link
-            to="/listings"
-            className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold transition-colors"
-          >
-            <FaArrowLeft size={18} />
-            Back to Listings
-          </Link>
-          {spot?.category && (
-            <span className="text-xs uppercase tracking-widest font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">
-              {spot.category}
-            </span>
-          )}
-        </div>
-      </motion.div>
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+      <div>
+        <Navbar />
 
-      {/* Loading Skeleton */}
+        {/* Breadcrumb / Back Bar */}
+        <div className="border-b border-slate-200/80 bg-white/95 px-6 py-3.5 backdrop-blur-md">
+          <div className="mx-auto flex max-w-6xl items-center justify-between">
+            <Link
+              to="/listings"
+              className="flex items-center gap-2 text-sm font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
+            >
+              <FaArrowLeft size={14} />
+              <span>Back to Listings</span>
+            </Link>
+            {spot?.category && (
+              <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-emerald-800">
+                {spot.category}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Loading Skeleton */}
       {loading && <PlotDetailsSkeleton />}
 
       {/* Error State */}
@@ -497,6 +497,9 @@ const PlotDetails = () => {
           </div>
         </motion.div>
       )}
+      </div>
+
+      <Footer />
     </div>
   );
 };

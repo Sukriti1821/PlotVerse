@@ -84,9 +84,20 @@ export const AuthProvider = ({ children }) => {
           return updated;
         });
       }
-    } catch (err) {
+    } catch {
       // Non-blocking background sync
     }
+  };
+
+  const upgradeToHost = async () => {
+    const response = await API.post("/auth/become-host");
+    const rawData = response.data;
+    const userData = rawData.data || rawData;
+
+    setAuthToken(userData.token);
+    setUserInfo(userData);
+    setUser(userData);
+    return userData;
   };
 
   const logout = () => {
@@ -112,6 +123,7 @@ export const AuthProvider = ({ children }) => {
         loading,
         login,
         register,
+        upgradeToHost,
         refreshUser,
         logout,
         showAuthModal,

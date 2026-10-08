@@ -22,7 +22,6 @@ import {
   FaTag,
   FaBullhorn,
   FaGift,
-  FaPercent,
   FaWallet,
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
@@ -590,8 +589,11 @@ const BookingComposer = ({
         refreshUser();
       }
 
+      const bookingData = response.data?.data || response.data;
+      const totalAmount = Number(bookingData?.totalPrice ?? response.data?.totalPrice ?? 0);
+
       toast.success(
-        `Booking reserved successfully! Total: ₹${response.data.totalPrice.toLocaleString()}`,
+        `Booking reserved successfully! Total: ₹${totalAmount.toLocaleString("en-IN")}`,
         { autoClose: 4000 }
       );
 

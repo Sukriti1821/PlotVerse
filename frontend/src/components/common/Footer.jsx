@@ -5,10 +5,8 @@ import {
   FaTwitter,
   FaEnvelope,
   FaPhoneAlt,
-  FaHeart,
 } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "./Logo";
 
 function Footer() {
   const location = useLocation();
@@ -47,7 +45,7 @@ function Footer() {
             className="inline-block transition-transform duration-200 hover:scale-[1.02] focus:outline-none"
             aria-label="Thikana Home"
           >
-            <Logo variant="white" className="h-10 sm:h-11" />
+            <img src="/logo-full.svg" alt="Thikana" className="h-10 sm:h-11 w-auto object-contain" />
           </Link>
           <p className="mt-5 text-sm leading-7 text-slate-400 max-w-sm">
             Discover scenic stays, book unforgettable nature escapes, and travel with confidence across the Himalayas.

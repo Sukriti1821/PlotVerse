@@ -11,7 +11,7 @@ import {
   FaFire,
   FaCompass,
 } from "react-icons/fa";
-import { getImageUrl, getOptimizedImageUrl } from "../../utils/imageHelper";
+import { getOptimizedImageUrl } from "../../utils/imageHelper";
 
 const CATEGORY_ICONS = {
   "Romantic Date": FaHeart,

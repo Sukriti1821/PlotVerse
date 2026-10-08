@@ -1,26 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
 import {
   FaBuilding,
   FaUsers,
-  FaCalendarAlt,
   FaClock,
   FaWifi,
-  FaTv,
   FaUtensils,
-  FaMicrophone,
   FaFileInvoiceDollar,
   FaCheckCircle,
   FaArrowRight,
   FaSpinner,
-  FaStar,
   FaMapMarkerAlt,
   FaSearch,
   FaTimes,
   FaShieldAlt,
-  FaLeaf,
   FaHandshake,
 } from "react-icons/fa";
 import Navbar from "../components/common/Navbar";
@@ -113,10 +108,9 @@ const CorporateLanding = () => {
   const [avTechNeeded, setAvTechNeeded] = useState(true);
   const [eventObjectives, setEventObjectives] = useState("");
   const [estimatedBudget, setEstimatedBudget] = useState(30000);
-  const [requiresCustomQuote, setRequiresCustomQuote] = useState(true);
 
   // Fetch corporate spaces
-  const fetchCorporateSpaces = async (retryCount = 0) => {
+  const fetchCorporateSpaces = useCallback(async (retryCount = 0) => {
     try {
       setLoading(true);
       const params = {};
@@ -172,11 +166,11 @@ const CorporateLanding = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [minCapacity, selectedEventType, searchLocation, selectedAmenity]);
 
   useEffect(() => {
     fetchCorporateSpaces();
-  }, [selectedEventType, minCapacity, selectedAmenity]);
+  }, [fetchCorporateSpaces]);
 
   // Preload company details if user already has an organization
   useEffect(() => {
@@ -190,7 +184,7 @@ const CorporateLanding = () => {
           setGstin(o.gstin || "");
           if (o.contactPhone) setContactPhone(o.contactPhone);
         }
-      } catch (e) {
+      } catch {
         // No org yet, normal
       }
     };
@@ -230,7 +224,7 @@ const CorporateLanding = () => {
         date: eventDate,
         startTime,
         durationHours: Number(durationHours) || 6,
-        requiresCustomQuote,
+        requiresCustomQuote: true,
         corporateDetails: {
           companyName: companyName.trim(),
           gstin: gstin.trim(),

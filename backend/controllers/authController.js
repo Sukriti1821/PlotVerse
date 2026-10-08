@@ -314,9 +314,47 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 });
 
+// 5. BECOME HOST (Upgrade authenticated account to owner role)
+const becomeHost = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  user.role = "owner";
+  await user.save();
+
+  const token = generateToken(user._id, user.role);
+
+  res.json({
+    success: true,
+    message: "Congratulations! Your account has been upgraded to Plot Owner / Host.",
+    data: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      referralCode: user.referralCode,
+      walletBalance: user.walletBalance || 0,
+      token,
+    },
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    referralCode: user.referralCode,
+    walletBalance: user.walletBalance || 0,
+    token,
+  });
+});
+
 module.exports = {
   registerUser,
   loginUser,
   forgotPassword,
   resetPassword,
+  becomeHost,
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useState, useEffect, useRef, lazy, Suspense, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -186,7 +186,7 @@ function Home() {
     navigate(`/listings${params.toString() ? `?${params.toString()}` : ""}`);
   };
 
-  const fetchSpots = async (retryCount = 0) => {
+  const fetchSpots = useCallback(async (retryCount = 0) => {
     try {
       setLoading(true);
       setError(null);
@@ -215,22 +215,19 @@ function Home() {
         return;
       }
       // Provide resilient fallback so the home page never shows a broken state
-      if (!spots || spots.length === 0) {
-        setSpots(FALLBACK_FEATURED_SPOTS);
-      } else {
-        setError(
-          err.response?.data?.message ||
-            "Failed to load featured destinations. Please check backend connection."
-        );
-      }
+      setSpots((prev) => (prev && prev.length > 0 ? prev : FALLBACK_FEATURED_SPOTS));
+      setError(
+        err.response?.data?.message ||
+          "Failed to load featured destinations. Please check backend connection."
+      );
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchSpots();
-  }, []);
+  }, [fetchSpots]);
 
   // Display top 4 spots as featured
   const featuredSpots = spots.slice(0, 4);

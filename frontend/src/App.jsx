@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, Component, lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -79,6 +79,7 @@ import PWAInstallPrompt from "./components/common/PWAInstallPrompt";
 import OfflineIndicator from "./components/common/OfflineIndicator";
 import MobileBottomNav from "./components/common/MobileBottomNav";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { setReferralCode } from "./utils/storage";
 
 // Dedicated loading fallback for code-split route transitions
 function RouteLoadingFallback() {
@@ -113,15 +114,14 @@ function ReferralParamHandler() {
       const refCode = params.get("ref");
       if (refCode && refCode.trim()) {
         const cleanCode = refCode.trim().toUpperCase();
-        localStorage.setItem("thikana_ref_code", cleanCode);
-        localStorage.setItem("thikana_ref_code", cleanCode);
+        setReferralCode(cleanCode);
         if (!user) {
           toast.info(`🎁 Referral code "${cleanCode}" saved! Sign up to earn ₹200 on your first booking.`, {
             toastId: "referral-banner",
           });
         }
       }
-    } catch (e) {
+    } catch {
       // Safe fallback
     }
   }, [user]);

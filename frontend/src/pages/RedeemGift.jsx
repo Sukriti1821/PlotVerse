@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate, Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import {
   FaGift,
@@ -13,7 +13,6 @@ import {
   FaCheck,
   FaUserCheck,
   FaLock,
-  FaArrowRight,
   FaSpinner,
   FaEnvelope,
   FaStar,
@@ -27,7 +26,7 @@ import { getImageUrl } from "../utils/imageHelper";
 const RedeemGift = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { user, setShowAuthModal, setAuthMode } = useAuth();
+  const { user, openAuthModal } = useAuth();
 
   const [inputCode, setInputCode] = useState(
     (searchParams.get("code") || "").toUpperCase().trim()
@@ -48,32 +47,7 @@ const RedeemGift = () => {
   const [redemptionSuccess, setRedemptionSuccess] = useState(null);
 
   // Auto-lookup if code present in URL on mount
-  useEffect(() => {
-    const codeFromUrl = searchParams.get("code");
-    if (codeFromUrl && codeFromUrl.trim()) {
-      handleLookup(codeFromUrl.trim().toUpperCase());
-    }
-  }, [searchParams]);
-
-  // Set default date to tomorrow or scheduledDate
-  useEffect(() => {
-    if (voucherData) {
-      if (voucherData.scheduledDate) {
-        const d = new Date(voucherData.scheduledDate).toISOString().split("T")[0];
-        setSelectedDate(d);
-      } else {
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        setSelectedDate(tomorrow.toISOString().split("T")[0]);
-      }
-
-      if (voucherData.scheduledStartTime) {
-        setSelectedStartTime(voucherData.scheduledStartTime);
-      }
-    }
-  }, [voucherData]);
-
-  const handleLookup = async (codeToLookup) => {
+  const handleLookup = useCallback(async (codeToLookup) => {
     const code = (codeToLookup || inputCode || "").toUpperCase().trim();
     if (!code) {
       toast.warn("Please enter a voucher code.");
@@ -101,7 +75,33 @@ const RedeemGift = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [inputCode]);
+
+  // Auto-lookup if code present in URL on mount
+  useEffect(() => {
+    const codeFromUrl = searchParams.get("code");
+    if (codeFromUrl && codeFromUrl.trim()) {
+      handleLookup(codeFromUrl.trim().toUpperCase());
+    }
+  }, [searchParams, handleLookup]);
+
+  // Set default date to tomorrow or scheduledDate
+  useEffect(() => {
+    if (voucherData) {
+      if (voucherData.scheduledDate) {
+        const d = new Date(voucherData.scheduledDate).toISOString().split("T")[0];
+        setSelectedDate(d);
+      } else {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        setSelectedDate(tomorrow.toISOString().split("T")[0]);
+      }
+
+      if (voucherData.scheduledStartTime) {
+        setSelectedStartTime(voucherData.scheduledStartTime);
+      }
+    }
+  }, [voucherData]);
 
   // Check slot availability when date/time changes
   useEffect(() => {
@@ -147,8 +147,7 @@ const RedeemGift = () => {
   // Handle Redemption
   const handleRedeem = async () => {
     if (!user) {
-      if (setAuthMode) setAuthMode("login");
-      if (setShowAuthModal) setShowAuthModal(true);
+      openAuthModal("login");
       toast.info("Please sign in or register to confirm your booking.");
       return;
     }
@@ -574,8 +573,7 @@ const RedeemGift = () => {
                         </p>
                         <button
                           onClick={() => {
-                            if (setAuthMode) setAuthMode("login");
-                            if (setShowAuthModal) setShowAuthModal(true);
+                            openAuthModal("login");
                           }}
                           className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors shadow-sm"
                         >

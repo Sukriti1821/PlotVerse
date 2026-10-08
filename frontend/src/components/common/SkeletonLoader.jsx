@@ -1,5 +1,3 @@
-import React from "react";
-
 /**
  * Skeleton card matching ListingCard aspect ratio and layout
  */

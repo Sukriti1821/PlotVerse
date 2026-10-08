@@ -13,6 +13,7 @@ import {
   FaGift,
 } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
+import { getReferralCode, removeReferralCode } from "../../utils/storage";
 import Logo from "./Logo";
 
 const AuthModal = () => {
@@ -24,7 +25,7 @@ const AuthModal = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("customer");
   const [referralCode, setReferralCode] = useState(() => {
-    return localStorage.getItem("thikana_ref_code") || localStorage.getItem("thikana_ref_code") || "";
+    return getReferralCode() || "";
   });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,12 +34,12 @@ const AuthModal = () => {
   // Sync referral code if set in localStorage or URL
   useEffect(() => {
     if (showAuthModal) {
-      const stored = localStorage.getItem("thikana_ref_code") || localStorage.getItem("thikana_ref_code");
+      const stored = getReferralCode();
       if (stored && !referralCode) {
         setReferralCode(stored);
       }
     }
-  }, [showAuthModal]);
+  }, [showAuthModal, referralCode]);
 
   if (!showAuthModal) return null;
 
@@ -69,8 +70,7 @@ const AuthModal = () => {
         toast.success(`Welcome back, ${user.name || user.email}!`);
       } else {
         const user = await register(name, email, password, role, referralCode);
-        localStorage.removeItem("thikana_ref_code");
-        localStorage.removeItem("thikana_ref_code");
+        removeReferralCode();
         toast.success(
           `Account registered as ${user.role === "owner" ? "Plot Owner / Host" : "Customer"}! Welcome to Thikana!`
         );

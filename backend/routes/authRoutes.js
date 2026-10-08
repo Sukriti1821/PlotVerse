@@ -7,7 +7,10 @@ const {
   loginUser,
   forgotPassword,
   resetPassword,
+  becomeHost,
 } = require("../controllers/authController");
+
+const { protect } = require("../middleware/authMiddleware");
 
 const {
   validateRegister,
@@ -34,5 +37,6 @@ router.post("/register", loginRegisterLimiter, validateRegister, registerUser);
 router.post("/login", loginRegisterLimiter, validateLogin, loginUser);
 router.post("/forgot-password", validateForgotPassword, forgotPassword);
 router.post("/reset-password/:token", validateResetPassword, resetPassword);
+router.post("/become-host", protect, becomeHost);
 
 module.exports = router;

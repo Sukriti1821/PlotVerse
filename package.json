@@ -12,6 +12,7 @@
     "postinstall": "npm run install-all"
   },
   "devDependencies": {
-    "concurrently": "^9.2.4"
+    "concurrently": "^9.2.4",
+    "sharp": "^0.35.5"
   }
 }

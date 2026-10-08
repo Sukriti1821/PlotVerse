@@ -51,15 +51,15 @@ async function seedDatabase() {
     process.exit(1);
   }
 
-  // Read seeded user password from env vars (never hardcoded weak passwords)
+  // Read seeded user password from env vars (never hardcoded weak passwords for production)
   let testPassword = process.env.SEED_ADMIN_PASSWORD || process.env.SEED_TEST_PASSWORD;
   if (!testPassword) {
     if (isProduction || isRemoteDb) {
       console.error("\n🛑 Error: SEED_ADMIN_PASSWORD must be configured in environment variables for production seeding.");
       process.exit(1);
     }
-    testPassword = crypto.randomBytes(6).toString("hex") + "!P1";
-    console.warn(`\n⚠️ Notice: No SEED_ADMIN_PASSWORD set in .env. Generated temporary test password for local run: ${testPassword}`);
+    testPassword = "Password@123";
+    console.warn(`\nℹ️ Notice: Using standard local development password: ${testPassword}`);
   }
 
   try {
@@ -784,16 +784,16 @@ async function seedDatabase() {
     console.log(`📊 Total Bookings     : ${seededBookings.length}`);
     console.log(`📊 Total Testimonials : ${seededReviews.length}`);
     console.log("--------------------------------------------------");
-    console.log(`🔑 READY-TO-USE TEST ACCOUNTS (Password: ${seedTestPassword}):`);
+    console.log(`🔑 READY-TO-USE TEST ACCOUNTS (Password: ${testPassword}):`);
     console.log("--------------------------------------------------");
     console.log("  🏢 Host / Owner Login:");
     console.log("     Email    : aarav.host@thikana.com");
-    console.log(`     Password : ${seedTestPassword}`);
+    console.log(`     Password : ${testPassword}`);
     console.log("     (Also created: meera.stays@thikana.com, vikram.plots@thikana.com)");
     console.log("");
     console.log("  🎒 Customer / Guest Login:");
     console.log("     Email    : rohan.travel@thikana.com");
-    console.log(`     Password : ${seedTestPassword}`);
+    console.log(`     Password : ${testPassword}`);
     console.log("     (Also created: ananya.art@thikana.com, sid.wanderer@thikana.com)");
     console.log("==================================================\n");
 

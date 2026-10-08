@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
@@ -21,10 +21,7 @@ import {
   FaFilter,
   FaMagic,
   FaImages,
-  FaPlus,
-  FaBuilding,
   FaFileInvoiceDollar,
-  FaUtensils,
 } from "react-icons/fa";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
@@ -63,7 +60,7 @@ const OwnerBookings = () => {
 
   const isOwner = user && (user.role === "owner" || user.role === "admin");
 
-  const fetchOwnerBookings = async () => {
+  const fetchOwnerBookings = useCallback(async () => {
     if (!isOwner) {
       setLoading(false);
       return;
@@ -84,21 +81,19 @@ const OwnerBookings = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isOwner]);
 
   useEffect(() => {
     fetchOwnerBookings();
-  }, [user]);
+  }, [fetchOwnerBookings]);
 
   // Handle Accept (Confirm) or Reject
   const handleUpdateStatus = async (bookingId, newStatus) => {
     try {
       setActionLoadingId(bookingId);
-      const response = await API.patch(`/bookings/${bookingId}/status`, {
+      await API.patch(`/bookings/${bookingId}/status`, {
         status: newStatus,
       });
-
-      const updated = response.data?.data || response.data;
 
       toast.success(
         newStatus === "approved"
@@ -133,15 +128,13 @@ const OwnerBookings = () => {
       setRespondingReqKey(reqKey);
       const quotedPrice = Number(customQuotes[reqKey]) || 0;
 
-      const response = await API.patch(
+      await API.patch(
         `/bookings/${bookingId}/custom-request/${index}`,
         {
           ownerResponse,
           ownerQuotedPrice: quotedPrice,
         }
       );
-
-      const updated = response.data?.data || response.data;
 
       toast.success(
         ownerResponse === "approved"

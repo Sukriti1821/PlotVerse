@@ -54,7 +54,6 @@ const ListingCard = ({ plot, actionLabel = "View Details" }) => {
     location = "Location Unknown",
     area,
     category = "Scenic Escape",
-    rating = "4.8",
   } = plot;
 
   const handleToggleLike = (e) => {

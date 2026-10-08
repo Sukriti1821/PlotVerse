@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaDownload, FaTimes, FaMobileAlt, FaShieldAlt, FaBolt } from "react-icons/fa";
+import { FaDownload, FaTimes, FaShieldAlt, FaBolt } from "react-icons/fa";
 
 // Global holder for deferred beforeinstallprompt event
 let deferredInstallPrompt = null;

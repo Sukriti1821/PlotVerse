@@ -1,24 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   FaBullhorn,
   FaPlus,
   FaTrash,
   FaTag,
-  FaPercent,
-  FaRupeeSign,
-  FaClock,
-  FaCheckCircle,
-  FaTimesCircle,
   FaCopy,
   FaStar,
-  FaShieldAlt,
-  FaCalendarAlt,
   FaSpinner,
-  FaExclamationTriangle,
-  FaLayerGroup,
-  FaTree,
   FaRocket,
   FaTimes,
 } from "react-icons/fa";

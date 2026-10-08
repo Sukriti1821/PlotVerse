@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   FaBuilding,
@@ -13,13 +12,10 @@ import {
   FaMapMarkerAlt,
   FaUsers,
   FaUtensils,
-  FaTv,
-  FaTag,
   FaSpinner,
   FaCheck,
   FaTimes,
   FaSave,
-  FaArrowRight,
 } from "react-icons/fa";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
@@ -29,7 +25,6 @@ import { getImageUrl } from "../utils/imageHelper";
 
 const CorporateBookings = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("bookings"); // 'bookings' | 'profile'
   const [corporateBookings, setCorporateBookings] = useState([]);

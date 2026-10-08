@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars, FaTimes, FaUserCircle, FaSignOutAlt, FaDownload, FaGift, FaWallet, FaTicketAlt, FaShieldAlt } from "react-icons/fa";
-import Logo from "./Logo";
 import { useAuth } from "../../context/AuthContext";
 import { triggerPWAInstall } from "./PWAInstallPrompt";
 
@@ -45,7 +44,7 @@ function Navbar() {
             className="flex items-center group transition-transform duration-200 hover:scale-[1.02] focus:outline-none"
             aria-label="Thikana Home"
           >
-            <Logo variant="full" className="h-9 sm:h-10" />
+            <img src="/logo-navbar.svg" alt="Thikana" className="h-10 sm:h-11 w-auto object-contain" />
           </Link>
 
           {/* Desktop Nav */}

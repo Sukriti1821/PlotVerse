@@ -13,12 +13,10 @@ import {
   FaWhatsapp,
   FaSpinner,
   FaWallet,
-  FaCalendarAlt,
 } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import API from "../../services/api";
 import { openRazorpayModal } from "../../utils/razorpay";
-import { getImageUrl } from "../../utils/imageHelper";
 
 const BuyAsGiftModal = ({
   isOpen,

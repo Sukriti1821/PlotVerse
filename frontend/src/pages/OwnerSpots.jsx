@@ -126,11 +126,10 @@ const OwnerSpots = () => {
     const newStatus = !(spot.isActive !== false);
     try {
       setToggleLoadingId(spot._id);
-      const response = await API.patch(`/spots/${spot._id}`, {
+      await API.patch(`/spots/${spot._id}`, {
         isActive: newStatus,
       });
 
-      const updated = response.data?.data || response.data;
       setSpots((prev) =>
         prev.map((s) => (s._id === spot._id ? { ...s, isActive: newStatus } : s))
       );

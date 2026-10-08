@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 56" width="240" height="56" fill="none">
+  <!-- Arched Emblem Icon -->
+  <g transform="translate(4, 4)">
+    <image href="/thikana-icon.png" width="48" height="48" preserveAspectRatio="xMidYMid meet" />
+  </g>
+  <!-- Wordmark "Thikana" -->
+  <text x="62" y="34" font-family="'Outfit', 'Poppins', 'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="900" fill="#0E382C" letter-spacing="-0.5px">Thikana</text>
+  <!-- Tagline -->
+  <text x="63" y="47" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="8.5" font-weight="700" fill="#059669" letter-spacing="1.5px">MERA THIKANA</text>
+</svg>

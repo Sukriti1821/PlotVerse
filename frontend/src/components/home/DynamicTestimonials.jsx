@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaStar,
@@ -9,7 +9,6 @@ import {
   FaChevronRight,
   FaPen,
   FaTimes,
-  FaCalendarAlt,
   FaSpinner,
 } from "react-icons/fa";
 import API from "../../services/api";
@@ -98,7 +97,6 @@ const FALLBACK_TESTIMONIALS = [
 
 export default function DynamicTestimonials() {
   const [items, setItems] = useState(FALLBACK_TESTIMONIALS);
-  const [loading, setLoading] = useState(false);
   const [activeTag, setActiveTag] = useState("All");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -122,7 +120,6 @@ export default function DynamicTestimonials() {
   // Fetch from backend API
   const fetchTestimonials = async () => {
     try {
-      setLoading(true);
       const res = await API.get("/testimonials");
       const list = res.data?.data || res.data;
       if (Array.isArray(list) && list.length > 0) {
@@ -130,8 +127,6 @@ export default function DynamicTestimonials() {
       }
     } catch (err) {
       console.warn("Using fallback testimonials:", err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
