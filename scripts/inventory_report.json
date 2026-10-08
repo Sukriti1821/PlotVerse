@@ -1,0 +1,572 @@
+{
+  "totalUniqueHexCodes": 55,
+  "hexCodes": {
+    "#00d8ff": {
+      "count": 1,
+      "samples": [
+        "frontend/src/assets/react.svg:1"
+      ]
+    },
+    "#000": {
+      "count": 2,
+      "samples": [
+        "frontend/src/assets/vite.svg:1",
+        "frontend/src/assets/vite.svg:1"
+      ]
+    },
+    "#fff": {
+      "count": 2,
+      "samples": [
+        "frontend/src/assets/vite.svg:1",
+        "frontend/public/icons.svg:4"
+      ]
+    },
+    "#9135ff": {
+      "count": 1,
+      "samples": [
+        "frontend/src/assets/vite.svg:1"
+      ]
+    },
+    "#eee6ff": {
+      "count": 3,
+      "samples": [
+        "frontend/src/assets/vite.svg:1",
+        "frontend/src/assets/vite.svg:1",
+        "frontend/src/assets/vite.svg:1"
+      ]
+    },
+    "#8900ff": {
+      "count": 10,
+      "samples": [
+        "frontend/src/assets/vite.svg:1",
+        "frontend/src/assets/vite.svg:1",
+        "frontend/src/assets/vite.svg:1",
+        "frontend/src/assets/vite.svg:1",
+        "frontend/src/assets/vite.svg:1"
+      ]
+    },
+    "#00c2ff": {
+      "count": 2,
+      "samples": [
+        "frontend/src/assets/vite.svg:1",
+        "frontend/src/assets/vite.svg:1"
+      ]
+    },
+    "#78350f": {
+      "count": 3,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:27",
+        "frontend/src/components/3d/HeroScene.jsx:182",
+        "frontend/src/components/3d/HeroScene.jsx:186"
+      ]
+    },
+    "#064e3b": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:32"
+      ]
+    },
+    "#047857": {
+      "count": 3,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:37",
+        "frontend/src/pages/OwnerAnalytics.jsx:547",
+        "frontend/public/logo-full.svg:11"
+      ]
+    },
+    "#059669": {
+      "count": 6,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:42",
+        "frontend/src/components/3d/HeroScene.jsx:249",
+        "frontend/src/pages/OwnerAnalytics.jsx:527",
+        "frontend/src/pages/OwnerAnalytics.jsx:577",
+        "frontend/src/utils/razorpay.js:167"
+      ]
+    },
+    "#64748b": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:117"
+      ]
+    },
+    "#451a03": {
+      "count": 2,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:125",
+        "frontend/src/components/3d/HeroScene.jsx:129"
+      ]
+    },
+    "#f97316": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:136"
+      ]
+    },
+    "#ea580c": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:137"
+      ]
+    },
+    "#fbbf24": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:148"
+      ]
+    },
+    "#fde047": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:158"
+      ]
+    },
+    "#92400e": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:176"
+      ]
+    },
+    "#d97706": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:191"
+      ]
+    },
+    "#fef08a": {
+      "count": 2,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:197",
+        "frontend/src/components/3d/HeroScene.jsx:202"
+      ]
+    },
+    "#eab308": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:198"
+      ]
+    },
+    "#f8fafc": {
+      "count": 4,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:222",
+        "frontend/src/components/3d/HeroScene.jsx:226",
+        "frontend/src/components/3d/HeroScene.jsx:230",
+        "frontend/src/components/3d/HeroScene.jsx:261"
+      ]
+    },
+    "#1e293b": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:243"
+      ]
+    },
+    "#0f3e30": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:256"
+      ]
+    },
+    "#475569": {
+      "count": 2,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:280",
+        "frontend/src/components/3d/HeroScene.jsx:284"
+      ]
+    },
+    "#ffffff": {
+      "count": 4,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:391",
+        "frontend/src/pages/OwnerAnalytics.jsx:548",
+        "frontend/src/pages/OwnerAnalytics.jsx:604",
+        "frontend/public/logo-white.svg:8"
+      ]
+    },
+    "#fffbeb": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:394"
+      ]
+    },
+    "#a7f3d0": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/3d/HeroScene.jsx:397"
+      ]
+    },
+    "#0e382c": {
+      "count": 3,
+      "samples": [
+        "frontend/src/components/common/Logo.jsx:68",
+        "frontend/public/logo-full.svg:8",
+        "frontend/public/logo-navbar.svg:7"
+      ]
+    },
+    "#25d366": {
+      "count": 5,
+      "samples": [
+        "frontend/src/components/gifts/BuyAsGiftModal.jsx:440",
+        "frontend/src/pages/CustomerReferrals.jsx:250",
+        "frontend/src/pages/CustomerReferrals.jsx:250",
+        "frontend/src/pages/CustomerReferrals.jsx:250",
+        "frontend/src/pages/CustomerReferrals.jsx:250"
+      ]
+    },
+    "#20bd5a": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/gifts/BuyAsGiftModal.jsx:440"
+      ]
+    },
+    "#14213d": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:7"
+      ]
+    },
+    "#0d1730": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:8"
+      ]
+    },
+    "#1f3358": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:9"
+      ]
+    },
+    "#fca311": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:10"
+      ]
+    },
+    "#e8920a": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:11"
+      ]
+    },
+    "#9a5b00": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:12"
+      ]
+    },
+    "#f7f7f2": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:13"
+      ]
+    },
+    "#5c677d": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:14"
+      ]
+    },
+    "#e4e7ef": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:15"
+      ]
+    },
+    "#2d6a4f": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:16"
+      ]
+    },
+    "#ddefe5": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:17"
+      ]
+    },
+    "#c23b22": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:18"
+      ]
+    },
+    "#fbe4df": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:19"
+      ]
+    },
+    "#c9ceda": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:20"
+      ]
+    },
+    "#f4a93b": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:21"
+      ]
+    },
+    "#faf7f0": {
+      "count": 1,
+      "samples": [
+        "frontend/src/index.css:22"
+      ]
+    },
+    "#10b981": {
+      "count": 3,
+      "samples": [
+        "frontend/src/pages/OwnerAnalytics.jsx:481",
+        "frontend/src/pages/OwnerAnalytics.jsx:482",
+        "frontend/src/pages/OwnerAnalytics.jsx:547"
+      ]
+    },
+    "#f1f5f9": {
+      "count": 1,
+      "samples": [
+        "frontend/src/pages/OwnerAnalytics.jsx:497"
+      ]
+    },
+    "#0f172a": {
+      "count": 1,
+      "samples": [
+        "frontend/src/pages/OwnerAnalytics.jsx:588"
+      ]
+    },
+    "#94a3b8": {
+      "count": 1,
+      "samples": [
+        "frontend/src/pages/OwnerAnalytics.jsx:595"
+      ]
+    },
+    "#020617": {
+      "count": 1,
+      "samples": [
+        "frontend/src/utils/razorpay.js:168"
+      ]
+    },
+    "#08060d": {
+      "count": 4,
+      "samples": [
+        "frontend/public/icons.svg:3",
+        "frontend/public/icons.svg:7",
+        "frontend/public/icons.svg:15",
+        "frontend/public/icons.svg:22"
+      ]
+    },
+    "#aa3bff": {
+      "count": 5,
+      "samples": [
+        "frontend/public/icons.svg:10",
+        "frontend/public/icons.svg:11",
+        "frontend/public/icons.svg:12",
+        "frontend/public/icons.svg:18",
+        "frontend/public/icons.svg:19"
+      ]
+    },
+    "#6ee7b7": {
+      "count": 1,
+      "samples": [
+        "frontend/public/logo-white.svg:11"
+      ]
+    }
+  },
+  "totalUniqueRgbRgba": 6,
+  "rgbRgba": {
+    "rgba(16,185,129,0.15)": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/recommendations/SmartRecommendationFinder.jsx:185"
+      ]
+    },
+    "rgba(14,165,233,0.12)": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/recommendations/SmartRecommendationFinder.jsx:186"
+      ]
+    },
+    "rgba(16,185,129,0.3)": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/SplashScreen.jsx:57"
+      ]
+    },
+    "rgba(16,185,129,0.2)": {
+      "count": 1,
+      "samples": [
+        "frontend/src/components/SplashScreen.jsx:68"
+      ]
+    },
+    "rgba(0,0,0,0.5)": {
+      "count": 1,
+      "samples": [
+        "frontend/src/pages/Home.jsx:361"
+      ]
+    },
+    "rgba(0,0,0,0.6)": {
+      "count": 1,
+      "samples": [
+        "frontend/src/pages/Home.jsx:367"
+      ]
+    }
+  },
+  "totalTailwindColorClasses": 4971,
+  "uniqueTailwindClasses": 326,
+  "tailwindTopClasses": [
+    [
+      "text-white",
+      342
+    ],
+    [
+      "bg-white",
+      280
+    ],
+    [
+      "text-slate-400",
+      275
+    ],
+    [
+      "border-slate-200",
+      269
+    ],
+    [
+      "text-slate-900",
+      240
+    ],
+    [
+      "text-slate-500",
+      230
+    ],
+    [
+      "text-emerald-600",
+      185
+    ],
+    [
+      "text-slate-700",
+      148
+    ],
+    [
+      "text-slate-600",
+      147
+    ],
+    [
+      "text-slate-800",
+      146
+    ],
+    [
+      "bg-slate-50",
+      128
+    ],
+    [
+      "bg-emerald-600",
+      125
+    ],
+    [
+      "border-slate-100",
+      103
+    ],
+    [
+      "text-emerald-700",
+      102
+    ],
+    [
+      "text-emerald-400",
+      102
+    ],
+    [
+      "border-emerald-500",
+      96
+    ],
+    [
+      "bg-slate-100",
+      86
+    ],
+    [
+      "bg-emerald-500",
+      83
+    ],
+    [
+      "bg-slate-900",
+      76
+    ],
+    [
+      "bg-emerald-100",
+      76
+    ],
+    [
+      "text-emerald-500",
+      74
+    ],
+    [
+      "bg-emerald-50",
+      70
+    ],
+    [
+      "text-emerald-800",
+      66
+    ],
+    [
+      "text-slate-300",
+      65
+    ],
+    [
+      "bg-slate-800",
+      56
+    ],
+    [
+      "border-slate-800",
+      56
+    ],
+    [
+      "bg-slate-200",
+      51
+    ],
+    [
+      "border-slate-700",
+      43
+    ],
+    [
+      "border-slate-300",
+      43
+    ],
+    [
+      "border-emerald-200",
+      39
+    ]
+  ],
+  "threeJsColorsCount": 28,
+  "threeJsLines": [
+    "frontend/src/components/3d/HeroScene.jsx:27 - <meshStandardMaterial color=\"#78350f\" roughness={0.9} />",
+    "frontend/src/components/3d/HeroScene.jsx:32 - <meshStandardMaterial color=\"#064e3b\" roughness={0.8} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:37 - <meshStandardMaterial color=\"#047857\" roughness={0.8} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:42 - <meshStandardMaterial color=\"#059669\" roughness={0.75} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:117 - <meshStandardMaterial color=\"#64748b\" roughness={0.9} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:125 - <meshStandardMaterial color=\"#451a03\" roughness={0.9} />",
+    "frontend/src/components/3d/HeroScene.jsx:129 - <meshStandardMaterial color=\"#451a03\" roughness={0.9} />",
+    "frontend/src/components/3d/HeroScene.jsx:136 - color=\"#f97316\"",
+    "frontend/src/components/3d/HeroScene.jsx:148 - color=\"#fbbf24\"",
+    "frontend/src/components/3d/HeroScene.jsx:158 - color=\"#fde047\"",
+    "frontend/src/components/3d/HeroScene.jsx:176 - <meshStandardMaterial color=\"#92400e\" roughness={0.7} />",
+    "frontend/src/components/3d/HeroScene.jsx:182 - <meshStandardMaterial color=\"#78350f\" roughness={0.8} />",
+    "frontend/src/components/3d/HeroScene.jsx:186 - <meshStandardMaterial color=\"#78350f\" roughness={0.8} />",
+    "frontend/src/components/3d/HeroScene.jsx:191 - <meshStandardMaterial color=\"#d97706\" roughness={0.8} />",
+    "frontend/src/components/3d/HeroScene.jsx:197 - color=\"#fef08a\"",
+    "frontend/src/components/3d/HeroScene.jsx:202 - <pointLight position={[0.18, 0.32, -0.2]} color=\"#fef08a\" intensity={0.9} distance={2} />",
+    "frontend/src/components/3d/HeroScene.jsx:222 - <meshStandardMaterial color=\"#f8fafc\" roughness={0.9} flatShading transparent opacity={0.85} />",
+    "frontend/src/components/3d/HeroScene.jsx:226 - <meshStandardMaterial color=\"#f8fafc\" roughness={0.9} flatShading transparent opacity={0.85} />",
+    "frontend/src/components/3d/HeroScene.jsx:230 - <meshStandardMaterial color=\"#f8fafc\" roughness={0.9} flatShading transparent opacity={0.85} />",
+    "frontend/src/components/3d/HeroScene.jsx:243 - <meshStandardMaterial color=\"#1e293b\" roughness={0.9} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:249 - <meshStandardMaterial color=\"#059669\" roughness={0.7} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:256 - <meshStandardMaterial color=\"#0f3e30\" roughness={0.85} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:261 - <meshStandardMaterial color=\"#f8fafc\" roughness={0.5} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:280 - <meshStandardMaterial color=\"#475569\" roughness={0.85} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:284 - <meshStandardMaterial color=\"#475569\" roughness={0.85} flatShading />",
+    "frontend/src/components/3d/HeroScene.jsx:391 - <ambientLight intensity={1.1} color=\"#ffffff\" />",
+    "frontend/src/components/3d/HeroScene.jsx:394 - <directionalLight position={[6, 10, 4]} intensity={1.8} color=\"#fffbeb\" castShadow />",
+    "frontend/src/components/3d/HeroScene.jsx:397 - <directionalLight position={[-6, 4, -4]} intensity={0.65} color=\"#a7f3d0\" />"
+  ],
+  "svgColorsSampleCount": 21,
+  "chartColorsSampleCount": 30
+}

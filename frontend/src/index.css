@@ -4,6 +4,20 @@
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-heading: "Outfit", "Plus Jakarta Sans", system-ui, sans-serif;
   --font-brand: "Poppins", "Outfit", "Plus Jakarta Sans", system-ui, sans-serif;
+  --color-navy: #14213D;
+  --color-navy-deep: #0D1730;
+  --color-dusk: #1F3358;
+  --color-saffron: #FCA311;
+  --color-saffron-hover: #E8920A;
+  --color-saffron-text: #9A5B00;
+  --color-snow: #F7F7F2;
+  --color-slate-brand: #5C677D;
+  --color-mist: #E4E7EF;
+  --color-pine: #2D6A4F;
+  --color-pine-mist: #DDEFE5;
+  --color-danger: #C23B22;
+  --color-danger-mist: #FBE4DF;
+  --color-light-slate: #C9CEDA;
   --color-brand-accent: #F4A93B;
   --color-brand-cream: #FAF7F0;
 }
@@ -14,10 +28,35 @@
 }
 
 body {
+  background-color: var(--color-snow);
+  color: var(--color-navy);
   font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.012em;
+}
+
+::selection {
+  background-color: var(--color-saffron);
+  color: var(--color-navy);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-saffron);
+  outline-offset: 2px;
+}
+
+body :focus-visible,
+.bg-snow :focus-visible,
+.bg-white :focus-visible {
+  outline-color: var(--color-navy);
+}
+
+.bg-navy :focus-visible,
+.bg-navy-deep :focus-visible,
+.bg-dusk :focus-visible,
+[data-theme="navy"] :focus-visible {
+  outline-color: var(--color-saffron);
 }
 
 h1, h2, h3, h4, h5, h6,
