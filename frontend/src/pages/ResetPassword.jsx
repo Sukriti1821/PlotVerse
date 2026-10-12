@@ -78,7 +78,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between">
+    <div className="min-h-screen bg-snow text-navy flex flex-col justify-between">
       <div>
         <Navbar />
 
@@ -87,32 +87,32 @@ const ResetPassword = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl"
+            className="rounded-3xl border border-mist bg-white p-8 shadow-xl"
           >
             {/* Header */}
             <div className="text-center mb-8">
-              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 border border-emerald-100 p-2 text-emerald-600 mb-4 shadow-sm">
+              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-saffron/15 border border-saffron/30 p-2 text-saffron-text mb-4 shadow-sm">
                 <FaLock className="text-2xl" />
               </div>
-              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="text-2xl font-extrabold text-navy tracking-tight">
                 Create New Password
               </h1>
-              <p className="mt-2 text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">
+              <p className="mt-2 text-xs text-slate-brand leading-relaxed max-w-xs mx-auto">
                 Your new password must be at least 6 characters long.
               </p>
             </div>
 
             {/* Error Message */}
             {error && (
-              <div className="mb-6 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs text-rose-700">
+              <div className="mb-6 rounded-2xl border border-danger/30 bg-danger-mist p-4 text-xs text-danger">
                 <div className="flex items-start gap-2">
-                  <FaExclamationTriangle className="text-rose-500 flex-shrink-0 mt-0.5" />
+                  <FaExclamationTriangle className="text-danger flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold">{error}</p>
                     {error.toLowerCase().includes("expired") || error.toLowerCase().includes("invalid") ? (
                       <Link
                         to="/forgot-password"
-                        className="mt-2 inline-block font-semibold text-rose-800 underline hover:text-rose-900"
+                        className="mt-2 inline-block font-semibold text-danger underline hover:opacity-80"
                       >
                         Request a new password reset link &rarr;
                       </Link>
@@ -126,11 +126,11 @@ const ResetPassword = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* New Password */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  <label className="mb-1.5 block text-xs font-bold text-navy uppercase tracking-wider">
                     New Password
                   </label>
-                  <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 focus-within:border-emerald-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-100 transition">
-                    <FaLock className="text-slate-400" />
+                  <div className="flex items-center gap-3 rounded-2xl border border-mist bg-snow px-4 py-3 focus-within:border-saffron focus-within:bg-white focus-within:ring-2 focus-within:ring-saffron/20 transition">
+                    <FaLock className="text-slate-brand" />
                     <input
                       type={showPassword ? "text" : "password"}
                       required
@@ -138,12 +138,12 @@ const ResetPassword = () => {
                       placeholder="At least 6 characters"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-transparent text-sm text-slate-800 outline-none placeholder-slate-400"
+                      className="w-full bg-transparent text-sm text-navy outline-none placeholder-slate-brand"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword((prev) => !prev)}
-                      className="text-slate-400 hover:text-slate-600 p-1"
+                      className="text-slate-brand hover:text-navy p-1"
                     >
                       {showPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
                     </button>
@@ -152,11 +152,11 @@ const ResetPassword = () => {
 
                 {/* Confirm Password */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  <label className="mb-1.5 block text-xs font-bold text-navy uppercase tracking-wider">
                     Confirm New Password
                   </label>
-                  <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 focus-within:border-emerald-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-100 transition">
-                    <FaLock className="text-slate-400" />
+                  <div className="flex items-center gap-3 rounded-2xl border border-mist bg-snow px-4 py-3 focus-within:border-saffron focus-within:bg-white focus-within:ring-2 focus-within:ring-saffron/20 transition">
+                    <FaLock className="text-slate-brand" />
                     <input
                       type={showPassword ? "text" : "password"}
                       required
@@ -164,7 +164,7 @@ const ResetPassword = () => {
                       placeholder="Re-enter new password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full bg-transparent text-sm text-slate-800 outline-none placeholder-slate-400"
+                      className="w-full bg-transparent text-sm text-navy outline-none placeholder-slate-brand"
                     />
                   </div>
                 </div>
@@ -172,7 +172,7 @@ const ResetPassword = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full mt-3 flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-500 transition hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full mt-3 flex items-center justify-center gap-2 rounded-2xl bg-saffron px-6 py-3.5 text-sm font-bold text-navy shadow-lg shadow-saffron/20 hover:bg-saffron-hover transition hover:-translate-y-0.5 disabled:bg-mist disabled:text-slate-brand disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>
@@ -186,13 +186,13 @@ const ResetPassword = () => {
             ) : (
               /* Success State */
               <div className="text-center py-4">
-                <div className="h-12 w-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mx-auto mb-4">
+                <div className="h-12 w-12 rounded-full bg-pine-mist text-pine flex items-center justify-center text-2xl mx-auto mb-4 border border-pine/20">
                   <FaCheckCircle />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">
+                <h3 className="text-lg font-bold text-navy mb-2">
                   Password Reset Complete!
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed mb-6">
+                <p className="text-xs text-slate-brand leading-relaxed mb-6">
                   Your password has been securely updated. Redirecting you to sign in...
                 </p>
                 <button
@@ -200,7 +200,7 @@ const ResetPassword = () => {
                     navigate("/");
                     openAuthModal("login");
                   }}
-                  className="w-full rounded-2xl bg-slate-900 px-6 py-3 text-xs font-bold text-white hover:bg-emerald-600 transition"
+                  className="w-full rounded-2xl bg-saffron px-6 py-3 text-xs font-bold text-navy hover:bg-saffron-hover transition"
                 >
                   Sign In Now
                 </button>
@@ -208,10 +208,10 @@ const ResetPassword = () => {
             )}
 
             {/* Back link */}
-            <div className="mt-8 pt-6 border-t border-slate-100 text-center">
+            <div className="mt-8 pt-6 border-t border-mist text-center">
               <Link
                 to="/forgot-password"
-                className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-emerald-600 transition"
+                className="inline-flex items-center gap-2 text-xs font-bold text-navy hover:text-saffron-text transition"
               >
                 <FaArrowLeft size={10} /> Request another reset link
               </Link>

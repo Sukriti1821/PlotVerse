@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+import { SCENE_COLORS } from "./sceneConstants";
 
 // Safe WebGL detection
 function checkWebGLSupport() {
@@ -24,22 +25,22 @@ function PineTree({ position = [0, 0, 0], scale = 1 }) {
       {/* Wooden Trunk */}
       <mesh position={[0, 0.35, 0]}>
         <cylinderGeometry args={[0.07, 0.09, 0.7, 5]} />
-        <meshStandardMaterial color="#78350f" roughness={0.9} />
+        <meshStandardMaterial color={SCENE_COLORS.woodTrunk} roughness={0.9} />
       </mesh>
       {/* Bottom Foliage Tier */}
       <mesh position={[0, 0.85, 0]}>
         <coneGeometry args={[0.55, 0.8, 5]} />
-        <meshStandardMaterial color="#064e3b" roughness={0.8} flatShading />
+        <meshStandardMaterial color={SCENE_COLORS.treeFoliageDark} roughness={0.8} flatShading />
       </mesh>
       {/* Middle Foliage Tier */}
       <mesh position={[0, 1.25, 0]}>
         <coneGeometry args={[0.42, 0.7, 5]} />
-        <meshStandardMaterial color="#047857" roughness={0.8} flatShading />
+        <meshStandardMaterial color={SCENE_COLORS.treeFoliageLight} roughness={0.8} flatShading />
       </mesh>
       {/* Top Foliage Tier */}
       <mesh position={[0, 1.6, 0]}>
         <coneGeometry args={[0.28, 0.6, 5]} />
-        <meshStandardMaterial color="#059669" roughness={0.75} flatShading />
+        <meshStandardMaterial color={SCENE_COLORS.treeFoliageDark} roughness={0.75} flatShading />
       </mesh>
     </group>
   );
@@ -114,7 +115,7 @@ function Campfire({ position = [0, 0, 0] }) {
             rotation={[0, angle, 0]}
           >
             <dodecahedronGeometry args={[0.08, 0]} />
-            <meshStandardMaterial color="#64748b" roughness={0.9} flatShading />
+            <meshStandardMaterial color={SCENE_COLORS.stones} roughness={0.9} flatShading />
           </mesh>
         );
       })}
@@ -122,19 +123,19 @@ function Campfire({ position = [0, 0, 0] }) {
       {/* Crossed Firewood Logs */}
       <mesh position={[0, 0.08, 0]} rotation={[0.2, 0.6, 0.2]}>
         <cylinderGeometry args={[0.04, 0.04, 0.4, 4]} />
-        <meshStandardMaterial color="#451a03" roughness={0.9} />
+        <meshStandardMaterial color={SCENE_COLORS.woodTrunk} roughness={0.9} />
       </mesh>
       <mesh position={[0, 0.08, 0]} rotation={[-0.2, -0.6, -0.2]}>
         <cylinderGeometry args={[0.04, 0.04, 0.4, 4]} />
-        <meshStandardMaterial color="#451a03" roughness={0.9} />
+        <meshStandardMaterial color={SCENE_COLORS.woodTrunk} roughness={0.9} />
       </mesh>
 
       {/* Stylized Glowing Flame Mesh */}
       <mesh ref={flameRef} position={[0, 0.2, 0]}>
         <coneGeometry args={[0.16, 0.35, 5]} />
         <meshStandardMaterial
-          color="#f97316"
-          emissive="#ea580c"
+          color={SCENE_COLORS.fireGlow}
+          emissive={SCENE_COLORS.fireCore}
           emissiveIntensity={1.8}
           roughness={0.2}
           flatShading
@@ -145,7 +146,7 @@ function Campfire({ position = [0, 0, 0] }) {
       <pointLight
         ref={lightRef}
         position={[0, 0.3, 0]}
-        color="#fbbf24"
+        color={SCENE_COLORS.lanternLight}
         intensity={2.2}
         distance={4.5}
         decay={2}
@@ -155,7 +156,7 @@ function Campfire({ position = [0, 0, 0] }) {
       <points ref={embersRef} position={[0, 0.2, 0]} geometry={emberGeometry}>
         <pointsMaterial
           size={0.06}
-          color="#fde047"
+          color={SCENE_COLORS.fireGlow}
           transparent
           opacity={0.9}
           blending={THREE.AdditiveBlending}
@@ -173,33 +174,33 @@ function WoodenDeck({ position = [0, 0, 0] }) {
       {[-0.32, -0.16, 0, 0.16, 0.32].map((xOffset, i) => (
         <mesh key={i} position={[xOffset, 0.04, 0]}>
           <boxGeometry args={[0.14, 0.04, 1.1]} />
-          <meshStandardMaterial color="#92400e" roughness={0.7} />
+          <meshStandardMaterial color={SCENE_COLORS.woodTrunk} roughness={0.7} />
         </mesh>
       ))}
       {/* Cross Support Beams */}
       <mesh position={[0, 0.01, -0.4]}>
         <boxGeometry args={[0.82, 0.03, 0.07]} />
-        <meshStandardMaterial color="#78350f" roughness={0.8} />
+        <meshStandardMaterial color={SCENE_COLORS.woodTrunk} roughness={0.8} />
       </mesh>
       <mesh position={[0, 0.01, 0.4]}>
         <boxGeometry args={[0.82, 0.03, 0.07]} />
-        <meshStandardMaterial color="#78350f" roughness={0.8} />
+        <meshStandardMaterial color={SCENE_COLORS.woodTrunk} roughness={0.8} />
       </mesh>
       {/* Cozy Stool/Chair */}
       <mesh position={[0.18, 0.16, -0.2]}>
         <cylinderGeometry args={[0.1, 0.1, 0.18, 5]} />
-        <meshStandardMaterial color="#d97706" roughness={0.8} />
+        <meshStandardMaterial color={SCENE_COLORS.campsitePlot} roughness={0.8} />
       </mesh>
       {/* Fairy Lantern on Stool */}
       <mesh position={[0.18, 0.3, -0.2]}>
         <boxGeometry args={[0.07, 0.1, 0.07]} />
         <meshStandardMaterial
-          color="#fef08a"
-          emissive="#eab308"
+          color={SCENE_COLORS.lanternLight}
+          emissive={SCENE_COLORS.lanternLight}
           emissiveIntensity={1.5}
         />
       </mesh>
-      <pointLight position={[0.18, 0.32, -0.2]} color="#fef08a" intensity={0.9} distance={2} />
+      <pointLight position={[0.18, 0.32, -0.2]} color={SCENE_COLORS.lanternLight} intensity={0.9} distance={2} />
     </group>
   );
 }
@@ -219,15 +220,15 @@ function FloatingCloud({ position = [0, 0, 0], scale = 1, speed = 0.2 }) {
     <group ref={cloudRef} position={position} scale={scale}>
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[0.32, 5, 4]} />
-        <meshStandardMaterial color="#f8fafc" roughness={0.9} flatShading transparent opacity={0.85} />
+        <meshStandardMaterial color={SCENE_COLORS.glacierRidge} roughness={0.9} flatShading transparent opacity={0.7} />
       </mesh>
       <mesh position={[0.26, -0.05, 0]}>
         <sphereGeometry args={[0.22, 5, 4]} />
-        <meshStandardMaterial color="#f8fafc" roughness={0.9} flatShading transparent opacity={0.85} />
+        <meshStandardMaterial color={SCENE_COLORS.glacierRidge} roughness={0.9} flatShading transparent opacity={0.7} />
       </mesh>
       <mesh position={[-0.24, -0.04, 0.05]}>
         <sphereGeometry args={[0.24, 5, 4]} />
-        <meshStandardMaterial color="#f8fafc" roughness={0.9} flatShading transparent opacity={0.85} />
+        <meshStandardMaterial color={SCENE_COLORS.glacierRidge} roughness={0.9} flatShading transparent opacity={0.7} />
       </mesh>
     </group>
   );
@@ -240,25 +241,25 @@ function MiniatureNatureIsland() {
       {/* 1. Subterranean Cliff Base (Stone Rock Pedestal) */}
       <mesh position={[0, -0.65, 0]}>
         <cylinderGeometry args={[2.5, 1.7, 1.3, 7]} />
-        <meshStandardMaterial color="#1e293b" roughness={0.9} flatShading />
+        <meshStandardMaterial color={SCENE_COLORS.campsitePlot} roughness={0.9} flatShading />
       </mesh>
 
-      {/* 2. Vibrant Emerald Meadow / Plot Grass Top */}
+      {/* 2. Mountain Ridge Top Surface */}
       <mesh position={[0, 0.02, 0]}>
         <cylinderGeometry args={[2.58, 2.52, 0.18, 7]} />
-        <meshStandardMaterial color="#059669" roughness={0.7} flatShading />
+        <meshStandardMaterial color={SCENE_COLORS.groundPlateau} roughness={0.7} flatShading />
       </mesh>
 
       {/* 3. Mountain Ridge Crest on the island corner */}
       <group position={[-1.1, 0.1, -0.9]}>
         <mesh position={[0, 0.9, 0]}>
           <coneGeometry args={[1.1, 1.8, 5]} />
-          <meshStandardMaterial color="#0f3e30" roughness={0.85} flatShading />
+          <meshStandardMaterial color={SCENE_COLORS.distantMountains} roughness={0.85} flatShading />
         </mesh>
         {/* Snow Peak */}
         <mesh position={[0, 1.45, 0]}>
           <coneGeometry args={[0.42, 0.7, 5]} />
-          <meshStandardMaterial color="#f8fafc" roughness={0.5} flatShading />
+          <meshStandardMaterial color={SCENE_COLORS.snowCaps} roughness={0.5} flatShading />
         </mesh>
       </group>
 
@@ -277,11 +278,11 @@ function MiniatureNatureIsland() {
       {/* 7. Decorative Natural Boulders */}
       <mesh position={[0.9, 0.16, -0.7]} rotation={[0.4, 0.2, 0.5]}>
         <dodecahedronGeometry args={[0.22, 0]} />
-        <meshStandardMaterial color="#475569" roughness={0.85} flatShading />
+        <meshStandardMaterial color={SCENE_COLORS.stones} roughness={0.85} flatShading />
       </mesh>
       <mesh position={[-0.3, 0.14, 1.4]} rotation={[0.1, 0.6, 0.2]}>
         <dodecahedronGeometry args={[0.16, 0]} />
-        <meshStandardMaterial color="#475569" roughness={0.85} flatShading />
+        <meshStandardMaterial color={SCENE_COLORS.stones} roughness={0.85} flatShading />
       </mesh>
 
       {/* 8. Floating Puffy Clouds around the Island */}
@@ -307,10 +308,10 @@ class SceneErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return (
         <div className="relative w-full h-[420px] sm:h-[480px] lg:h-[540px] flex items-center justify-center p-6">
-          <div className="rounded-3xl border border-emerald-500/20 bg-emerald-50/60 p-8 text-center backdrop-blur shadow-sm max-w-sm">
+          <div className="rounded-3xl border border-white/10 bg-dusk p-8 text-center backdrop-blur shadow-sm max-w-sm">
             <span className="text-3xl">🏔️</span>
-            <p className="mt-2 font-bold text-slate-800">Panoramic Himalayan Retreats</p>
-            <p className="text-xs text-slate-500 mt-1">Scenic plots, pine glades & starlit stays ready to explore.</p>
+            <p className="mt-2 font-bold text-snow">Panoramic Himalayan Retreats</p>
+            <p className="text-xs text-light-slate mt-1">Scenic plots, pine glades & starlit stays ready to explore.</p>
           </div>
         </div>
       );
@@ -319,8 +320,8 @@ class SceneErrorBoundary extends React.Component {
   }
 }
 
-// Main Export Component
-export default function HeroScene() {
+// Main Inner 3D Component
+function HeroSceneInner() {
   const [hasWebGL, setHasWebGL] = useState(true);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isLowEnd, setIsLowEnd] = useState(false);
@@ -332,13 +333,16 @@ export default function HeroScene() {
       const lowCores =
         typeof navigator !== "undefined" &&
         navigator.hardwareConcurrency &&
-        navigator.hardwareConcurrency <= 2;
+        navigator.hardwareConcurrency <= 4;
+      const prefersReducedMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const saveData =
         typeof navigator !== "undefined" &&
         navigator.connection &&
         Boolean(navigator.connection.saveData);
 
-      setIsSmallScreen(Boolean(small));
+      setIsSmallScreen(Boolean(small || prefersReducedMotion));
       setIsLowEnd(Boolean(lowCores || saveData));
     };
 
@@ -347,24 +351,21 @@ export default function HeroScene() {
     return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
-  // Mobile / Low-End Fallback: Lightweight static image instead of heavy WebGL canvas
-  if (!hasWebGL || isSmallScreen) {
+  // Mobile / Low-End Fallback: Static navy hero with warm saffron sun motif
+  if (!hasWebGL || isSmallScreen || isLowEnd) {
     return (
-      <div className="relative w-full h-[340px] sm:h-[400px] rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex items-center justify-center bg-slate-950">
-        <img
-          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=70"
-          alt="Panoramic Himalayan Plot Preview"
-          className="absolute inset-0 w-full h-full object-cover opacity-75"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-        <div className="relative z-10 p-6 text-center text-white max-w-xs">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 px-3 py-1 text-[11px] font-bold text-emerald-300 uppercase tracking-wider backdrop-blur-md mb-2">
-            🏔️ Mobile Optimized
+      <div className="relative w-full h-[340px] sm:h-[400px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex items-center justify-center bg-navy-deep">
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy to-dusk" />
+        {/* Saffron sun motif */}
+        <div className="absolute top-10 right-14 w-28 h-28 rounded-full bg-saffron/20 blur-2xl" />
+        <div className="absolute top-14 right-18 w-16 h-16 rounded-full bg-saffron/40 blur-md" />
+        <div className="relative z-10 p-6 text-center text-snow max-w-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-saffron/15 border border-saffron/30 px-3 py-1 text-[11px] font-bold text-saffron uppercase tracking-wider backdrop-blur-md mb-2">
+            🏔️ Himalayan Dusk
           </span>
-          <h4 className="text-base font-bold text-white">Scenic Himalayan Plot</h4>
-          <p className="text-xs text-slate-300 mt-1">
-            High-performance preview loaded for smaller screens to conserve data and battery.
+          <h4 className="text-base font-bold text-snow">Scenic Mountain Plots</h4>
+          <p className="text-xs text-light-slate mt-1">
+            Discover secluded glades, alpine meadows, and ridge-line camps by the hour.
           </p>
         </div>
       </div>
@@ -372,11 +373,10 @@ export default function HeroScene() {
   }
 
   return (
-    <SceneErrorBoundary>
-      <div
-        className="relative w-full h-[420px] sm:h-[480px] lg:h-[540px] select-none"
-        style={{ touchAction: "none" }}
-      >
+    <div
+      className="relative w-full h-[420px] sm:h-[480px] lg:h-[540px] select-none"
+      style={{ touchAction: "none" }}
+    >
         <Canvas
           camera={{ position: [3.8, 3.2, 5.0], fov: 42 }}
           gl={{
@@ -384,46 +384,52 @@ export default function HeroScene() {
             alpha: true,
             powerPreference: isLowEnd ? "low-power" : "high-performance",
           }}
-          dpr={isLowEnd ? 1 : [1, 1.5]}
+          dpr={[1, 1.5]}
           className="cursor-grab active:cursor-grabbing"
         >
-          {/* Soft Sky & Daylight Ambient Lighting */}
-          <ambientLight intensity={1.1} color="#ffffff" />
+          {/* Ambient Lighting */}
+          <ambientLight intensity={0.9} color={SCENE_COLORS.ambientLight} />
 
-          {/* Crisp Himalayan Sunlight casting depth shadows */}
-          <directionalLight position={[6, 10, 4]} intensity={1.8} color="#fffbeb" castShadow />
+          {/* Warm Saffron Himalayan Sunlight */}
+          <directionalLight position={[6, 10, 4]} intensity={2.2} color={SCENE_COLORS.sunLight} castShadow />
 
-          {/* Soft Meadow Fill Light */}
-          <directionalLight position={[-6, 4, -4]} intensity={0.65} color="#a7f3d0" />
+          {/* Cool Dusk Fill Light */}
+          <directionalLight position={[-6, 4, -4]} intensity={0.8} color={SCENE_COLORS.fillLight} />
 
-          {/* Interactive Floating Island with Gentle Levitation & User Rotation */}
+          {/* Interactive Floating Island */}
           <Suspense fallback={null}>
             <Float
-              speed={1.8} // Animation speed
-              rotationIntensity={0.25} // XYZ rotation intensity
-              floatIntensity={0.5} // Up/down float intensity
+              speed={1.8}
+              rotationIntensity={0.25}
+              floatIntensity={0.5}
               floatingRange={[-0.1, 0.1]}
             >
               <MiniatureNatureIsland />
             </Float>
 
-            {/* Smooth Orbit Controls with auto-rotate and angle clamping */}
             <OrbitControls
-              enableZoom={false} // Prevent stealing page scroll
-              enablePan={false} // Keep centered
-              autoRotate={true} // Gentle idle rotation
+              enableZoom={false}
+              enablePan={false}
+              autoRotate={true}
               autoRotateSpeed={0.8}
-              minPolarAngle={Math.PI / 4.2} // Prevent viewing from directly above
-              maxPolarAngle={Math.PI / 2.05} // Prevent viewing from under the ground
+              minPolarAngle={Math.PI / 4.2}
+              maxPolarAngle={Math.PI / 2.05}
             />
           </Suspense>
         </Canvas>
 
         {/* Subtle Hint Badge */}
-        <div className="pointer-events-none absolute bottom-3 right-4 sm:right-6 rounded-full bg-white/85 px-3 py-1 text-[11px] font-semibold text-slate-700 backdrop-blur-md border border-slate-200/90 shadow-sm flex items-center gap-1.5">
-          <span className="text-emerald-600">✦</span> Drag to explore plot
+        <div className="pointer-events-none absolute bottom-3 right-4 sm:right-6 rounded-full bg-dusk/90 px-3 py-1 text-[11px] font-semibold text-snow backdrop-blur-md border border-white/10 shadow-sm flex items-center gap-1.5">
+          <span className="text-saffron">✦</span> Drag to explore plot
         </div>
       </div>
+  );
+}
+
+export default function HeroScene(props) {
+  return (
+    <SceneErrorBoundary>
+      <HeroSceneInner {...props} />
     </SceneErrorBoundary>
   );
 }

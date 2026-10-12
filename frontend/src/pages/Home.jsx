@@ -253,9 +253,9 @@ function Home() {
             <div className="absolute inset-0 z-0">
               <Suspense
                 fallback={
-                  <div className="w-full h-full flex flex-col items-center justify-center bg-slate-950 text-emerald-400">
-                    <div className="w-10 h-10 border-2 border-emerald-500/20 border-t-emerald-400 rounded-full animate-spin mb-3" />
-                    <span className="text-xs font-semibold tracking-wider uppercase">Loading 3D Terrain...</span>
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-navy text-saffron">
+                    <div className="w-10 h-10 border-2 border-saffron/20 border-t-saffron rounded-full animate-spin mb-3" />
+                    <span className="text-xs font-semibold tracking-wider uppercase text-light-slate">Loading 3D Terrain...</span>
                   </div>
                 }
               >
@@ -299,23 +299,11 @@ function Home() {
 
           {/* 3. Multi-Layer Contrast Overlays ensuring 100% WCAG AAA readability at all breakpoints */}
           {/* Horizontal dark scrim for text content readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/70 to-slate-900/35 sm:to-transparent pointer-events-none" />
-          {/* Subtle brand emerald undertone */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-emerald-950/40 via-transparent to-black/30 pointer-events-none" />
-          {/* Bottom gradient fade into page content / discovery bar */}
-          <div className="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent pointer-events-none" />
-
-          {/*
-            ALTERNATIVE LAYOUT (Option B - Photo Collage):
-            If an asymmetric multi-photo grid is desired instead of a single full-bleed hero,
-            you can replace the full-bleed <img> with a 12-column grid containing:
-            - 7 columns: Headline, description, and CTAs on light/dark card
-            - 5 columns: An asymmetric 3-image masonry collage featuring:
-              1. Large portrait: Alpine meadow (photo-1506744038136-46273834b3fb)
-              2. Top-right small landscape: Pine glade (photo-1426604966848-d7adac402bff)
-              3. Bottom-right small landscape: Ridge sunset (photo-1472214103451-9374bd1c798e)
-            Currently using Option A (Full-Bleed Photography) for highest visual impact and immersion.
-          */}
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy/85 to-navy/40 sm:to-transparent pointer-events-none" />
+          {/* Subtle dusk undertone */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-navy-deep/60 via-transparent to-dusk/40 pointer-events-none" />
+          {/* Bottom gradient fade into snow content */}
+          <div className="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-t from-snow via-snow/40 to-transparent pointer-events-none" />
 
           <div className="relative z-10 mx-auto max-w-7xl px-6 pt-20 pb-24 sm:pt-24 sm:pb-28 lg:pt-28 lg:pb-32 lg:px-8 w-full">
             <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-8">
@@ -327,19 +315,19 @@ function Home() {
                 className="lg:col-span-8 text-left max-w-2xl lg:max-w-3xl"
               >
                 <div className="flex flex-wrap items-center gap-3 mb-6">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-950/70 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-emerald-300 shadow-md backdrop-blur-md">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-dusk/80 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-snow shadow-md backdrop-blur-md">
+                    <span className="h-2 w-2 rounded-full bg-saffron animate-pulse" />
                     Verified Mountain Land
                   </div>
                   {/* View Mode Toggle */}
-                  <div className="inline-flex items-center rounded-full bg-slate-900/80 p-1 border border-white/20 backdrop-blur-md shadow-lg">
+                  <div className="inline-flex items-center rounded-full bg-dusk/90 p-1 border border-white/20 backdrop-blur-md shadow-lg">
                     <button
                       type="button"
                       onClick={() => setShow3DHero(false)}
                       className={`px-3 py-1 text-xs font-bold rounded-full transition cursor-pointer ${
                         !show3DHero
-                          ? "bg-emerald-600 text-white shadow"
-                          : "text-slate-300 hover:text-white"
+                          ? "bg-saffron text-navy shadow font-bold"
+                          : "text-snow hover:text-saffron"
                       }`}
                     >
                       📷 Photo
@@ -349,8 +337,8 @@ function Home() {
                       onClick={() => setShow3DHero(true)}
                       className={`px-3 py-1 text-xs font-bold rounded-full transition cursor-pointer flex items-center gap-1.5 ${
                         show3DHero
-                          ? "bg-emerald-600 text-white shadow"
-                          : "text-slate-300 hover:text-white"
+                          ? "bg-saffron text-navy shadow font-bold"
+                          : "text-snow hover:text-saffron"
                       }`}
                     >
                       <span>🏔️ 3D Plot</span>
@@ -358,44 +346,44 @@ function Home() {
                   </div>
                 </div>
 
-                <h1 className="text-4xl font-black leading-[1.12] text-white sm:text-5xl lg:text-6xl tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]">
+                <h1 className="text-4xl font-black leading-[1.12] text-snow sm:text-5xl lg:text-6xl tracking-tight">
                   Find Your Perfect{" "}
-                  <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-300 bg-clip-text text-transparent">
+                  <span className="text-saffron">
                     Scenic Escape
                   </span>
                 </h1>
-                <p className="mt-5 max-w-xl text-base sm:text-lg leading-relaxed text-slate-200 font-normal drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]">
+                <p className="mt-5 max-w-xl text-base sm:text-lg leading-relaxed text-light-slate font-normal">
                   Discover private mountain glades, romantic sunset decks, and campfire stays across Himachal, Uttarakhand & Jammu.
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <Link
                     to="/listings"
-                    className="rounded-full bg-emerald-500 px-7 py-3.5 font-bold text-white shadow-xl shadow-emerald-950/50 transition hover:-translate-y-0.5 hover:bg-emerald-400 active:translate-y-0"
+                    className="rounded-full bg-saffron px-7 py-3.5 font-bold text-navy shadow-xl transition hover:bg-saffron-hover hover:-translate-y-0.5"
                   >
                     Explore Stays
                   </Link>
                   <Link
                     to="/become-a-host"
-                    className="rounded-full border border-white/30 bg-white/10 px-7 py-3.5 font-bold text-white backdrop-blur-md shadow-md transition hover:border-white hover:bg-white/20 hover:-translate-y-0.5"
+                    className="rounded-full border border-white/30 px-7 py-3.5 font-bold text-snow backdrop-blur-md shadow-md transition hover:border-white hover:bg-white/10 hover:-translate-y-0.5"
                   >
                     Become a Host
                   </Link>
                 </div>
 
                 {/* Trust Verification Indicators */}
-                <div className="mt-10 flex flex-wrap items-center gap-6 pt-6 border-t border-white/15 text-xs text-slate-300">
+                <div className="mt-10 flex flex-wrap items-center gap-6 pt-6 border-t border-white/10 text-xs text-light-slate">
                   <div className="flex items-center gap-2">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/30 text-emerald-400 ring-1 ring-emerald-400/40">✓</span>
-                    <span className="font-semibold text-white">100% Real Mountain Land</span>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-saffron/20 text-saffron ring-1 ring-saffron/30 font-bold">✓</span>
+                    <span className="font-semibold text-snow">100% Real Mountain Land</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/30 text-emerald-400 ring-1 ring-emerald-400/40">✓</span>
-                    <span className="font-semibold text-white">Verified Hosts</span>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-saffron/20 text-saffron ring-1 ring-saffron/30 font-bold">✓</span>
+                    <span className="font-semibold text-snow">Verified Hosts</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/30 text-emerald-400 ring-1 ring-emerald-400/40">✓</span>
-                    <span className="font-semibold text-white">Himachal & Uttarakhand</span>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-saffron/20 text-saffron ring-1 ring-saffron/30 font-bold">✓</span>
+                    <span className="font-semibold text-snow">Himachal & Uttarakhand</span>
                   </div>
                 </div>
               </motion.div>
@@ -403,7 +391,7 @@ function Home() {
               {/* Right Column: Interactive 3D Canvas or Mountain Pill */}
               <div className="lg:col-span-4 flex flex-col justify-center items-center h-full min-h-[340px]">
                 {show3DHero ? (
-                  <div className="w-full h-[360px] sm:h-[420px] rounded-3xl overflow-hidden border border-white/20 bg-slate-950/50 backdrop-blur-md shadow-2xl relative">
+                  <div className="w-full h-[360px] sm:h-[420px] rounded-3xl overflow-hidden border border-white/10 bg-navy-deep/80 backdrop-blur-md shadow-2xl relative">
                     <HeroScene />
                   </div>
                 ) : (
@@ -411,19 +399,19 @@ function Home() {
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="rounded-2xl border border-white/20 bg-slate-950/60 p-5 backdrop-blur-md shadow-2xl text-left max-w-xs self-end"
+                    className="rounded-2xl border border-white/10 bg-dusk/90 p-5 backdrop-blur-md shadow-2xl text-left max-w-xs self-end"
                   >
-                    <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
-                      <FaMapMarkerAlt className="text-emerald-400 text-xs" />
+                    <div className="flex items-center gap-2 text-xs font-bold text-saffron">
+                      <FaMapMarkerAlt className="text-saffron text-xs" />
                       <span>Solang Valley, Manali</span>
                     </div>
-                    <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                    <p className="mt-1.5 text-xs text-light-slate leading-relaxed">
                       Pristine alpine meadow & pine camping ridge. 100% natural undeveloped land inventory.
                     </p>
                     <button
                       type="button"
                       onClick={() => setShow3DHero(true)}
-                      className="mt-4 inline-flex items-center gap-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 px-3.5 py-1.5 text-xs font-bold text-white transition shadow cursor-pointer"
+                      className="mt-4 inline-flex items-center gap-2 rounded-xl border border-white/30 hover:bg-white/10 text-snow px-3.5 py-1.5 text-xs font-bold transition shadow cursor-pointer"
                     >
                       <span>🏔️ Launch 3D Explorer</span>
                     </button>
@@ -442,37 +430,37 @@ function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5 }}
-              className="rounded-3xl sm:rounded-full bg-white p-2 sm:p-2.5 shadow-xl shadow-slate-200/80 border border-slate-200/90"
+              className="rounded-3xl sm:rounded-full bg-white p-2 sm:p-2.5 shadow-xl border border-mist"
             >
               <form
                 onSubmit={handleSearchSubmit}
-                className="flex flex-col sm:flex-row items-center divide-y sm:divide-y-0 sm:divide-x divide-slate-100 relative"
+                className="flex flex-col sm:flex-row items-center divide-y sm:divide-y-0 sm:divide-x divide-mist relative"
               >
                 {/* Location */}
-                <label className="flex-1 w-full px-5 py-2.5 sm:py-2 text-left hover:bg-slate-50/90 rounded-2xl sm:rounded-full transition cursor-pointer group">
-                  <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-emerald-600 transition">
-                    <FaMapMarkerAlt className="text-emerald-500 text-xs flex-shrink-0" /> Location
+                <label className="flex-1 w-full px-5 py-2.5 sm:py-2 text-left hover:bg-snow rounded-2xl sm:rounded-full transition cursor-pointer group">
+                  <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-brand group-hover:text-navy transition">
+                    <FaMapMarkerAlt className="text-saffron-text text-xs flex-shrink-0" /> Location
                   </span>
                   <input
                     type="text"
                     value={searchLocation}
                     onChange={(e) => setSearchLocation(e.target.value)}
                     placeholder="Where to? (e.g. Manali, Solang)"
-                    className="w-full bg-transparent text-sm font-semibold text-slate-800 placeholder:text-slate-400 outline-none mt-0.5"
+                    className="w-full bg-transparent text-sm font-semibold text-navy placeholder:text-slate-brand outline-none mt-0.5"
                   />
                 </label>
 
                 {/* Date */}
-                <label className="w-full sm:w-44 lg:w-48 px-5 py-2.5 sm:py-2 text-left hover:bg-slate-50/90 rounded-2xl sm:rounded-full transition cursor-pointer group">
-                  <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-emerald-600 transition">
-                    <FaCalendarAlt className="text-emerald-500 text-xs flex-shrink-0" /> Date
+                <label className="w-full sm:w-44 lg:w-48 px-5 py-2.5 sm:py-2 text-left hover:bg-snow rounded-2xl sm:rounded-full transition cursor-pointer group">
+                  <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-brand group-hover:text-navy transition">
+                    <FaCalendarAlt className="text-saffron-text text-xs flex-shrink-0" /> Date
                   </span>
                   <input
                     type="date"
                     value={searchDate}
                     min={new Date().toISOString().split("T")[0]}
                     onChange={(e) => setSearchDate(e.target.value)}
-                    className="w-full bg-transparent text-sm font-semibold text-slate-800 outline-none mt-0.5 cursor-pointer [color-scheme:light]"
+                    className="w-full bg-transparent text-sm font-semibold text-navy outline-none mt-0.5 cursor-pointer [color-scheme:light]"
                   />
                 </label>
 
@@ -481,23 +469,23 @@ function Home() {
                   <button
                     type="button"
                     onClick={() => setGuestsDropdownOpen((prev) => !prev)}
-                    className="w-full px-5 py-2.5 sm:py-2 text-left hover:bg-slate-50/90 rounded-2xl sm:rounded-full transition cursor-pointer group flex flex-col justify-center"
+                    className="w-full px-5 py-2.5 sm:py-2 text-left hover:bg-snow rounded-2xl sm:rounded-full transition cursor-pointer group flex flex-col justify-center"
                   >
-                    <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-emerald-600 transition">
-                      <FaUsers className="text-emerald-500 text-xs flex-shrink-0" /> Guests
+                    <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-brand group-hover:text-navy transition">
+                      <FaUsers className="text-saffron-text text-xs flex-shrink-0" /> Guests
                     </span>
-                    <span className="text-sm font-semibold text-slate-800 mt-0.5 truncate">
+                    <span className="text-sm font-semibold text-navy mt-0.5 truncate">
                       {searchGuests ? `${searchGuests} Guest${searchGuests > 1 ? "s" : ""}` : "Add guests"}
                     </span>
                   </button>
 
                   {/* Stepper Popover */}
                   {guestsDropdownOpen && (
-                    <div className="absolute top-full sm:right-0 mt-3 w-64 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-150">
-                      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div className="absolute top-full sm:right-0 mt-3 w-64 rounded-2xl border border-mist bg-white p-4 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-150">
+                      <div className="flex items-center justify-between pb-3 border-b border-mist">
                         <div>
-                          <p className="text-sm font-bold text-slate-900">Total Guests</p>
-                          <p className="text-xs text-slate-400">Ages 13 or above</p>
+                          <p className="text-sm font-bold text-navy">Total Guests</p>
+                          <p className="text-xs text-slate-brand">Ages 13 or above</p>
                         </div>
                         <div className="flex items-center gap-3">
                           <button
@@ -507,11 +495,11 @@ function Home() {
                               e.stopPropagation();
                               setSearchGuests((prev) => Math.max(1, prev - 1));
                             }}
-                            className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 text-slate-600 hover:border-emerald-500 hover:text-emerald-600 active:scale-95 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer"
+                            className="flex h-8 w-8 items-center justify-center rounded-full border border-mist text-navy hover:border-navy hover:bg-snow active:scale-95 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer"
                           >
                             <FaMinus size={10} />
                           </button>
-                          <span className="w-6 text-center text-sm font-bold text-slate-900">
+                          <span className="w-6 text-center text-sm font-bold text-navy">
                             {searchGuests}
                           </span>
                           <button
@@ -521,18 +509,18 @@ function Home() {
                               e.stopPropagation();
                               setSearchGuests((prev) => Math.min(15, prev + 1));
                             }}
-                            className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-300 text-slate-600 hover:border-emerald-500 hover:text-emerald-600 active:scale-95 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer"
+                            className="flex h-8 w-8 items-center justify-center rounded-full border border-mist text-navy hover:border-navy hover:bg-snow active:scale-95 disabled:opacity-30 disabled:pointer-events-none transition cursor-pointer"
                           >
                             <FaPlus size={10} />
                           </button>
                         </div>
                       </div>
                       <div className="mt-3 flex justify-between items-center text-xs">
-                        <span className="text-slate-400">Max 15 guests</span>
+                        <span className="text-slate-brand">Max 15 guests</span>
                         <button
                           type="button"
                           onClick={() => setGuestsDropdownOpen(false)}
-                          className="text-emerald-600 font-bold hover:underline cursor-pointer"
+                          className="text-navy font-bold hover:underline cursor-pointer"
                         >
                           Done
                         </button>
@@ -545,7 +533,7 @@ function Home() {
                 <div className="w-full sm:w-auto p-1">
                   <button
                     type="submit"
-                    className="w-full sm:w-auto h-12 px-7 rounded-2xl sm:rounded-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-sm shadow-md shadow-emerald-600/30 flex items-center justify-center gap-2 transition hover:-translate-y-0.5 flex-shrink-0 cursor-pointer"
+                    className="w-full sm:w-auto h-12 px-7 rounded-2xl sm:rounded-full bg-navy hover:bg-dusk active:scale-95 text-snow font-bold text-sm shadow-md flex items-center justify-center gap-2 transition hover:-translate-y-0.5 flex-shrink-0 cursor-pointer"
                   >
                     <FaSearch size={13} />
                     <span>Search Stays</span>
@@ -572,15 +560,15 @@ function Home() {
               </div>
             )}
 
-            {/* Error State */}
-            {!loading && error && (
-              <div className="mt-12 rounded-2xl border border-rose-200 bg-rose-50 p-8 text-center">
-                <FaExclamationTriangle className="mx-auto text-3xl text-rose-500" />
-                <h3 className="mt-3 text-lg font-semibold text-rose-800">Unable to load live spots</h3>
-                <p className="mt-1 text-sm text-rose-600">{error}</p>
+            {/* Error State when no spots available */}
+            {!loading && error && featuredSpots.length === 0 && (
+              <div className="mt-12 rounded-2xl border border-danger/20 bg-danger-mist p-8 text-center">
+                <FaExclamationTriangle className="mx-auto text-3xl text-danger" />
+                <h3 className="mt-3 text-lg font-semibold text-danger">Unable to load live spots</h3>
+                <p className="mt-1 text-sm text-slate-brand">{error}</p>
                 <button
                   onClick={fetchSpots}
-                  className="mt-4 rounded-full bg-rose-600 px-5 py-2 text-sm font-semibold text-white shadow hover:bg-rose-500"
+                  className="mt-4 rounded-full border-2 border-navy text-navy px-5 py-2 text-sm font-semibold hover:bg-navy hover:text-snow cursor-pointer"
                 >
                   Try Again
                 </button>
@@ -589,14 +577,14 @@ function Home() {
 
             {/* Empty State */}
             {!loading && !error && featuredSpots.length === 0 && (
-              <div className="mt-12 rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
-                <p className="text-lg font-semibold text-slate-700">No destinations listed yet.</p>
-                <p className="mt-2 text-sm text-slate-500">Check back soon or be the first host to add a scenic plot!</p>
+              <div className="mt-12 rounded-2xl border border-mist bg-white p-12 text-center shadow-sm">
+                <p className="text-lg font-semibold text-navy">No destinations listed yet.</p>
+                <p className="mt-2 text-sm text-slate-brand">Check back soon or be the first host to add a scenic plot!</p>
               </div>
             )}
 
-            {/* Live Spots Grid */}
-            {!loading && !error && featuredSpots.length > 0 && (
+            {/* Spots Grid */}
+            {!loading && featuredSpots.length > 0 && (
               <div className="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
                 {featuredSpots.map((place, index) => (
                   <motion.div
@@ -627,28 +615,28 @@ function Home() {
           subtitle="Select your vibe below to instantly discover outdoor spaces matched to your activity, group size, and retreat style"
           showVibeSelector={true}
           limit={4}
-          className="bg-slate-50 border-t border-slate-200/80"
+          className="bg-snow border-t border-mist"
         />
 
         {/* Signature Experiences Spotlight */}
         {featuredExperiences.length > 0 && (
-          <section className="bg-slate-950 text-white px-6 py-20 lg:px-8 overflow-hidden relative">
+          <section className="bg-navy-deep text-snow px-6 py-20 lg:px-8 overflow-hidden relative">
             <div className="mx-auto max-w-7xl relative z-10">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 block mb-2">
+                  <span className="text-xs font-bold uppercase tracking-widest text-saffron block mb-2">
                     Curated Outdoor Packages
                   </span>
-                  <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                  <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-snow">
                     Signature Thikana Experiences
                   </h2>
-                  <p className="mt-2 text-sm text-slate-400 max-w-xl">
+                  <p className="mt-2 text-sm text-light-slate max-w-xl">
                     More than raw land — fully coordinated nature escapes complete with bonfires, ambient dinners, music, and stargazing gear.
                   </p>
                 </div>
                 <Link
                   to="/experiences"
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-5 py-2.5 text-xs font-bold text-emerald-400 hover:bg-emerald-500 hover:text-white transition shrink-0"
+                  className="inline-flex items-center gap-2 rounded-full border border-saffron/40 bg-saffron/10 px-5 py-2.5 text-xs font-bold text-saffron hover:bg-saffron hover:text-navy transition shrink-0"
                 >
                   <span>Explore All Experiences</span>
                   <FaArrowRight size={10} />
@@ -664,7 +652,7 @@ function Home() {
           </section>
         )}
 
-        <section id="how-it-works" className="bg-white px-6 py-20 lg:px-8">
+        <section id="how-it-works" className="bg-white px-6 py-20 lg:px-8 border-t border-mist">
           <div className="mx-auto max-w-7xl">
             <SectionHeading
               eyebrow="Simple journey"
@@ -682,13 +670,13 @@ function Home() {
                     viewport={{ once: true, amount: 0.25 }}
                     transition={{ duration: 0.4, delay: index * 0.08 }}
                     whileHover={{ y: -6, scale: 1.02 }}
-                    className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-8 shadow-sm"
+                    className="rounded-[1.75rem] border border-mist bg-snow p-8 shadow-sm"
                   >
-                    <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/15 text-2xl text-emerald-600">
+                    <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-saffron/15 text-2xl text-saffron-text">
                       <Icon />
                     </div>
-                    <h3 className="text-xl font-semibold text-slate-900">{step.title}</h3>
-                    <p className="mt-3 text-base leading-7 text-slate-600">{step.description}</p>
+                    <h3 className="text-xl font-semibold text-navy">{step.title}</h3>
+                    <p className="mt-3 text-base leading-7 text-slate-brand">{step.description}</p>
                   </motion.div>
                 );
               })}
@@ -696,7 +684,7 @@ function Home() {
           </div>
         </section>
 
-        <section id="about" className="px-6 py-20 lg:px-8">
+        <section id="about" className="px-6 py-20 lg:px-8 bg-snow border-t border-mist">
           <div className="mx-auto max-w-7xl">
             <SectionHeading
               eyebrow="Why choose us"
@@ -714,13 +702,13 @@ function Home() {
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.35, delay: index * 0.08 }}
                     whileHover={{ y: -6, scale: 1.02 }}
-                    className="rounded-[1.75rem] border border-slate-200 bg-white p-7 shadow-sm"
+                    className="rounded-[1.75rem] border border-mist bg-white p-7 shadow-sm"
                   >
-                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-xl text-emerald-600 ring-1 ring-emerald-500/20">
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-pine-mist text-xl text-pine">
                       <Icon />
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900">{reason.title}</h3>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{reason.description}</p>
+                    <h3 className="text-lg font-semibold text-navy">{reason.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-brand">{reason.description}</p>
                   </motion.div>
                 );
               })}
@@ -730,6 +718,32 @@ function Home() {
 
         {/* Dynamic Guest Testimonials Carousel & Story Sharing */}
         <DynamicTestimonials />
+
+        {/* Himalayan Dusk Navy CTA Band */}
+        <section className="bg-navy py-16 px-6 lg:px-8 text-snow text-center relative overflow-hidden border-t border-white/10">
+          <div className="mx-auto max-w-4xl relative z-10">
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-snow">
+              Ready for your own patch of the mountains?
+            </h2>
+            <p className="mt-4 text-base sm:text-lg text-light-slate max-w-2xl mx-auto">
+              Book serene private acres by the hour or host your Himalayan sanctuary with Thikana.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link
+                to="/listings"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-saffron text-navy font-bold text-sm hover:bg-saffron-hover shadow-lg transition active:scale-95 cursor-pointer"
+              >
+                Explore Plots
+              </Link>
+              <Link
+                to="/host"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-full border border-white/30 text-snow font-bold text-sm hover:bg-white/10 transition active:scale-95 cursor-pointer"
+              >
+                Become a Host
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />

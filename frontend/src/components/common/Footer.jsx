@@ -35,7 +35,7 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-slate-950 px-6 pt-16 pb-12 text-slate-300 border-t border-slate-900">
+    <footer className="bg-navy-deep px-6 pt-16 pb-12 text-light-slate border-t border-white/10">
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-2 lg:grid-cols-4">
         {/* Brand Column */}
         <div>
@@ -45,12 +45,16 @@ function Footer() {
             className="inline-block transition-transform duration-200 hover:scale-[1.02] focus:outline-none"
             aria-label="Thikana Home"
           >
-            <img src="/logo-full.svg" alt="Thikana" className="h-10 sm:h-11 w-auto object-contain" />
+            <img
+              src="/logo-white.svg"
+              alt="Thikana - Your Place. Your Escape."
+              className="h-10 sm:h-11 w-auto object-contain"
+            />
           </Link>
-          <p className="mt-5 text-sm leading-7 text-slate-400 max-w-sm">
+          <p className="mt-5 text-sm leading-7 text-light-slate max-w-sm">
             Discover scenic stays, book unforgettable nature escapes, and travel with confidence across the Himalayas.
           </p>
-          <div className="mt-6 flex items-center gap-2 text-xs text-slate-500 font-medium">
+          <div className="mt-6 flex items-center gap-2 text-xs text-light-slate/80 font-medium">
             <span>Verified Scenic Plots</span>
             <span>•</span>
             <span>Himachal, Uttarakhand & J&K</span>
@@ -59,13 +63,13 @@ function Footer() {
 
         {/* Quick Links Column */}
         <div>
-          <h3 className="text-base font-bold uppercase tracking-wider text-white">Quick Links</h3>
+          <h3 className="text-base font-bold uppercase tracking-wider text-snow">Quick Links</h3>
           <ul className="mt-4 space-y-3 text-sm">
             <li>
               <Link
                 to="/"
                 onClick={(e) => handleScrollLink(e, "/", null)}
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
+                className="text-light-slate hover:text-saffron transition inline-block"
               >
                 Home
               </Link>
@@ -73,41 +77,39 @@ function Footer() {
             <li>
               <Link
                 to="/listings"
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
+                className="text-light-slate hover:text-saffron transition inline-block"
               >
                 Explore Stays
               </Link>
             </li>
             <li>
               <Link
+                to="/experiences"
+                className="text-light-slate hover:text-saffron transition inline-block"
+              >
+                Curated Experiences
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/become-a-host"
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
+                className="text-light-slate hover:text-saffron transition inline-block"
               >
                 Become a Host
               </Link>
             </li>
             <li>
               <Link
-                to="/#about"
-                onClick={(e) => handleScrollLink(e, "/", "about")}
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
+                to="/corporate"
+                className="text-light-slate hover:text-saffron transition inline-block"
               >
-                About Thikana
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/#how-it-works"
-                onClick={(e) => handleScrollLink(e, "/", "how-it-works")}
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
-              >
-                How It Works
+                Corporate Retreats
               </Link>
             </li>
             <li>
               <Link
                 to="/contact"
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
+                className="text-light-slate hover:text-saffron transition inline-block"
               >
                 Contact Concierge
               </Link>
@@ -115,43 +117,40 @@ function Footer() {
           </ul>
         </div>
 
-        {/* Support Column */}
+        {/* Support & Legal Column */}
         <div>
-          <h3 className="text-base font-bold uppercase tracking-wider text-white">Support</h3>
+          <h3 className="text-base font-bold uppercase tracking-wider text-snow">Support & Trust</h3>
           <ul className="mt-4 space-y-3 text-sm">
             <li>
               <Link
-                to="/contact#customer-care"
-                onClick={(e) => handleScrollLink(e, "/contact", "customer-care")}
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
+                to="/contact"
+                className="text-light-slate hover:text-saffron transition inline-block"
               >
                 24/7 Customer Care
               </Link>
             </li>
             <li>
               <Link
-                to="/cancellation-policy"
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
+                to="/refund-policy"
+                className="text-light-slate hover:text-saffron transition inline-block"
               >
-                Flexible Cancellations
+                Refund Policy
               </Link>
             </li>
             <li>
               <Link
-                to="/contact#assistance"
-                onClick={(e) => handleScrollLink(e, "/contact", "assistance")}
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
+                to="/privacy"
+                className="text-light-slate hover:text-saffron transition inline-block"
               >
-                Travel Assistance
+                Privacy Policy
               </Link>
             </li>
             <li>
               <Link
-                to="/contact#support"
-                onClick={(e) => handleScrollLink(e, "/contact", "support")}
-                className="text-slate-400 hover:text-emerald-400 transition inline-block"
+                to="/terms"
+                className="text-light-slate hover:text-saffron transition inline-block"
               >
-                Send Support Message
+                Terms of Service
               </Link>
             </li>
           </ul>
@@ -159,14 +158,14 @@ function Footer() {
 
         {/* Follow Us Column */}
         <div>
-          <h3 className="text-base font-bold uppercase tracking-wider text-white">Follow Us</h3>
+          <h3 className="text-base font-bold uppercase tracking-wider text-snow">Connect</h3>
           <div className="mt-4 flex gap-3 text-lg">
             <a
               href="https://facebook.com/thikana"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-slate-400 hover:bg-emerald-600 hover:text-white transition shadow-sm border border-slate-800"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-dusk text-light-slate hover:bg-saffron hover:text-navy transition shadow-sm border border-white/10"
             >
               <FaFacebook />
             </a>
@@ -175,7 +174,7 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-slate-400 hover:bg-emerald-600 hover:text-white transition shadow-sm border border-slate-800"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-dusk text-light-slate hover:bg-saffron hover:text-navy transition shadow-sm border border-white/10"
             >
               <FaInstagram />
             </a>
@@ -184,7 +183,7 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Twitter / X"
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-slate-400 hover:bg-emerald-600 hover:text-white transition shadow-sm border border-slate-800"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-dusk text-light-slate hover:bg-saffron hover:text-navy transition shadow-sm border border-white/10"
             >
               <FaTwitter />
             </a>
@@ -193,7 +192,7 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-slate-400 hover:bg-emerald-600 hover:text-white transition shadow-sm border border-slate-800"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-dusk text-light-slate hover:bg-saffron hover:text-navy transition shadow-sm border border-white/10"
             >
               <FaLinkedin />
             </a>
@@ -202,16 +201,16 @@ function Footer() {
           <div className="mt-6 space-y-2">
             <a
               href="mailto:support@thikana.com"
-              className="flex items-center gap-2.5 text-sm font-medium text-slate-300 hover:text-emerald-400 transition"
+              className="flex items-center gap-2.5 text-sm font-medium text-light-slate hover:text-saffron transition"
             >
-              <FaEnvelope className="text-emerald-500 text-xs flex-shrink-0" />
+              <FaEnvelope className="text-saffron text-xs flex-shrink-0" />
               <span>support@thikana.com</span>
             </a>
             <a
               href="tel:+918278819226"
-              className="flex items-center gap-2.5 text-sm font-medium text-slate-300 hover:text-emerald-400 transition"
+              className="flex items-center gap-2.5 text-sm font-medium text-light-slate hover:text-saffron transition"
             >
-              <FaPhoneAlt className="text-emerald-500 text-xs flex-shrink-0" />
+              <FaPhoneAlt className="text-saffron text-xs flex-shrink-0" />
               <span>+91 82788 19226</span>
             </a>
           </div>
@@ -219,25 +218,29 @@ function Footer() {
       </div>
 
       {/* Bottom Bar with Copyright & Legal Links */}
-      <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-4 border-t border-slate-900 pt-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-4 border-t border-white/10 pt-8 text-xs text-light-slate/80 sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 Thikana. All rights reserved.</p>
 
-        <div className="flex flex-wrap items-center gap-4 text-slate-400">
-          <Link to="/privacy-policy" className="hover:text-emerald-400 transition">
+        <div className="flex flex-wrap items-center gap-4 text-light-slate">
+          <Link to="/privacy" className="hover:text-saffron transition">
             Privacy Policy
           </Link>
           <span>•</span>
-          <Link to="/terms-of-service" className="hover:text-emerald-400 transition">
+          <Link to="/terms" className="hover:text-saffron transition">
             Terms of Service
           </Link>
           <span>•</span>
-          <Link to="/cancellation-policy" className="hover:text-emerald-400 transition">
-            Cancellation Policy
+          <Link to="/refund-policy" className="hover:text-saffron transition">
+            Refund Policy
+          </Link>
+          <span>•</span>
+          <Link to="/contact" className="hover:text-saffron transition">
+            Contact
           </Link>
         </div>
 
-        <p className="text-slate-500 flex items-center gap-1">
-          Crafted for scenic stays and unforgettable escapes.
+        <p className="text-light-slate/70 flex items-center gap-1">
+          Crafted for scenic stays and unforgettable mountain escapes.
         </p>
       </div>
     </footer>

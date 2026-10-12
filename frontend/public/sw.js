@@ -9,6 +9,7 @@ const STATIC_ASSETS = [
   "/manifest.json",
   "/favicon.svg",
   "/logo-icon.svg",
+  "/logo-icon-white.svg",
   "/logo-full.svg",
   "/logo-white.svg",
   "/icons/icon-192x192.png",

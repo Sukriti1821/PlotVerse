@@ -20,6 +20,8 @@ import {
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import SpotManageModal from "../components/owner/SpotManageModal";
+import IcalSyncModal from "../components/owner/IcalSyncModal";
+import { FiCalendar } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 import API from "../services/api";
 import { getImageUrl, PLACEHOLDER_IMAGE } from "../utils/imageHelper";
@@ -37,6 +39,7 @@ const OwnerSpots = () => {
   // Modal states
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
   const [spotToEdit, setSpotToEdit] = useState(null);
+  const [icalSpot, setIcalSpot] = useState(null);
 
   // Delete confirmation modal state
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -517,12 +520,21 @@ const OwnerSpots = () => {
                         {isActive ? "Deactivate" : "Activate"}
                       </button>
 
-                      {/* Right Action buttons: Edit & Delete */}
+                      {/* Right Action buttons: iCal Sync, Edit & Delete */}
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
+                          onClick={() => setIcalSpot(spot)}
+                          className="flex items-center gap-1.5 rounded-xl border border-mist bg-white hover:border-navy text-navy px-3 py-2 text-xs font-bold transition shadow-xs cursor-pointer"
+                          title="Two-way iCalendar Sync with Airbnb / Google"
+                        >
+                          <FiCalendar className="text-saffron-text" size={12} /> Sync iCal
+                        </button>
+
+                        <button
+                          type="button"
                           onClick={() => handleOpenEdit(spot)}
-                          className="flex items-center gap-1.5 rounded-xl bg-slate-900 text-white px-3.5 py-2 text-xs font-bold hover:bg-emerald-600 transition shadow-sm"
+                          className="flex items-center gap-1.5 rounded-xl bg-navy text-white px-3.5 py-2 text-xs font-bold hover:bg-navy-deep transition shadow-sm cursor-pointer"
                         >
                           <FaEdit size={11} /> Edit
                         </button>
@@ -530,7 +542,7 @@ const OwnerSpots = () => {
                         <button
                           type="button"
                           onClick={() => handleOpenDelete(spot)}
-                          className="flex items-center justify-center rounded-xl border border-rose-200 bg-rose-50 text-rose-600 hover:bg-rose-100 p-2 text-xs font-bold transition"
+                          className="flex items-center justify-center rounded-xl border border-rose-200 bg-rose-50 text-rose-600 hover:bg-rose-100 p-2 text-xs font-bold transition cursor-pointer"
                           title="Delete Listing"
                         >
                           <FaTrash size={12} />
@@ -551,6 +563,13 @@ const OwnerSpots = () => {
         onClose={() => setIsManageModalOpen(false)}
         spotToEdit={spotToEdit}
         onSpotSaved={handleSpotSaved}
+      />
+
+      {/* Two-Way iCalendar (.ics) Sync Modal */}
+      <IcalSyncModal
+        isOpen={!!icalSpot}
+        onClose={() => setIcalSpot(null)}
+        spot={icalSpot}
       />
 
       {/* Delete / Deactivate Confirmation Modal */}

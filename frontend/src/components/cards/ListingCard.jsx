@@ -132,8 +132,8 @@ const ListingCard = ({ plot, actionLabel = "View Details" }) => {
   const imageUrl = getOptimizedImageUrl(plot.images?.[0] || plot.image, fallback, 600);
 
   return (
-    <div className="group flex flex-col justify-between overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
-      <div className="relative h-52 sm:h-56 overflow-hidden bg-slate-200 flex-shrink-0">
+    <div className="group flex flex-col justify-between overflow-hidden rounded-[1.5rem] border border-mist bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
+      <div className="relative h-52 sm:h-56 overflow-hidden bg-mist flex-shrink-0">
         <img
           src={imageUrl}
           alt={title}
@@ -144,16 +144,16 @@ const ListingCard = ({ plot, actionLabel = "View Details" }) => {
             e.target.src = getImageUrl(null, fallback);
           }}
         />
-        <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-emerald-700 shadow backdrop-blur-sm">
+        <div className="absolute left-4 top-4 rounded-full bg-snow/95 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-navy shadow backdrop-blur-sm border border-mist">
           {category}
         </div>
         {(plot.isFeatured || plot.featuredConfig?.isFeatured) && (
-          <div className="absolute left-4 bottom-3 flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-md shadow-amber-500/30">
+          <div className="absolute left-4 bottom-3 flex items-center gap-1 rounded-full bg-saffron px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-navy shadow-md">
             <span>✨</span> {plot.featuredConfig?.sponsoredBadge || "Featured"}
           </div>
         )}
         {plot.corporateFriendly?.isCorporateFriendly && (
-          <div className="absolute right-4 bottom-3 flex items-center gap-1 rounded-full bg-slate-900/85 px-2.5 py-1 text-[10px] font-bold text-emerald-300 shadow-md backdrop-blur-sm border border-emerald-500/30">
+          <div className="absolute right-4 bottom-3 flex items-center gap-1 rounded-full bg-dusk/90 px-2.5 py-1 text-[10px] font-bold text-snow shadow-md backdrop-blur-sm border border-white/10">
             <span>🏢</span> Up to {plot.corporateFriendly.maxCorporateCapacity || plot.maxGuests || 50}
           </div>
         )}
@@ -164,12 +164,12 @@ const ListingCard = ({ plot, actionLabel = "View Details" }) => {
           title={isLiked ? "Remove from favorites" : "Save destination"}
           className={`absolute right-4 top-4 rounded-full p-2.5 shadow transition-all duration-200 hover:scale-110 active:scale-95 backdrop-blur-sm z-10 ${
             isLiked
-              ? "bg-white text-rose-500 shadow-rose-500/20"
-              : "bg-white/90 text-slate-500 hover:text-rose-500 hover:bg-white"
+              ? "bg-white text-danger shadow-danger/20"
+              : "bg-white/90 text-slate-brand hover:text-danger hover:bg-white"
           }`}
         >
           {isLiked ? (
-            <FaHeart size={14} className="text-rose-500" />
+            <FaHeart size={14} className="text-danger" />
           ) : (
             <FaRegHeart size={14} className="transition-colors duration-200" />
           )}
@@ -181,37 +181,37 @@ const ListingCard = ({ plot, actionLabel = "View Details" }) => {
           <div className="min-w-0 flex-1">
             <h2
               title={title}
-              className="text-base sm:text-lg font-bold text-slate-900 line-clamp-2 min-h-[3rem] leading-snug group-hover:text-emerald-600 transition-colors"
+              className="text-base sm:text-lg font-bold text-navy line-clamp-2 min-h-[3rem] leading-snug group-hover:text-saffron-text transition-colors"
             >
               {title}
             </h2>
             <div
               title={location}
-              className="mt-2 flex items-center gap-1.5 text-xs text-slate-600"
+              className="mt-2 flex items-center gap-1.5 text-xs text-slate-brand"
             >
-              <FaMapMarkerAlt className="text-emerald-500 flex-shrink-0" />
+              <FaMapMarkerAlt className="text-saffron-text flex-shrink-0" />
               <span className="line-clamp-1">{location}</span>
             </div>
           </div>
-          <div className="flex-shrink-0 flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700 ring-1 ring-amber-200/60">
-            <FaStar className="text-amber-500" /> {displayRating}
+          <div className="flex-shrink-0 flex items-center gap-1 rounded-full bg-saffron/15 px-2.5 py-1 text-xs font-bold text-saffron-text ring-1 ring-saffron/30">
+            <FaStar className="text-saffron" /> {displayRating}
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-t border-slate-200 pt-3 text-sm text-slate-600">
+        <div className="flex items-center justify-between border-t border-mist pt-3 text-sm text-slate-brand">
           <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Stay</p>
-            <p className="font-semibold text-slate-800">{displayArea}</p>
+            <p className="text-xs uppercase tracking-[0.24em] text-slate-brand">Stay</p>
+            <p className="font-semibold text-navy">{displayArea}</p>
           </div>
           <div className="text-right">
-            <p className="text-xs uppercase tracking-[0.24em] text-slate-400">From</p>
-            <p className="font-semibold text-emerald-600">{formattedPrice}</p>
+            <p className="text-xs uppercase tracking-[0.24em] text-slate-brand">From</p>
+            <p className="font-bold text-navy text-base">{formattedPrice}</p>
           </div>
         </div>
 
         <Link
           to={`/plot/${spotId}`}
-          className="mt-2 flex items-center justify-center gap-2 rounded-full bg-slate-900 px-4 py-3 font-semibold text-white transition hover:bg-emerald-600"
+          className="mt-2 flex items-center justify-center gap-2 rounded-full border-2 border-navy px-4 py-3 font-bold text-navy transition hover:bg-navy hover:text-snow"
         >
           {actionLabel} <FaArrowRight size={13} />
         </Link>

@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="50 90 390 300" width="500" height="500" fill="none">
+    <g id="thikana-mark" transform="translate(0, 0)">
+      <!-- Saffron Sun (Nestled behind right roof slope) -->
+      <circle cx="362" cy="132" r="42" fill="#FCA311" />
+
+      <!-- Main Combined Shelter & Mountain Silhouette -->
+      <path d="
+        M 72 212
+        C 76 204, 88 196, 102 188
+        L 228 120
+        C 238 114, 252 114, 262 120
+        L 396 190
+        C 408 196, 418 205, 418 214
+        C 418 220, 412 225, 404 225
+        L 388 225
+        L 254 156
+        C 248 153, 242 153, 236 156
+        L 132 208
+        L 132 355
+        C 132 362, 126 368, 118 368
+        L 108 368
+        C 100 368, 94 362, 94 355
+        L 94 225
+        L 78 225
+        C 72 225, 68 220, 72 212
+        Z
+      " fill="#F7F7F2" />
+
+      <!-- Mountain Silhouette beneath the roof apex -->
+      <path d="
+        M 132 280
+        L 218 192
+        C 222 188, 228 188, 232 192
+        L 300 262
+        L 282 262
+        L 225 204
+        L 165 265
+        Z
+      " fill="#F7F7F2" />
+
+      <!-- Foreground Mountain & Hillside Mass -->
+      <path d="
+        M 132 280
+        L 185 240
+        C 190 236, 198 238, 204 244
+        L 230 270
+        C 220 285, 235 298, 248 304
+        C 230 316, 215 334, 195 368
+        L 132 368
+        Z
+      " fill="#F7F7F2" />
+
+      <!-- Right Terrain Mass with Trees -->
+      <path d="
+        M 248 304
+        C 265 296, 280 285, 290 270
+        L 410 338
+        C 416 342, 416 350, 412 356
+        L 396 368
+        L 235 368
+        C 252 344, 260 322, 248 304
+        Z
+      " fill="#F7F7F2" />
+
+      <!-- Evergreen Pine Tree 1 (Left / Tall) -->
+      <path d="
+        M 326 230
+        L 338 248 L 333 248
+        L 345 268 L 339 268
+        L 352 292 L 344 292
+        L 358 320
+        L 326 320
+        L 334 292 L 326 292
+        L 339 268 L 333 268
+        L 345 248 L 340 248
+        Z
+      " fill="#F7F7F2" />
+
+      <!-- Evergreen Pine Tree 2 (Right / Shorter) -->
+      <path d="
+        M 364 250
+        L 374 266 L 369 266
+        L 380 284 L 374 284
+        L 386 306 L 379 306
+        L 392 330
+        L 362 330
+        L 370 306 L 363 306
+        L 375 284 L 369 284
+        L 381 266 L 376 266
+        Z
+      " fill="#F7F7F2" />
+
+      <!-- Winding River / Hiking Path (Cutting cleanly through the landscape) -->
+      <path d="
+        M 218 245
+        C 224 250, 232 258, 230 268
+        C 228 278, 218 286, 222 298
+        C 226 310, 240 318, 238 332
+        C 236 345, 220 356, 195 368
+        L 235 368
+        C 255 352, 268 340, 268 328
+        C 268 316, 252 308, 250 296
+        C 248 284, 260 274, 258 262
+        C 256 252, 242 244, 230 240
+        Z
+      " fill="#14213D" opacity="0.9" />
+    </g>
+  </svg>

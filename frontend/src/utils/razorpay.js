@@ -164,8 +164,8 @@ export const openRazorpayModal = ({
         contact: orderData.customer?.phone || "",
       },
       theme: {
-        color: "#059669", // Emerald 600 brand theme
-        backdrop_color: "#020617",
+        color: "#FCA311", // Saffron Himalayan Dusk brand theme
+        backdrop_color: "#14213D",
       },
       config: RAZORPAY_CHECKOUT_CONFIG,
       modal: {

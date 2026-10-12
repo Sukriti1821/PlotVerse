@@ -7,6 +7,21 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      'leaflet',
+      'react-leaflet',
+      '@react-leaflet/core',
+      '@react-three/fiber',
+      '@react-three/drei',
+    ],
+  },
   build: {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {

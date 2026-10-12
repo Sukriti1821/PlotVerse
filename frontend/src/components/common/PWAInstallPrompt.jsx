@@ -102,21 +102,21 @@ const PWAInstallPrompt = () => {
       aria-label="PWA install prompt"
       className="fixed bottom-20 md:bottom-6 right-4 left-4 md:left-auto md:max-w-md z-40 animate-fade-in-up"
     >
-      <div className="relative overflow-hidden rounded-3xl bg-slate-900/95 border border-emerald-500/30 p-4 sm:p-5 text-white shadow-2xl backdrop-blur-xl ring-1 ring-white/10">
+      <div className="relative overflow-hidden rounded-3xl bg-dusk/95 border border-white/10 p-4 sm:p-5 text-snow shadow-2xl backdrop-blur-xl ring-1 ring-white/10">
         {/* Dismiss Button */}
         <button
           type="button"
           aria-label="Close install prompt"
           onClick={handleDismiss}
-          className="absolute top-3 right-3 rounded-full p-1.5 text-slate-400 hover:text-white transition"
+          className="absolute top-3 right-3 rounded-full p-1.5 text-light-slate hover:text-snow transition"
         >
           <FaTimes size={12} />
         </button>
 
         <div className="flex items-start gap-3.5 pr-6">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 p-2 shadow-lg shadow-emerald-600/30">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-navy-deep border border-white/10 p-2 shadow-lg">
             <img
-              src="/logo-icon.svg"
+              src="/favicon.svg"
               alt="Thikana App Icon"
               className="h-full w-full object-contain rounded-xl"
             />
@@ -124,18 +124,18 @@ const PWAInstallPrompt = () => {
 
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
-              <span className="rounded bg-emerald-500/20 px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-emerald-400">
+              <span className="rounded bg-saffron/20 px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-saffron">
                 PWA Ready
               </span>
-              <h4 className="text-sm font-bold text-white truncate">
+              <h4 className="text-sm font-bold text-snow truncate">
                 Install Thikana App
               </h4>
             </div>
-            <p className="mt-1 text-xs text-slate-300 leading-snug">
+            <p className="mt-1 text-xs text-light-slate leading-snug">
               Thikana — Fast, app-like outdoor plot booking experience with offline viewing.
             </p>
 
-            <div className="mt-2.5 flex items-center gap-3 text-[11px] text-emerald-400 font-medium">
+            <div className="mt-2.5 flex items-center gap-3 text-[11px] text-saffron font-medium">
               <span className="flex items-center gap-1">
                 <FaBolt size={10} /> 1-Tap Launch
               </span>
@@ -146,18 +146,18 @@ const PWAInstallPrompt = () => {
           </div>
         </div>
 
-        <div className="mt-4 flex items-center gap-2 pt-2 border-t border-slate-800">
+        <div className="mt-4 flex items-center gap-2 pt-2 border-t border-white/10">
           <button
             type="button"
             onClick={handleInstallClick}
-            className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 px-4 py-2.5 text-xs font-bold text-slate-950 shadow-md shadow-emerald-500/20 transition active:scale-95"
+            className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-saffron hover:bg-saffron-hover px-4 py-2.5 text-xs font-bold text-navy shadow-md transition active:scale-95"
           >
             <FaDownload size={11} /> Install Application
           </button>
           <button
             type="button"
             onClick={handleDismiss}
-            className="rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-400 hover:text-slate-200 transition"
+            className="rounded-xl px-3 py-2.5 text-xs font-semibold text-light-slate hover:text-snow transition"
           >
             Not Now
           </button>

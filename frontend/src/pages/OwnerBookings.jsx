@@ -31,6 +31,8 @@ import { useAuth } from "../context/AuthContext";
 import API from "../services/api";
 import { getImageUrl } from "../utils/imageHelper";
 import { BookingListSkeleton } from "../components/common/SkeletonLoader";
+import { FiMessageSquare } from "react-icons/fi";
+import BookingChatModal from "../components/chat/BookingChatModal";
 
 const OwnerBookings = () => {
   const { user, openAuthModal } = useAuth();
@@ -40,6 +42,7 @@ const OwnerBookings = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [selectedSpotId, setSelectedSpotId] = useState("all");
   const [actionLoadingId, setActionLoadingId] = useState(null);
+  const [chatBooking, setChatBooking] = useState(null);
   
   // State for Spot Manage Modal
   const [isSpotModalOpen, setIsSpotModalOpen] = useState(false);
@@ -852,6 +855,15 @@ const OwnerBookings = () => {
                                       </p>
                                     </div>
                                   )}
+
+                                  {/* In-App Direct Message Guest Button */}
+                                  <button
+                                    type="button"
+                                    onClick={() => setChatBooking(booking)}
+                                    className="w-full mt-2.5 rounded-xl border border-mist bg-white hover:border-navy px-3 py-2 text-center text-xs font-bold text-navy transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                                  >
+                                    <FiMessageSquare className="text-saffron-text" /> Message Guest
+                                  </button>
                                 </div>
                               </div>
                           </div>
@@ -865,6 +877,15 @@ const OwnerBookings = () => {
           )}
         </div>
       </div>
+
+      {/* Direct In-App Guest Messaging Drawer */}
+      <BookingChatModal
+        isOpen={!!chatBooking}
+        onClose={() => setChatBooking(null)}
+        booking={chatBooking}
+        recipientName={chatBooking?.user?.name || "Guest"}
+        recipientRole="traveler"
+      />
 
       {/* Spot Create / Edit Modal */}
       <SpotManageModal

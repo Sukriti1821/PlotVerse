@@ -230,10 +230,10 @@ const BookingComposer = ({
     return { foodItemsList: items, foodSubtotal: subtotal };
   }, [activeRestaurant, foodQuantities]);
 
-  // Normalize spot's amenity catalog into structured items
+  // Normalize spot's amenity catalog into structured items and bundle mountain experience add-ons
   const catalog = useMemo(() => {
-    if (!spot?.amenities || !Array.isArray(spot.amenities)) return [];
-    return spot.amenities.map((item, index) => {
+    const rawList = spot?.amenities && Array.isArray(spot.amenities) ? spot.amenities : [];
+    const baseItems = rawList.map((item, index) => {
       if (typeof item === "string") {
         return {
           id: `amenity-${index}`,
@@ -250,6 +250,28 @@ const BookingComposer = ({
         price: p,
       };
     });
+
+    const HIMALAYAN_ADDONS = [
+      { id: "addon-bonfire", name: "🔥 Himalayan Bonfire & Pine Timber Kit", hourlyPrice: 150, price: 150 },
+      { id: "addon-telescope", name: "🔭 Dark-Sky Telescope & Stargazing Chart", hourlyPrice: 200, price: 200 },
+      { id: "addon-guide", name: "🥾 Valley Nature Trail Guide", hourlyPrice: 250, price: 250 },
+      { id: "addon-kahwa", name: "☕ Mountain Kahwa & Fresh Herbal Tea", hourlyPrice: 100, price: 100 },
+    ];
+
+    const combined = [...baseItems];
+    for (const addon of HIMALAYAN_ADDONS) {
+      const exists = combined.some(
+        (b) =>
+          (b.name.toLowerCase().includes("bonfire") && addon.id === "addon-bonfire") ||
+          (b.name.toLowerCase().includes("telescope") && addon.id === "addon-telescope") ||
+          (b.name.toLowerCase().includes("guide") && addon.id === "addon-guide") ||
+          (b.name.toLowerCase().includes("kahwa") && addon.id === "addon-kahwa")
+      );
+      if (!exists) {
+        combined.push(addon);
+      }
+    }
+    return combined;
   }, [spot]);
 
   // Compute duration in hours from startTime and endTime
@@ -609,15 +631,15 @@ const BookingComposer = ({
   };
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl lg:p-8">
+    <div className="rounded-3xl border border-mist bg-white p-6 shadow-xl lg:p-8">
       <div className="mb-6">
-        <span className="inline-block rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-emerald-700">
+        <span className="inline-block rounded-full bg-pine-mist px-3 py-1 text-xs font-bold uppercase tracking-wider text-pine">
           Instant Reservation
         </span>
-        <h3 className="mt-2 text-2xl font-bold text-slate-900">
+        <h3 className="mt-2 text-2xl font-bold text-navy">
           Compose Your Stay
         </h3>
-        <p className="mt-1 text-xs text-slate-500">
+        <p className="mt-1 text-xs text-slate-brand">
           Pick your time slot, add amenities, optionally order local food, and view live totals.
         </p>
       </div>
@@ -628,32 +650,32 @@ const BookingComposer = ({
           {activeBanners.map((banner) => (
             <div
               key={banner._id}
-              className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 p-[1px] shadow-sm"
+              className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-saffron to-saffron-hover p-[1px] shadow-sm"
             >
               <div className="rounded-[15px] bg-white p-3.5 sm:p-4">
                 <div className="flex items-start gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-600 font-bold">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-snow text-navy font-bold border border-mist">
                     <FaBullhorn size={13} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="rounded-md bg-amber-500/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-700">
+                      <span className="rounded-md bg-saffron/15 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-saffron-text">
                         Host Promotion
                       </span>
-                      <h4 className="text-xs font-bold text-slate-900 truncate">
+                      <h4 className="text-xs font-bold text-navy truncate">
                         {banner.title}
                       </h4>
                     </div>
-                    <p className="mt-1 text-xs text-slate-600 leading-relaxed font-medium">
+                    <p className="mt-1 text-xs text-slate-brand leading-relaxed font-medium">
                       {banner.bannerText}
                     </p>
                     {banner.code && (
                       <div className="mt-2 flex items-center gap-2">
-                        <span className="text-[11px] text-slate-500 font-medium">Use coupon:</span>
+                        <span className="text-[11px] text-slate-brand font-medium">Use coupon:</span>
                         <button
                           type="button"
                           onClick={() => handleApplyPromo(banner.code)}
-                          className="inline-flex items-center gap-1 rounded-lg border border-dashed border-amber-400 bg-amber-50 px-2 py-0.5 text-xs font-mono font-bold text-amber-800 hover:bg-amber-100 transition"
+                          className="inline-flex items-center gap-1 rounded-lg border border-dashed border-saffron bg-snow px-2 py-0.5 text-xs font-mono font-bold text-saffron-text hover:bg-mist transition cursor-pointer"
                         >
                           <FaTag size={9} /> {banner.code}
                         </button>
@@ -670,78 +692,78 @@ const BookingComposer = ({
       <form onSubmit={handleBookingSubmit} className="space-y-6">
         {/* 1. Date Selection */}
         <div>
-          <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700">
+          <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-navy">
             1. Select Date
           </label>
-          <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 focus-within:border-emerald-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-100">
-            <FaCalendarAlt className="text-emerald-500" />
+          <div className="flex items-center gap-3 rounded-2xl border border-mist bg-snow px-4 py-3 focus-within:border-navy focus-within:bg-white focus-within:ring-2 focus-within:ring-navy/15">
+            <FaCalendarAlt className="text-navy" />
             <input
               type="date"
               required
               min={new Date().toISOString().split("T")[0]}
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full bg-transparent text-base sm:text-sm font-medium text-slate-800 outline-none min-h-[40px]"
+              className="w-full bg-transparent text-base sm:text-sm font-medium text-navy outline-none min-h-[40px]"
             />
           </div>
         </div>
 
         {/* 2. Time Slot & Duration */}
         <div>
-          <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700">
+          <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-navy">
             2. Time Slot & Duration ({durationHours} {durationHours === 1 ? "hour" : "hours"})
           </label>
           <div className="grid grid-cols-2 gap-3">
-            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5 focus-within:border-emerald-500 focus-within:bg-white">
-              <FaClock className="text-xs text-emerald-500" />
+            <div className="flex items-center gap-2 rounded-2xl border border-mist bg-snow px-3 py-2.5 focus-within:border-navy focus-within:bg-white focus-within:ring-2 focus-within:ring-navy/15">
+              <FaClock className="text-xs text-navy" />
               <div className="w-full">
-                <span className="block text-[10px] uppercase font-bold text-slate-400">Start</span>
+                <span className="block text-[10px] uppercase font-bold text-slate-brand">Start</span>
                 <input
                   type="time"
                   required
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
-                  className="w-full bg-transparent text-base sm:text-xs font-bold text-slate-800 outline-none min-h-[36px]"
+                  className="w-full bg-transparent text-base sm:text-xs font-bold text-navy outline-none min-h-[36px]"
                 />
               </div>
             </div>
 
-            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5 focus-within:border-emerald-500 focus-within:bg-white">
-              <FaClock className="text-xs text-emerald-500" />
+            <div className="flex items-center gap-2 rounded-2xl border border-mist bg-snow px-3 py-2.5 focus-within:border-navy focus-within:bg-white focus-within:ring-2 focus-within:ring-navy/15">
+              <FaClock className="text-xs text-navy" />
               <div className="w-full">
-                <span className="block text-[10px] uppercase font-bold text-slate-400">End</span>
+                <span className="block text-[10px] uppercase font-bold text-slate-brand">End</span>
                 <input
                   type="time"
                   required
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
-                  className="w-full bg-transparent text-base sm:text-xs font-bold text-slate-800 outline-none min-h-[36px]"
+                  className="w-full bg-transparent text-base sm:text-xs font-bold text-navy outline-none min-h-[36px]"
                 />
               </div>
             </div>
           </div>
 
           {/* Availability Policies & Buffer Meta */}
-          <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
-            <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 font-medium text-slate-700">
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-slate-brand">
+            <span className="inline-flex items-center gap-1 rounded-md bg-snow border border-mist px-2 py-0.5 font-medium text-navy">
               🕒 Open {availabilityData?.operatingHours?.open || "06:00"} – {availabilityData?.operatingHours?.close || "22:00"}
             </span>
-            <span className="inline-flex items-center gap-1 rounded-md bg-amber-50 px-2 py-0.5 font-medium text-amber-700">
+            <span className="inline-flex items-center gap-1 rounded-md bg-snow border border-mist px-2 py-0.5 font-medium text-saffron-text">
               ⚡ {availabilityData?.bufferMinutes ?? 30}m turnaround buffer
             </span>
-            <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-0.5 font-medium text-slate-700">
+            <span className="inline-flex items-center gap-1 rounded-md bg-snow border border-mist px-2 py-0.5 font-medium text-navy">
               ⏳ Min {availabilityData?.minDurationHours || 1}h / Max {availabilityData?.maxDurationHours || 12}h
             </span>
           </div>
 
           {/* Real-time Conflict Alert */}
           {slotConflict && (
-            <div className="mt-3 rounded-2xl border border-amber-300 bg-amber-50/90 p-4 text-amber-900 shadow-xs">
+            <div className="mt-3 rounded-2xl border border-danger/20 bg-danger-mist p-4 text-danger shadow-xs">
               <div className="flex items-start gap-2.5">
-                <FaExclamationTriangle className="mt-0.5 shrink-0 text-amber-600" size={14} />
+                <FaExclamationTriangle className="mt-0.5 shrink-0 text-danger" size={14} />
                 <div className="text-xs">
-                  <span className="font-bold block mb-0.5 text-amber-950">Time Slot Unavailable</span>
-                  <p className="leading-relaxed text-amber-900">{slotConflict.message}</p>
+                  <span className="font-bold block mb-0.5 text-danger">Time Slot Unavailable</span>
+                  <p className="leading-relaxed text-danger">{slotConflict.message}</p>
                 </div>
               </div>
               {slotConflict.suggestedNext && (
@@ -757,7 +779,7 @@ const BookingComposer = ({
                     const clampedEndH = Math.min(closeH, endH);
                     setEndTime(`${String(clampedEndH).padStart(2, "0")}:${String(endM).padStart(2, "0")}`);
                   }}
-                  className="mt-2.5 inline-flex items-center gap-1.5 rounded-xl bg-amber-200/90 hover:bg-amber-300 px-3 py-1.5 text-[11px] font-bold text-amber-950 transition cursor-pointer shadow-2xs"
+                  className="mt-2.5 inline-flex items-center gap-1.5 rounded-xl border border-navy text-navy hover:bg-navy hover:text-snow px-3 py-1.5 text-[11px] font-bold transition cursor-pointer"
                 >
                   ⚡ Shift Start to {slotConflict.suggestedNext}
                 </button>
@@ -768,7 +790,7 @@ const BookingComposer = ({
           {/* Suggested Available Windows */}
           {availabilityData?.availableWindows && availabilityData.availableWindows.length > 0 && (
             <div className="mt-3">
-              <span className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">
+              <span className="block text-[11px] font-bold uppercase tracking-wider text-slate-brand mb-1.5">
                 Available Time Windows on {date}:
               </span>
               <div className="flex flex-wrap gap-1.5">
@@ -780,9 +802,9 @@ const BookingComposer = ({
                       setStartTime(win.startTime);
                       setEndTime(win.endTime);
                     }}
-                    className="inline-flex items-center gap-1 rounded-lg border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100 px-2.5 py-1 text-[11px] font-bold text-emerald-800 transition cursor-pointer"
+                    className="inline-flex items-center gap-1 rounded-lg border border-pine/20 bg-pine-mist px-2.5 py-1 text-[11px] font-bold text-pine hover:bg-pine-mist/80 transition cursor-pointer"
                   >
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-pine animate-pulse"></span>
                     {win.startTime} – {win.endTime} ({win.durationHours}h)
                   </button>
                 ))}
@@ -792,34 +814,34 @@ const BookingComposer = ({
 
           {/* Real-time Day Schedule Timeline Strip */}
           {availabilityData?.timeline && availabilityData.timeline.length > 0 && (
-            <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-3.5">
+            <div className="mt-4 rounded-2xl border border-mist bg-snow p-3.5">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-navy flex items-center gap-1.5">
                   Day Schedule ({availabilityData.timeline[0]?.time} - {availabilityData.timeline[availabilityData.timeline.length - 1]?.time})
-                  {loadingAvailability && <FaSpinner className="animate-spin text-emerald-500" size={10} />}
+                  {loadingAvailability && <FaSpinner className="animate-spin text-navy" size={10} />}
                 </span>
-                <div className="flex items-center gap-2.5 text-[10px] font-medium text-slate-500">
+                <div className="flex items-center gap-2.5 text-[10px] font-medium text-slate-brand">
                   <span className="inline-flex items-center gap-1">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500"></span> Available
+                    <span className="h-2 w-2 rounded-full bg-pine"></span> Available
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <span className="h-2 w-2 rounded-full bg-slate-800"></span> Booked
+                    <span className="h-2 w-2 rounded-full bg-navy"></span> Booked
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <span className="h-2 w-2 rounded-full bg-amber-500"></span> Buffer
+                    <span className="h-2 w-2 rounded-full bg-saffron"></span> Buffer
                   </span>
                 </div>
               </div>
 
               <div className="grid grid-cols-6 sm:grid-cols-8 gap-1">
                 {availabilityData.timeline.map((slot, idx) => {
-                  let bgClass = "bg-emerald-100 text-emerald-800 border-emerald-200 hover:bg-emerald-200";
+                  let bgClass = "bg-pine-mist text-pine border-pine/20 hover:bg-pine-mist/80";
                   if (slot.status === "booked") {
-                    bgClass = "bg-slate-800 text-white border-slate-900 cursor-not-allowed";
+                    bgClass = "bg-navy text-snow border-navy cursor-not-allowed";
                   } else if (slot.status === "buffer") {
-                    bgClass = "bg-amber-200 text-amber-900 border-amber-300 cursor-not-allowed";
+                    bgClass = "bg-saffron/20 text-saffron-text border-saffron/30 cursor-not-allowed";
                   } else if (slot.status === "past" || slot.status === "blocked" || slot.status === "maintenance") {
-                    bgClass = "bg-slate-200 text-slate-400 border-slate-300 cursor-not-allowed opacity-60";
+                    bgClass = "bg-mist text-slate-brand border-mist cursor-not-allowed opacity-60";
                   }
 
                   return (
@@ -839,7 +861,7 @@ const BookingComposer = ({
 
         {/* 3. Guests count */}
         <div>
-          <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700">
+          <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-navy">
             3. Guests
           </label>
           <div className="flex items-center gap-3">
@@ -847,7 +869,7 @@ const BookingComposer = ({
               type="button"
               aria-label="Decrease guests"
               onClick={() => setGuests((prev) => Math.max(1, Number(prev || 1) - 1))}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 active:scale-95 transition text-base font-bold shadow-2xs cursor-pointer"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-mist bg-snow text-navy hover:bg-mist active:scale-95 transition text-base font-bold cursor-pointer"
             >
               <FaMinus size={11} />
             </button>
@@ -857,13 +879,13 @@ const BookingComposer = ({
               max="50"
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
-              className="flex-1 text-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-base sm:text-sm font-bold text-slate-800 outline-none focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-100 min-h-[44px]"
+              className="flex-1 text-center rounded-2xl border border-mist bg-snow px-4 py-2.5 text-base sm:text-sm font-bold text-navy outline-none focus:border-navy focus:bg-white focus:ring-2 focus:ring-navy/15 min-h-[44px]"
             />
             <button
               type="button"
               aria-label="Increase guests"
               onClick={() => setGuests((prev) => Math.min(50, Number(prev || 1) + 1))}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white active:scale-95 transition text-base font-bold shadow-md shadow-emerald-600/20 cursor-pointer"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-navy hover:bg-dusk text-snow active:scale-95 transition text-base font-bold shadow-md cursor-pointer"
             >
               <FaPlus size={11} />
             </button>
@@ -873,10 +895,10 @@ const BookingComposer = ({
         {/* 4. Customize Amenities */}
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
+            <label className="text-xs font-bold uppercase tracking-wider text-navy">
               4. Customize Amenities
             </label>
-            <span className="text-[11px] font-semibold text-emerald-600">
+            <span className="text-[11px] font-semibold text-pine">
               {selectedAmenities.length} selected
             </span>
           </div>
@@ -894,32 +916,32 @@ const BookingComposer = ({
                     onClick={() => toggleAmenity(amenity)}
                     className={`flex cursor-pointer items-center justify-between rounded-2xl border p-3 transition-all ${
                       isSelected
-                        ? "border-emerald-500 bg-emerald-50/70 shadow-sm"
-                        : "border-slate-100 bg-slate-50 hover:bg-slate-100"
+                        ? "border-pine bg-pine-mist/50 shadow-sm"
+                        : "border-mist bg-snow hover:bg-white"
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div
                         className={`flex h-6 w-6 items-center justify-center rounded-lg text-xs font-bold transition ${
                           isSelected
-                            ? "bg-emerald-600 text-white"
-                            : "border border-slate-300 bg-white text-transparent"
+                            ? "bg-pine text-white"
+                            : "border border-mist bg-white text-transparent"
                         }`}
                       >
                         <FaCheck size={10} />
                       </div>
-                      <span className="text-xs font-semibold text-slate-800">
+                      <span className="text-xs font-semibold text-navy">
                         {amenity.name}
                       </span>
                     </div>
 
                     <div className="text-right">
                       {amenity.hourlyPrice > 0 ? (
-                        <span className="text-xs font-bold text-slate-700">
+                        <span className="text-xs font-bold text-navy">
                           +₹{amenity.hourlyPrice}/hr
                         </span>
                       ) : (
-                        <span className="text-[11px] font-semibold text-emerald-700">
+                        <span className="text-[11px] font-semibold text-pine">
                           Included
                         </span>
                       )}
@@ -929,7 +951,7 @@ const BookingComposer = ({
               })}
             </div>
           ) : (
-            <p className="rounded-xl bg-slate-50 p-3 text-xs text-slate-500">
+            <p className="rounded-xl bg-snow border border-mist p-3 text-xs text-slate-brand">
               Basic property amenities included in the base rate.
             </p>
           )}
@@ -1174,20 +1196,20 @@ const BookingComposer = ({
         </div>
 
         {/* 7. OPTIONAL: Apply Promo / Discount Code */}
-        <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/40 p-4 transition-all">
+        <div className="rounded-2xl border border-mist bg-snow p-4 transition-all">
           <div
             onClick={() => setIsPromoAccordionOpen(!isPromoAccordionOpen)}
             className="flex cursor-pointer items-center justify-between"
           >
             <div className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-sm">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-navy text-snow shadow-sm">
                 <FaTag size={12} />
               </div>
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900">
-                  7. Have a Promo Code? <span className="text-emerald-700 font-bold">(Optional)</span>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-navy">
+                  7. Have a Promo Code? <span className="text-pine font-bold">(Optional)</span>
                 </h4>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[11px] text-slate-brand">
                   {appliedPromo
                     ? `Coupon "${appliedPromo.code}" active (-₹${effectiveDiscount.toLocaleString()})`
                     : "Apply discount codes, limited-time deals, or loyalty vouchers."}
@@ -1197,7 +1219,7 @@ const BookingComposer = ({
 
             <button
               type="button"
-              className="text-slate-500 hover:text-slate-800 p-1 rounded-full transition"
+              className="text-slate-brand hover:text-navy p-1 rounded-full transition cursor-pointer"
             >
               {isPromoAccordionOpen ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
             </button>
@@ -1205,18 +1227,18 @@ const BookingComposer = ({
 
           {/* Collapsible Promo Code Area */}
           {isPromoAccordionOpen && (
-            <div className="mt-4 border-t border-emerald-200/60 pt-4 space-y-3">
+            <div className="mt-4 border-t border-mist pt-4 space-y-3">
               {appliedPromo ? (
-                <div className="flex items-center justify-between rounded-xl bg-emerald-100/80 p-3 border border-emerald-300">
+                <div className="flex items-center justify-between rounded-xl bg-pine-mist/80 p-3 border border-pine/30">
                   <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-white text-xs">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-pine text-white text-xs">
                       <FaCheck size={11} />
                     </span>
                     <div>
-                      <span className="font-mono text-xs font-black tracking-wider text-emerald-950">
+                      <span className="font-mono text-xs font-black tracking-wider text-pine">
                         {appliedPromo.code}
                       </span>
-                      <p className="text-[11px] text-emerald-800 font-medium">
+                      <p className="text-[11px] text-pine font-medium">
                         {appliedPromo.title || "Discount Applied"} — saved ₹{effectiveDiscount.toLocaleString()}
                       </p>
                     </div>
@@ -1224,7 +1246,7 @@ const BookingComposer = ({
                   <button
                     type="button"
                     onClick={handleRemovePromo}
-                    className="rounded-lg bg-white px-2.5 py-1 text-xs font-bold text-rose-600 hover:bg-rose-50 border border-rose-200 transition shadow-xs"
+                    className="rounded-lg bg-white px-2.5 py-1 text-xs font-bold text-danger hover:bg-danger-mist border border-danger/20 transition cursor-pointer"
                   >
                     Remove
                   </button>
@@ -1246,13 +1268,13 @@ const BookingComposer = ({
                           handleApplyPromo();
                         }
                       }}
-                      className="flex-1 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-mono uppercase tracking-wider text-slate-800 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+                      className="flex-1 rounded-xl border border-mist bg-white px-3.5 py-2 text-xs font-mono uppercase tracking-wider text-navy outline-none focus:border-navy focus:ring-2 focus:ring-navy/15"
                     />
                     <button
                       type="button"
                       disabled={validatingPromo || !promoCodeInput.trim()}
                       onClick={() => handleApplyPromo()}
-                      className="rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 text-xs font-bold transition shadow-sm disabled:opacity-50 flex items-center gap-1.5"
+                      className="rounded-xl bg-navy hover:bg-dusk text-snow px-4 py-2 text-xs font-bold transition shadow-sm disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
                     >
                       {validatingPromo ? <FaSpinner className="animate-spin" size={12} /> : "Apply"}
                     </button>
@@ -1262,7 +1284,7 @@ const BookingComposer = ({
                   {promoMessage && (
                     <p
                       className={`text-xs font-medium ${
-                        promoMessage.type === "success" ? "text-emerald-700" : "text-rose-600"
+                        promoMessage.type === "success" ? "text-pine" : "text-danger"
                       }`}
                     >
                       {promoMessage.text}
@@ -1272,7 +1294,7 @@ const BookingComposer = ({
                   {/* Quick-apply available coupons for this spot */}
                   {availableCoupons.length > 0 && (
                     <div className="pt-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-brand block mb-1.5">
                         Available Offers for this Plot:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
@@ -1281,11 +1303,11 @@ const BookingComposer = ({
                             key={c._id}
                             type="button"
                             onClick={() => handleApplyPromo(c.code)}
-                            className="inline-flex items-center gap-1 rounded-lg border border-dashed border-emerald-300 bg-white px-2 py-1 text-[11px] font-bold text-emerald-800 hover:bg-emerald-100 transition shadow-2xs"
+                            className="inline-flex items-center gap-1 rounded-lg border border-dashed border-pine/40 bg-white px-2 py-1 text-[11px] font-bold text-pine hover:bg-pine-mist transition cursor-pointer"
                           >
                             <FaTag size={9} />
                             <span className="font-mono">{c.code}</span>
-                            <span className="text-emerald-600 font-normal">
+                            <span className="text-pine font-normal">
                               ({c.discountType === "percentage" ? `${c.discountValue}% off` : `₹${c.discountValue} off`})
                             </span>
                           </button>
@@ -1300,14 +1322,14 @@ const BookingComposer = ({
         </div>
 
         {/* Transparent Dynamic Price Breakdown Card */}
-        <div className="rounded-2xl border border-slate-200 bg-slate-50/90 p-4">
-          <div className="flex items-center justify-between mb-3 border-b border-slate-200/80 pb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+        <div className="rounded-2xl border border-mist bg-snow p-4">
+          <div className="flex items-center justify-between mb-3 border-b border-mist pb-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-navy flex items-center gap-1.5">
               Price Breakdown
-              {loadingPricing && <FaSpinner className="animate-spin text-emerald-500" size={10} />}
+              {loadingPricing && <FaSpinner className="animate-spin text-navy" size={10} />}
             </span>
             {serverPricing?.appliedRule && serverPricing.appliedRule.ruleType !== "base" && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800">
+              <span className="inline-flex items-center gap-1 rounded-full bg-pine-mist px-2.5 py-0.5 text-[10px] font-bold text-pine">
                 ✨ {serverPricing.appliedRule.ruleLabel}
               </span>
             )}
@@ -1315,16 +1337,16 @@ const BookingComposer = ({
 
           <div className="space-y-2 text-xs">
             {/* Base Plot Line */}
-            <div className="flex items-center justify-between text-slate-600">
+            <div className="flex items-center justify-between text-slate-brand">
               <span>Plot ({durationHours} {durationHours === 1 ? "hr" : "hrs"} @ ₹{(serverPricing?.baseHourlyRate ?? baseHourlyRate).toLocaleString()}/hr):</span>
-              <span className="font-semibold text-slate-800">
+              <span className="font-semibold text-navy">
                 ₹{(serverPricing?.basePlotTotal ?? (baseHourlyRate * durationHours)).toLocaleString()}
               </span>
             </div>
 
-            {/* Dynamic Rule Adjustment Line (e.g. Weekend adjustment, Peak season) */}
+            {/* Dynamic Rule Adjustment Line */}
             {serverPricing?.appliedRule && serverPricing.appliedRule.totalAdjustment !== 0 && (
-              <div className="flex items-center justify-between font-medium text-emerald-700 bg-emerald-50/80 px-2 py-1 rounded-lg">
+              <div className="flex items-center justify-between font-medium text-pine bg-pine-mist/80 px-2 py-1 rounded-lg">
                 <span>{serverPricing.appliedRule.ruleLabel}:</span>
                 <span className="font-bold">
                   {serverPricing.appliedRule.totalAdjustment > 0 ? "+" : ""}₹{serverPricing.appliedRule.totalAdjustment.toLocaleString()}
@@ -1334,7 +1356,7 @@ const BookingComposer = ({
 
             {/* Extended Stay Discount Line */}
             {serverPricing?.durationDiscount?.applied && (
-              <div className="flex items-center justify-between font-medium text-purple-700 bg-purple-50/80 px-2 py-1 rounded-lg">
+              <div className="flex items-center justify-between font-medium text-pine bg-pine-mist/80 px-2 py-1 rounded-lg">
                 <span>{serverPricing.durationDiscount.label}:</span>
                 <span className="font-bold">
                   -₹{serverPricing.durationDiscount.discountAmount.toLocaleString()}
@@ -1345,17 +1367,17 @@ const BookingComposer = ({
             {/* Itemized Amenities */}
             {serverPricing?.amenitiesBreakdown && serverPricing.amenitiesBreakdown.length > 0 ? (
               serverPricing.amenitiesBreakdown.map((a, idx) => (
-                <div key={idx} className="flex items-center justify-between text-slate-600">
+                <div key={idx} className="flex items-center justify-between text-slate-brand">
                   <span>{a.name} ({durationHours}h):</span>
-                  <span className="font-semibold text-slate-800">
+                  <span className="font-semibold text-navy">
                     {a.hourlyPrice > 0 ? `+₹${a.total.toLocaleString()}` : "Included"}
                   </span>
                 </div>
               ))
             ) : selectedAmenitiesHourlyRate > 0 ? (
-              <div className="flex items-center justify-between text-slate-600">
+              <div className="flex items-center justify-between text-slate-brand">
                 <span>Amenities Add-ons:</span>
-                <span className="font-semibold text-slate-800">
+                <span className="font-semibold text-navy">
                   +₹{(selectedAmenitiesHourlyRate * durationHours).toLocaleString()}
                 </span>
               </div>
@@ -1363,11 +1385,11 @@ const BookingComposer = ({
 
             {/* Food Subtotal */}
             {(serverPricing?.foodSubtotal > 0 || foodSubtotal > 0) && (
-              <div className="flex items-center justify-between text-xs text-amber-700 bg-amber-100/60 p-2 rounded-xl">
+              <div className="flex items-center justify-between text-xs text-navy bg-mist/60 p-2 rounded-xl">
                 <span className="flex items-center gap-1 font-bold">
                   <FaUtensils size={10} /> Food & Beverages:
                 </span>
-                <span className="font-extrabold text-amber-800">
+                <span className="font-extrabold text-navy">
                   +₹{(serverPricing?.foodSubtotal ?? foodSubtotal).toLocaleString()}
                 </span>
               </div>
@@ -1375,11 +1397,11 @@ const BookingComposer = ({
 
             {/* Promotional Code Discount Line */}
             {appliedPromo && effectiveDiscount > 0 && (
-              <div className="flex items-center justify-between font-bold text-emerald-700 bg-emerald-100/80 px-2.5 py-1.5 rounded-xl border border-emerald-300">
+              <div className="flex items-center justify-between font-bold text-pine bg-pine-mist/80 px-2.5 py-1.5 rounded-xl border border-pine/30">
                 <span className="flex items-center gap-1.5">
                   <FaTag size={10} /> Promo ({appliedPromo.code}):
                 </span>
-                <span className="font-black text-emerald-800">
+                <span className="font-black text-pine">
                   -₹{effectiveDiscount.toLocaleString()}
                 </span>
               </div>
@@ -1387,11 +1409,11 @@ const BookingComposer = ({
 
             {/* Wallet Credit Discount Line */}
             {useWalletCredits && effectiveWalletCredit > 0 && (
-              <div className="flex items-center justify-between font-bold text-emerald-800 bg-emerald-100/90 px-2.5 py-1.5 rounded-xl border border-emerald-300">
+              <div className="flex items-center justify-between font-bold text-pine bg-pine-mist/90 px-2.5 py-1.5 rounded-xl border border-pine/30">
                 <span className="flex items-center gap-1.5">
                   <FaWallet size={10} /> Wallet Credit:
                 </span>
-                <span className="font-black text-emerald-900">
+                <span className="font-black text-pine">
                   -₹{effectiveWalletCredit.toLocaleString()}
                 </span>
               </div>
@@ -1400,26 +1422,26 @@ const BookingComposer = ({
 
           {/* Wallet Credit Toggle Card */}
           {user && availableWalletBalance > 0 && (
-            <div className="mt-3 pt-3 border-t border-slate-200/80">
-              <label className="flex items-center justify-between gap-2 p-2 rounded-xl bg-white border border-emerald-200 hover:bg-emerald-50/40 transition cursor-pointer select-none">
+            <div className="mt-3 pt-3 border-t border-mist">
+              <label className="flex items-center justify-between gap-2 p-2 rounded-xl bg-white border border-pine/30 hover:bg-snow transition cursor-pointer select-none">
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     checked={useWalletCredits}
                     onChange={(e) => setUseWalletCredits(e.target.checked)}
-                    className="h-4 w-4 rounded border-emerald-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                    className="h-4 w-4 rounded border-mist text-navy focus:ring-navy cursor-pointer"
                   />
                   <div>
-                    <span className="text-xs font-bold text-slate-900 block flex items-center gap-1">
-                      <FaWallet className="text-emerald-600" size={10} /> Use Wallet Balance
+                    <span className="text-xs font-bold text-navy flex items-center gap-1">
+                      <FaWallet className="text-pine" size={10} /> Use Wallet Balance
                     </span>
-                    <span className="text-[10px] text-slate-500">
+                    <span className="text-[10px] text-slate-brand">
                       Available: ₹{availableWalletBalance.toLocaleString("en-IN")}
                     </span>
                   </div>
                 </div>
                 {useWalletCredits && effectiveWalletCredit > 0 && (
-                  <span className="text-xs font-extrabold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">
+                  <span className="text-xs font-extrabold text-pine bg-pine-mist px-2 py-0.5 rounded-md">
                     -₹{effectiveWalletCredit.toLocaleString("en-IN")}
                   </span>
                 )}
@@ -1427,34 +1449,34 @@ const BookingComposer = ({
             </div>
           )}
 
-          <div className="border-t border-slate-200 mt-3 pt-3 flex items-baseline justify-between">
+          <div className="border-t border-mist mt-3 pt-3 flex items-baseline justify-between">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-brand block">
                 Total
               </span>
-              <span className="text-[10px] text-emerald-600 font-medium flex items-center gap-1 mt-0.5">
+              <span className="text-[10px] text-pine font-medium flex items-center gap-1 mt-0.5">
                 <FaInfoCircle size={9} /> Server-Verified Rate
               </span>
             </div>
             <div className="text-right">
               {(effectiveDiscount > 0 || (useWalletCredits && effectiveWalletCredit > 0)) && (
-                <span className="text-xs text-slate-400 line-through block font-medium">
+                <span className="text-xs text-slate-brand line-through block font-medium">
                   ₹{(serverPricing?.grandTotal ?? Math.round(estimatedTotal)).toLocaleString()}
                 </span>
               )}
-              <span className="text-2xl font-extrabold text-emerald-600">
+              <span className="text-2xl font-extrabold text-navy">
                 ₹{finalPayableTotal.toLocaleString()}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Submit or Auth Button */}
+        {/* Submit or Auth Button - EXACTLY ONE SAFFRON PRIMARY BUTTON PER SCREEN */}
         {user ? (
           <button
             type="submit"
             disabled={submitting || Boolean(slotConflict)}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 py-4 font-bold text-white shadow-lg shadow-emerald-600/25 transition hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-saffron py-4 font-bold text-navy shadow-lg hover:bg-saffron-hover transition active:scale-95 disabled:bg-mist disabled:text-slate-brand disabled:cursor-not-allowed cursor-pointer"
           >
             {submitting && <FaSpinner className="animate-spin" />}
             {slotConflict
@@ -1467,19 +1489,19 @@ const BookingComposer = ({
           <button
             type="button"
             onClick={() => openAuthModal("login")}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-900 py-4 font-bold text-white transition hover:bg-emerald-600"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-saffron py-4 font-bold text-navy shadow-lg hover:bg-saffron-hover transition active:scale-95 cursor-pointer"
           >
             <FaLock size={14} /> Sign In to Book This Spot
           </button>
         )}
 
-        {/* Feature 9: Buy as a Gift Button */}
+        {/* Feature 9: Buy as a Gift Button - SECONDARY NAVY OUTLINE */}
         <button
           type="button"
           onClick={() => setShowGiftModal(true)}
-          className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-2xl border border-amber-300/80 bg-amber-50 py-3.5 font-bold text-amber-900 shadow-sm transition hover:bg-amber-100 text-xs dark:bg-amber-950/30 dark:hover:bg-amber-900/40 dark:text-amber-300 dark:border-amber-900/50"
+          className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-navy bg-white py-3.5 font-bold text-navy shadow-sm transition hover:bg-navy hover:text-snow text-xs active:scale-95 cursor-pointer"
         >
-          <FaGift className="text-amber-500 text-sm" /> Gift this Plot Experience 🎁
+          <FaGift className="text-saffron-text text-sm" /> Gift this Plot Experience 🎁
         </button>
 
         {/* Feature 9: Buy as Gift Modal */}

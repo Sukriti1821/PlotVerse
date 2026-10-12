@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 @theme {
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -41,22 +42,40 @@ body {
   color: var(--color-navy);
 }
 
-:focus-visible {
+:focus-visible:not(input):not(textarea):not(select) {
   outline: 2px solid var(--color-saffron);
   outline-offset: 2px;
 }
 
-body :focus-visible,
-.bg-snow :focus-visible,
-.bg-white :focus-visible {
+body :focus-visible:not(input):not(textarea):not(select),
+.bg-snow :focus-visible:not(input):not(textarea):not(select),
+.bg-white :focus-visible:not(input):not(textarea):not(select) {
   outline-color: var(--color-navy);
 }
 
-.bg-navy :focus-visible,
-.bg-navy-deep :focus-visible,
-.bg-dusk :focus-visible,
-[data-theme="navy"] :focus-visible {
+.bg-navy :focus-visible:not(input):not(textarea):not(select),
+.bg-navy-deep :focus-visible:not(input):not(textarea):not(select),
+.bg-dusk :focus-visible:not(input):not(textarea):not(select),
+[data-theme="navy"] :focus-visible:not(input):not(textarea):not(select) {
   outline-color: var(--color-saffron);
+}
+
+/* Eliminate inner focus rectangle/box on inputs, textareas, and select elements */
+input,
+textarea,
+select,
+.outline-none {
+  outline: none !important;
+}
+
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -68,5 +87,75 @@ h1, h2, h3, h4, h5, h6,
 button, input, select, textarea {
   font-family: inherit;
 }
+
+/* Skeletons: mist with pulse */
+.skeleton-pulse {
+  background-color: var(--color-mist);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Date picker, Calendar & Native Picker Overrides */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(12%) sepia(21%) saturate(2462%) hue-rotate(184deg) brightness(96%) contrast(92%); /* Navy tone */
+}
+
+.react-datepicker {
+  font-family: inherit !important;
+  border-color: var(--color-mist) !important;
+  background-color: var(--color-white) !important;
+  color: var(--color-navy) !important;
+  border-radius: 1rem !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 25px -5px rgba(20, 33, 61, 0.1) !important;
+}
+
+.react-datepicker__header {
+  background-color: var(--color-snow) !important;
+  border-bottom-color: var(--color-mist) !important;
+  color: var(--color-navy) !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: var(--color-saffron) !important;
+  color: var(--color-navy) !important;
+  font-weight: 700 !important;
+  border-radius: 0.5rem !important;
+}
+
+.react-datepicker__day:hover {
+  background-color: var(--color-mist) !important;
+  border-radius: 0.5rem !important;
+}
+
+/* Toast Himalayan Dusk Classes */
+.toast-success {
+  background-color: var(--color-pine) !important;
+  color: var(--color-white) !important;
+}
+
+.toast-error {
+  background-color: var(--color-danger) !important;
+  color: var(--color-white) !important;
+}
+
+.toast-info {
+  background-color: var(--color-navy) !important;
+  color: var(--color-snow) !important;
+}
+
+/* Honor prefers-reduced-motion across the entire application */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 
 

@@ -98,31 +98,31 @@ const AuthModal = () => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-deep/60 p-4 backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="relative w-full max-w-md max-h-[92vh] overflow-y-auto rounded-3xl bg-white p-6 sm:p-8 shadow-2xl"
+          className="relative w-full max-w-md max-h-[92vh] overflow-y-auto rounded-3xl bg-white p-6 sm:p-8 shadow-2xl border border-mist"
         >
           {/* Close Button */}
           <button
             onClick={closeAuthModal}
-            className="absolute right-6 top-6 rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+            className="absolute right-6 top-6 rounded-full p-2 text-slate-brand hover:bg-snow hover:text-navy transition cursor-pointer"
           >
             <FaTimes size={18} />
           </button>
 
           {/* Modal Header */}
           <div className="mb-6 flex items-start gap-4">
-            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-50/80 p-1.5 shadow-sm border border-emerald-100/60">
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-snow p-1.5 shadow-sm border border-mist">
               <Logo variant="icon" className="h-full w-full" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-slate-900">
+              <h2 className="text-2xl font-bold text-navy">
                 {authMode === "login" ? "Welcome to Thikana" : "Join Thikana"}
               </h2>
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-slate-brand">
                 {authMode === "login"
                   ? "Sign in to reserve unique plots and nature stays."
                   : "Create your account to discover properties or list your plots."}
@@ -131,17 +131,17 @@ const AuthModal = () => {
           </div>
 
           {/* Mode Switcher Tabs */}
-          <div className="mb-6 grid grid-cols-2 rounded-2xl bg-slate-100 p-1">
+          <div className="mb-6 grid grid-cols-2 rounded-2xl bg-snow border border-mist p-1">
             <button
               type="button"
               onClick={() => {
                 setError(null);
                 openAuthModal("login");
               }}
-              className={`rounded-xl py-2 text-sm font-semibold transition ${
+              className={`rounded-xl py-2 text-sm font-semibold transition cursor-pointer ${
                 authMode === "login"
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-navy text-snow shadow-sm"
+                  : "text-slate-brand hover:text-navy"
               }`}
             >
               Sign In
@@ -152,10 +152,10 @@ const AuthModal = () => {
                 setError(null);
                 openAuthModal("register");
               }}
-              className={`rounded-xl py-2 text-sm font-semibold transition ${
+              className={`rounded-xl py-2 text-sm font-semibold transition cursor-pointer ${
                 authMode === "register"
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-navy text-snow shadow-sm"
+                  : "text-slate-brand hover:text-navy"
               }`}
             >
               Sign Up
@@ -164,7 +164,7 @@ const AuthModal = () => {
 
           {/* Error Banner */}
           {error && (
-            <div className="mb-4 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-medium text-rose-700">
+            <div className="mb-4 rounded-xl border border-danger/20 bg-danger-mist p-3 text-xs font-medium text-danger">
               {error}
             </div>
           )}
@@ -173,46 +173,46 @@ const AuthModal = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {authMode === "register" && (
               <div>
-                <label className="mb-1 block text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                <label className="mb-1 block text-xs font-semibold text-slate-brand uppercase tracking-wider">
                   Full Name
                 </label>
-                <div className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
-                  <FaUser className="text-slate-400" />
+                <div className="flex items-center gap-3 rounded-xl border border-mist bg-white px-4 py-3 focus-within:border-navy focus-within:ring-2 focus-within:ring-navy/15">
+                  <FaUser className="text-slate-brand" />
                   <input
                     type="text"
                     required
                     placeholder="e.g. Sukriti Sharma"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-transparent text-sm text-slate-800 outline-none"
+                    className="w-full bg-transparent text-sm text-navy border-none outline-none focus:outline-none focus:ring-0 placeholder:text-light-slate"
                   />
                 </div>
               </div>
             )}
 
             <div>
-              <label className="mb-1 block text-xs font-semibold text-slate-600 uppercase tracking-wider">
+              <label className="mb-1 block text-xs font-semibold text-slate-brand uppercase tracking-wider">
                 Email Address
               </label>
-              <div className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
-                <FaEnvelope className="text-slate-400" />
+              <div className="flex items-center gap-3 rounded-xl border border-mist bg-white px-4 py-3 focus-within:border-navy focus-within:ring-2 focus-within:ring-navy/15">
+                <FaEnvelope className="text-slate-brand" />
                 <input
                   type="email"
                   required
                   placeholder="e.g. you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                  className="w-full bg-transparent text-sm text-navy border-none outline-none focus:outline-none focus:ring-0 placeholder:text-light-slate"
                 />
               </div>
             </div>
 
             <div>
-              <label className="mb-1 block text-xs font-semibold text-slate-600 uppercase tracking-wider">
+              <label className="mb-1 block text-xs font-semibold text-slate-brand uppercase tracking-wider">
                 Password
               </label>
-              <div className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
-                <FaLock className="text-slate-400" />
+              <div className="flex items-center gap-3 rounded-xl border border-mist bg-white px-4 py-3 focus-within:border-navy focus-within:ring-2 focus-within:ring-navy/15">
+                <FaLock className="text-slate-brand" />
                 <input
                   type="password"
                   required
@@ -220,7 +220,7 @@ const AuthModal = () => {
                   placeholder="At least 6 characters"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-transparent text-sm text-slate-800 outline-none"
+                  className="w-full bg-transparent text-sm text-navy border-none outline-none focus:outline-none focus:ring-0 placeholder:text-light-slate"
                 />
               </div>
               {authMode === "login" && (
@@ -228,7 +228,7 @@ const AuthModal = () => {
                   <Link
                     to="/forgot-password"
                     onClick={closeAuthModal}
-                    className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline transition"
+                    className="text-xs font-semibold text-navy hover:text-saffron-text hover:underline transition"
                   >
                     Forgot password?
                   </Link>
@@ -239,36 +239,36 @@ const AuthModal = () => {
             {/* Explicit Role Toggle for Registration */}
             {authMode === "register" && (
               <div>
-                <label className="mb-2 block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                <label className="mb-2 block text-xs font-bold text-navy uppercase tracking-wider">
                   I want to join Thikana as:
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => setRole("customer")}
-                    className={`flex flex-col items-center gap-1.5 rounded-2xl border p-3.5 text-center transition ${
+                    className={`flex flex-col items-center gap-1.5 rounded-2xl border p-3.5 text-center transition cursor-pointer ${
                       role === "customer"
-                        ? "border-emerald-500 bg-emerald-50/80 text-emerald-900 shadow-sm ring-2 ring-emerald-500/20"
-                        : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                        ? "border-pine bg-pine-mist/50 text-pine shadow-sm ring-2 ring-pine/20"
+                        : "border-mist bg-white text-slate-brand hover:bg-snow"
                     }`}
                   >
-                    <FaUserCheck className={role === "customer" ? "text-emerald-600" : "text-slate-400"} />
+                    <FaUserCheck className={role === "customer" ? "text-pine" : "text-slate-brand"} />
                     <span className="text-xs font-bold">Customer</span>
-                    <span className="text-[10px] text-slate-500">Book scenic plots</span>
+                    <span className="text-[10px] text-slate-brand">Book scenic plots</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setRole("owner")}
-                    className={`flex flex-col items-center gap-1.5 rounded-2xl border p-3.5 text-center transition ${
+                    className={`flex flex-col items-center gap-1.5 rounded-2xl border p-3.5 text-center transition cursor-pointer ${
                       role === "owner"
-                        ? "border-emerald-500 bg-emerald-50/80 text-emerald-900 shadow-sm ring-2 ring-emerald-500/20"
-                        : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                        ? "border-pine bg-pine-mist/50 text-pine shadow-sm ring-2 ring-pine/20"
+                        : "border-mist bg-white text-slate-brand hover:bg-snow"
                     }`}
                   >
-                    <FaUserShield className={role === "owner" ? "text-emerald-600" : "text-slate-400"} />
+                    <FaUserShield className={role === "owner" ? "text-pine" : "text-slate-brand"} />
                     <span className="text-xs font-bold">Plot Owner / Host</span>
-                    <span className="text-[10px] text-slate-500">List & host stays</span>
+                    <span className="text-[10px] text-slate-brand">List & host stays</span>
                   </button>
                 </div>
               </div>
@@ -278,27 +278,27 @@ const AuthModal = () => {
             {authMode === "register" && (
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                  <label className="block text-xs font-semibold text-slate-brand uppercase tracking-wider">
                     Referral Code (Optional)
                   </label>
                   {referralCode.trim() && (
-                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span className="text-[10px] font-bold text-pine bg-pine-mist border border-pine/20 px-2 py-0.5 rounded-full flex items-center gap-1">
                       <FaGift size={10} /> ₹200 Bonus Applied
                     </span>
                   )}
                 </div>
-                <div className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100">
-                  <FaGift className={referralCode ? "text-emerald-500" : "text-slate-400"} />
+                <div className="flex items-center gap-3 rounded-xl border border-mist bg-white px-4 py-3 focus-within:border-navy focus-within:ring-2 focus-within:ring-navy/15">
+                  <FaGift className={referralCode ? "text-saffron-text" : "text-slate-brand"} />
                   <input
                     type="text"
                     placeholder="e.g. FRIEND200"
                     value={referralCode}
                     onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
-                    className="w-full bg-transparent text-sm font-semibold tracking-wider text-slate-800 uppercase outline-none placeholder:normal-case placeholder:font-normal"
+                    className="w-full bg-transparent text-sm font-semibold tracking-wider text-navy uppercase border-none outline-none focus:outline-none focus:ring-0 placeholder:normal-case placeholder:font-normal placeholder:text-light-slate"
                   />
                 </div>
                 {referralCode.trim() && (
-                  <p className="mt-1 text-[11px] text-emerald-700 font-medium">
+                  <p className="mt-1 text-[11px] text-pine font-medium">
                     🎁 You and your friend will each receive ₹200 credit after your first completed booking!
                   </p>
                 )}
@@ -307,33 +307,33 @@ const AuthModal = () => {
 
             {/* Terms and Privacy Agreement Checkbox for Registration */}
             {authMode === "register" && (
-              <div className="mt-4 flex items-start gap-2.5 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-3.5">
+              <div className="mt-4 flex items-start gap-2.5 rounded-2xl border border-mist bg-snow p-3.5">
                 <input
                   type="checkbox"
                   id="auth-agree-terms"
                   checked={agreedToTerms}
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                  className="mt-0.5 h-4 w-4 rounded border-mist text-navy focus:ring-navy cursor-pointer"
                 />
                 <label
                   htmlFor="auth-agree-terms"
-                  className="text-xs text-slate-600 leading-relaxed cursor-pointer select-none"
+                  className="text-xs text-slate-brand leading-relaxed cursor-pointer select-none"
                 >
                   I agree to Thikana&apos;s{" "}
                   <Link
-                    to="/terms-of-service"
+                    to="/terms"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-semibold text-emerald-600 hover:text-emerald-700 underline"
+                    className="font-semibold text-navy hover:text-saffron-text underline"
                   >
                     Terms of Service
                   </Link>{" "}
                   and{" "}
                   <Link
-                    to="/privacy-policy"
+                    to="/privacy"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-semibold text-emerald-600 hover:text-emerald-700 underline"
+                    className="font-semibold text-navy hover:text-saffron-text underline"
                   >
                     Privacy Policy
                   </Link>
@@ -345,7 +345,7 @@ const AuthModal = () => {
             <button
               type="submit"
               disabled={loading}
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/25 transition hover:bg-emerald-500 disabled:opacity-50"
+              className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-saffron hover:bg-saffron-hover py-3.5 text-sm font-bold text-navy shadow-md transition active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               {loading && <FaSpinner className="animate-spin" />}
               {authMode === "login" ? "Sign In" : `Register as ${role === "owner" ? "Host" : "Customer"}`}

@@ -71,14 +71,14 @@ export default function SmartRecommendations({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-emerald-700 mb-2">
-              <FaCompass className="text-emerald-500" /> Smart Recommendations
+            <div className="inline-flex items-center gap-2 rounded-full border border-saffron/30 bg-saffron/15 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-saffron-text mb-2">
+              <FaCompass className="text-saffron-text" /> Smart Recommendations
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight font-heading">
               {title}
             </h2>
             {subtitle && (
-              <p className="mt-1 text-sm text-slate-500 font-sans max-w-xl">
+              <p className="mt-1 text-sm text-slate-brand font-sans max-w-xl">
                 {subtitle}
               </p>
             )}
@@ -86,7 +86,7 @@ export default function SmartRecommendations({
 
           <Link
             to="/listings"
-            className="self-start md:self-auto text-xs font-bold text-emerald-600 hover:text-emerald-700 uppercase tracking-wider flex items-center gap-1.5 transition hover:translate-x-0.5"
+            className="self-start md:self-auto text-xs font-bold text-navy hover:text-saffron-text underline uppercase tracking-wider flex items-center gap-1.5 transition hover:translate-x-0.5"
           >
             Explore All Plots →
           </Link>
@@ -106,8 +106,8 @@ export default function SmartRecommendations({
                   }}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition cursor-pointer ${
                     isActive
-                      ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
-                      : "bg-white border border-slate-200 text-slate-700 hover:border-emerald-400 hover:bg-emerald-50/30"
+                      ? "bg-navy text-snow shadow-md"
+                      : "bg-white border border-mist text-slate-brand hover:border-saffron hover:bg-snow"
                   }`}
                 >
                   <span>{vibe.icon}</span>
@@ -125,24 +125,24 @@ export default function SmartRecommendations({
               {[...Array(limit)].map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-3xl border border-slate-200 bg-white p-4 animate-pulse shadow-sm h-80 flex flex-col justify-between"
+                  className="rounded-3xl border border-mist bg-white p-4 animate-pulse shadow-sm h-80 flex flex-col justify-between"
                 >
-                  <div className="h-44 bg-slate-200 rounded-2xl w-full" />
+                  <div className="h-44 bg-mist rounded-2xl w-full" />
                   <div className="space-y-2 mt-4">
-                    <div className="h-4 bg-slate-200 rounded w-3/4" />
-                    <div className="h-3 bg-slate-100 rounded w-1/2" />
+                    <div className="h-4 bg-mist rounded w-3/4" />
+                    <div className="h-3 bg-mist/60 rounded w-1/2" />
                   </div>
-                  <div className="h-4 bg-slate-100 rounded w-1/4 mt-3" />
+                  <div className="h-4 bg-mist/60 rounded w-1/4 mt-3" />
                 </div>
               ))}
             </div>
           ) : recommendations.length === 0 ? (
-            <div className="text-center py-12 bg-white rounded-3xl border border-slate-200 p-8 shadow-xs">
+            <div className="text-center py-12 bg-white rounded-3xl border border-mist p-8 shadow-xs">
               <span className="text-3xl mb-2 block">🏕️</span>
-              <h3 className="text-base font-bold text-slate-800">
+              <h3 className="text-base font-bold text-navy">
                 No matching plots found for this vibe
               </h3>
-              <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+              <p className="text-xs text-slate-brand mt-1 max-w-sm mx-auto">
                 Try selecting &ldquo;All Curated&rdquo; to browse all verified private outdoor escapes.
               </p>
               <button
@@ -150,7 +150,7 @@ export default function SmartRecommendations({
                   setLoading(true);
                   setSelectedVibe("all");
                 }}
-                className="mt-4 px-5 py-2 rounded-full bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-500 transition cursor-pointer"
+                className="mt-4 px-5 py-2 rounded-full bg-saffron text-navy text-xs font-bold hover:bg-saffron-hover transition cursor-pointer"
               >
                 Reset Vibe
               </button>
@@ -182,10 +182,10 @@ export default function SmartRecommendations({
                   <Link
                     key={plot._id}
                     to={`/plot/${plot._id}`}
-                    className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-emerald-200"
+                    className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-mist bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-saffron/40"
                   >
                     {/* Image Area */}
-                    <div className="relative h-48 sm:h-52 overflow-hidden bg-slate-100">
+                    <div className="relative h-48 sm:h-52 overflow-hidden bg-mist">
                       <img
                         src={imageUrl}
                         alt={plot.title}
@@ -193,19 +193,19 @@ export default function SmartRecommendations({
                       />
 
                       {/* Category Badge */}
-                      <div className="absolute left-3 top-3 rounded-full bg-slate-900/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-xs">
+                      <div className="absolute left-3 top-3 rounded-full bg-navy/85 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-snow shadow-xs">
                         {plot.category}
                       </div>
 
                       {/* Match Score Glowing Pill */}
-                      <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-extrabold shadow-md shadow-emerald-500/30">
+                      <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-saffron text-navy px-2.5 py-1 text-[11px] font-extrabold shadow-md">
                         <FaBolt className="text-[10px]" />
                         <span>{matchScore}% Match</span>
                       </div>
 
                       {/* Contextual Match Reason Pill */}
                       <div className="absolute bottom-2.5 left-3 right-3">
-                        <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-950/75 backdrop-blur-md px-3 py-1 text-[10px] font-semibold text-emerald-300 shadow-sm border border-emerald-500/20 truncate max-w-full">
+                        <div className="inline-flex items-center gap-1.5 rounded-full bg-navy-deep/80 backdrop-blur-md px-3 py-1 text-[10px] font-semibold text-snow shadow-sm border border-white/10 truncate max-w-full">
                           <span className="truncate">{matchReason}</span>
                         </div>
                       </div>
@@ -214,37 +214,37 @@ export default function SmartRecommendations({
                     {/* Content Area */}
                     <div className="p-4 sm:p-5 flex flex-col justify-between flex-grow">
                       <div>
-                        <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
-                          <span className="flex items-center gap-1 text-slate-600 font-medium truncate max-w-[70%]">
-                            <FaMapMarkerAlt className="text-emerald-500 flex-shrink-0" />
+                        <div className="flex items-center justify-between text-xs text-slate-brand mb-1">
+                          <span className="flex items-center gap-1 text-slate-brand font-medium truncate max-w-[70%]">
+                            <FaMapMarkerAlt className="text-saffron-text flex-shrink-0" />
                             <span className="truncate">{plot.location}</span>
                           </span>
-                          <span className="flex items-center gap-1 font-bold text-slate-800">
-                            <FaStar className="text-amber-400 text-xs" />
+                          <span className="flex items-center gap-1 font-bold text-navy">
+                            <FaStar className="text-saffron text-xs" />
                             {rating.toFixed(1)}
                           </span>
                         </div>
 
-                        <h3 className="font-bold text-sm sm:text-base text-slate-900 group-hover:text-emerald-600 transition-colors line-clamp-1 font-heading">
+                        <h3 className="font-bold text-sm sm:text-base text-navy group-hover:text-saffron-text transition-colors line-clamp-1 font-heading">
                           {plot.title}
                         </h3>
 
                         {plot.description && (
-                          <p className="text-xs text-slate-500 line-clamp-2 mt-1 font-sans">
+                          <p className="text-xs text-slate-brand line-clamp-2 mt-1 font-sans">
                             {plot.description}
                           </p>
                         )}
                       </div>
 
                       {/* Price & Action */}
-                      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <div className="mt-4 pt-3 border-t border-mist flex items-center justify-between">
                         <div>
-                          <span className="text-base font-extrabold text-slate-900">
+                          <span className="text-base font-extrabold text-navy">
                             {formattedPrice}
                           </span>
                         </div>
 
-                        <span className="inline-flex items-center text-xs font-bold text-emerald-600 group-hover:text-emerald-700 transition">
+                        <span className="inline-flex items-center text-xs font-bold text-navy group-hover:text-saffron-text transition">
                           View Details →
                         </span>
                       </div>

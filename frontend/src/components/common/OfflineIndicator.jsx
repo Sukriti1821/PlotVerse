@@ -30,7 +30,7 @@ const OfflineIndicator = () => {
   if (showReconnected) {
     return (
       <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce">
-        <div className="flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-emerald-600/30 backdrop-blur-md">
+        <div className="flex items-center gap-2 rounded-full bg-pine px-4 py-2 text-xs font-bold text-snow shadow-xl backdrop-blur-md">
           <FaWifi size={12} />
           <span>Connected back online!</span>
         </div>
@@ -45,9 +45,9 @@ const OfflineIndicator = () => {
       aria-label="Offline status banner"
       className="fixed top-16 sm:top-20 left-1/2 -translate-x-1/2 z-50 max-w-[92vw] sm:max-w-md w-full px-2"
     >
-      <div className="flex items-center justify-between gap-3 rounded-2xl bg-amber-500/95 border border-amber-400/50 px-4 py-2.5 text-xs font-semibold text-slate-950 shadow-2xl backdrop-blur-xl">
+      <div className="flex items-center justify-between gap-3 rounded-2xl bg-saffron border border-saffron-hover px-4 py-2.5 text-xs font-semibold text-navy shadow-2xl backdrop-blur-xl">
         <div className="flex items-center gap-2.5 min-w-0">
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-600/30 text-slate-950">
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-navy/15 text-navy">
             <FaExclamationCircle size={13} />
           </span>
           <p className="truncate">
@@ -57,7 +57,7 @@ const OfflineIndicator = () => {
         <button
           type="button"
           onClick={() => window.location.reload()}
-          className="shrink-0 rounded-lg bg-white/90 hover:bg-white px-2.5 py-1 text-[11px] font-bold text-slate-900 transition active:scale-95"
+          className="shrink-0 rounded-lg bg-navy hover:bg-navy-deep px-2.5 py-1 text-[11px] font-bold text-snow transition active:scale-95"
         >
           Retry
         </button>

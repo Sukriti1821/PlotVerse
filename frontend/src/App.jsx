@@ -7,33 +7,87 @@ import "react-toastify/dist/ReactToastify.css";
 class AppErrorBoundary extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false, error: null, errorInfo: null, showDetails: false };
   }
   static getDerivedStateFromError(error) {
     return { hasError: true, error };
   }
   componentDidCatch(error, errorInfo) {
     console.error("AppErrorBoundary caught error:", error, errorInfo);
+    this.setState({ errorInfo });
   }
+
+  handleReset = () => {
+    this.setState({ hasError: false, error: null, errorInfo: null });
+    window.location.href = "/";
+  };
+
+  handleReload = () => {
+    window.location.reload();
+  };
+
+  handleClearCacheAndReload = () => {
+    try {
+      sessionStorage.clear();
+      // Keep essential auth if valid, or clear if corrupt
+      localStorage.removeItem("thikana_saved_destinations");
+      localStorage.removeItem("thikana_pwa_dismissed");
+    } catch {
+      // Safe fallback
+    }
+    window.location.href = "/";
+  };
+
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-900 text-white p-6">
-          <div className="max-w-md w-full bg-slate-800 p-8 rounded-3xl border border-slate-700 text-center shadow-2xl">
+        <div className="min-h-screen flex items-center justify-center bg-navy-deep text-snow p-6 select-none">
+          <div className="max-w-lg w-full bg-navy p-8 rounded-3xl border border-white/15 text-center shadow-2xl backdrop-blur-xl">
             <div className="text-4xl mb-4">⚠️</div>
-            <h1 className="text-2xl font-bold mb-2">Something went wrong</h1>
-            <p className="text-slate-400 text-sm mb-6">
+            <h1 className="text-2xl font-bold mb-2 text-snow font-heading">Something went wrong</h1>
+            <p className="text-light-slate text-sm mb-6 leading-relaxed">
               {this.state.error?.message || "An unexpected error occurred while rendering the page."}
             </p>
-            <button
-              onClick={() => {
-                this.setState({ hasError: false, error: null });
-                window.location.href = "/";
-              }}
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-6 rounded-full transition"
-            >
-              Back to Home
-            </button>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-5">
+              <button
+                onClick={this.handleReset}
+                className="bg-saffron hover:bg-saffron-hover text-navy font-bold py-2.5 px-6 rounded-full text-xs shadow-md transition active:scale-95 cursor-pointer"
+              >
+                Back to Home
+              </button>
+              <button
+                onClick={this.handleReload}
+                className="border border-white/20 hover:bg-white/10 text-snow font-bold py-2.5 px-6 rounded-full text-xs transition active:scale-95 cursor-pointer"
+              >
+                Reload Page
+              </button>
+            </div>
+
+            <div className="border-t border-white/10 pt-4 text-left">
+              <button
+                type="button"
+                onClick={() => this.setState((prev) => ({ showDetails: !prev.showDetails }))}
+                className="text-[11px] text-light-slate hover:text-saffron transition flex items-center gap-1 cursor-pointer"
+              >
+                <span>{this.state.showDetails ? "▼ Hide" : "▶ Show"} Technical Details</span>
+              </button>
+
+              {this.state.showDetails && (
+                <div className="mt-3 p-3.5 rounded-xl bg-navy-deep border border-white/10 text-xs text-rose-300 font-mono overflow-x-auto max-h-48 whitespace-pre-wrap select-text">
+                  <p className="font-bold text-red-400 mb-1">{String(this.state.error)}</p>
+                  {this.state.error?.stack && (
+                    <p className="text-[10px] text-light-slate/70">{this.state.error.stack}</p>
+                  )}
+                  {this.state.errorInfo?.componentStack && (
+                    <p className="text-[10px] text-saffron/80 mt-2">
+                      Component Stack:
+                      {this.state.errorInfo.componentStack}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       );
